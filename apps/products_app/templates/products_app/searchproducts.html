@@ -1,5 +1,5 @@
 <div id="allproducts">
-    <h2>{{category.name}}</h2>
+    <h2>{{searchitem}}</h2>
     {%for product in products%}
     <div class="item">
         <a href="">{{product.image}}</a>
@@ -9,7 +9,7 @@
     {%endfor%}
     <ul class='pagination'>
         {%for i in numpages%}
-        <li><a href="{{category.id}}/{{i}}">i</a></li>
+        <li><a href="search/{{search}}/{{i}}">i</a></li>
         {%endfor%}
     </ul>
 </div>
