@@ -97,11 +97,18 @@ def create_user(request):
 def user(request, user_id):
     if 'user_id' not in request.session:
         messages.error(request, 'You are not logged in.')
+<<<<<<< HEAD
+=======
 
+>>>>>>> master
         return redirect('/index')
 
     user = User.objects.get(id=user_id)
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
     context = {
         'user' : user,
     }
@@ -195,6 +202,8 @@ def signin(request):
         except:
             messages.error(request, 'Your Login information does not match our database. Please try again.')
     return redirect('/signin')
+<<<<<<< HEAD
+=======
 
 def admin_create_user(request):
     if request.method == 'POST':
@@ -282,3 +291,4 @@ def delete_user(request, user_id):
     user = User.objects.get(id=user_id)
     user.delete()
     return redirect('/dashboard/admin')
+>>>>>>> master
