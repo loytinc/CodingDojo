@@ -2,11 +2,6 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-<<<<<<< HEAD
-    
-]
-=======
-<<<<<<< HEAD
     #Home Page
     url(r'^$', views.index),
     url(r'^main$', views.index),
@@ -22,8 +17,3 @@ urlpatterns = [
     url(r'^user/(?P<user_id>\d+)$', views.user),
 
 ]
-=======
-
-]
->>>>>>> e93de42686eb4635c0b3b9cb83eed556f283df09
->>>>>>> master

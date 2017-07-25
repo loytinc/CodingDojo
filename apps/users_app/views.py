@@ -86,18 +86,11 @@ def create_user(request):
 def user(request, user_id):
     if 'user_id' not in request.session:
         messages.error(request, 'You are not logged in.')
-<<<<<<< HEAD
-        return redirect('/users')
-
-    user = User.objects.get(id=user_id)
-
-=======
         return redirect('/index')
 
     user = User.objects.get(id=user_id)
 
 
->>>>>>> master
     context = {
         'user' : user,
     }
@@ -105,9 +98,6 @@ def user(request, user_id):
 
 def logout(request):
     request.session.clear()
-<<<<<<< HEAD
-    return redirect('/users')
-=======
     return redirect('/index')
 
 def signin(request):
@@ -124,4 +114,3 @@ def signin(request):
         except:
             messages.error(request, 'Your information is incorrect. Please try again.')
     return redirect('/signin')
->>>>>>> master

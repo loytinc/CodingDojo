@@ -12,10 +12,6 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 noNumberPls = re.compile(r'^[a-zA-Z]+$')
 
 # Create your models here.
-<<<<<<< HEAD
-class User(models.Model):
-    name = models.CharField(max_length=255)
-=======
 class UserManager(models.Manager):
     def user_validator(self, postData):
         errors = []
@@ -76,4 +72,3 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user_level = models.IntegerField()
     objects = UserManager()
->>>>>>> master
