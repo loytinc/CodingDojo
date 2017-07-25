@@ -70,10 +70,8 @@
         $('#searchbox').keyup(function(e){
             e.preventDefault()
             $.ajax({
-                url:'/products/search/1',
-                method: 'post',
-                data: {'name':$(this).val()},
-                headers:{'X-CSRFToken': csrftoken},
+                url:'/products/search/'+$(this).val()+'/1',
+                method: 'get',
                 success: function(res){
                     $('#showproducts').html(res);
                 }
