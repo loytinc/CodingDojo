@@ -19,11 +19,12 @@
             <div>
                 {{product.description}}
             </div>
-            <form action="/addtocart">
+            <form action="/products/addtocart">
+                <input type="hidden" name='prodid' value='{{product.id}}'>
                 <select name="price" id="item priice">
                     <option value="{{product.price}}">1 {{product.price}}</option>
-                    <option value="{{product.price*2}}">2 {{product.price*2}}</option>
-                    <option value="{{product.price*3}}">3 {{product.price*3}}</option>
+                    <!-- <option value="{{product.price*2}}">2 {{product.price*2}}</option> -->
+                    <!-- <option value="{{product.price*3}}">3 {{product.price*3}}</option> -->
                 </select>
                 <input type="submit" value='Buy'>
             </form>
