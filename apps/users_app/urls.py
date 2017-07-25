@@ -5,6 +5,7 @@ urlpatterns = [
 <<<<<<< HEAD
     #Home Page
     url(r'^$', views.index),
+    url(r'^main$', views.index),
 
     #Login & Logout
     url(r'^login$', views.signin),
@@ -14,17 +15,10 @@ urlpatterns = [
     url(r'^register$', views.create_user),
 
     #View user profile
-=======
-    # Home page
-    url(r'^$', views.index),
-    url(r'^main$', views.index),
-
-    url(r'^login$', views.signin),
-    url(r'^register$', views.create_user),
-    url(r'^logout$', views.logout),
-
-    # User Profile information
->>>>>>> master
     url(r'^user/(?P<user_id>\d+)$', views.user),
 
 ]
+=======
+
+]
+>>>>>>> e93de42686eb4635c0b3b9cb83eed556f283df09
