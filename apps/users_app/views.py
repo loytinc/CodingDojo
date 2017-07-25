@@ -73,6 +73,13 @@ def create_user(request):
                 return redirect('/index')
 
             except:
+                if request.session['isAdmin'] == False:
+                    return redirect('/dashboard')
+
+                context = {
+                    'current_user_id' : request.session['user_id'],
+                }
+
                 # hash password
                 hash_it = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
 
@@ -81,7 +88,6 @@ def create_user(request):
                 user.save()
                 messages.success(request, 'You have successfully registered')
     return redirect('/index')
-
 
 def user(request, user_id):
     if 'user_id' not in request.session:

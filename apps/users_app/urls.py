@@ -2,23 +2,27 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-<<<<<<< HEAD
-    #Home Page
-    url(r'^$', views.index),
-    url(r'^main$', views.index),
+    # render routes
+    url(r'^$', views.landing),
+    url(r'^signin$', views.login),
+    url(r'^register$', views.register),
+    url(r'^dashboard$', views.dashboard),
+    url(r'^dashboard/admin$', views.dashboard),
+    url(r'^users/new$', views.add_user),
+    url(r'^users/edit$', views.edit_user),
+    url(r'^users/edit/(?P<user_id>\d+)$', views.edit_user_admin),
+    url(r'^users/show/(?P<user_id>\d+)$', views.profile),
+    url(r'^dashboard/admin/remove/(?P<user_id>\d+)$', views.warning),
 
-    #Login & Logout
-    url(r'^login$', views.login),
-    url(r'^logout$', views.logout),
-
-    #Register new users
-    url(r'^register$', views.create_user),
-
-    #View user profile
-    url(r'^user/(?P<user_id>\d+)$', views.user),
-
+    # process routes
+    url(r'^logoff$', views.logoff),
+    url(r'^signin/login$', views.signin),
+    url(r'^register/create$', views.create_user),
+    url(r'^users/new/add$', views.admin_create_user),
+    url(r'^users/edit/(?P<user_id>\d+)/update_user$', views.update_user),
+    url(r'^users/edit/(?P<user_id>\d+)/update_password$', views.update_password),
+    url(r'^users/edit/(?P<user_id>\d+)/update_desc$', views.update_desc),
+    url(r'^users/show/(?P<user_id>\d+)/post$', views.new_post),
+    url(r'^users/show/(?P<user_id>\d+)/comment$', views.new_comment),
+    url(r'^dashboard/admin/remove/(?P<user_id>\d+)/delete$', views.delete_user),
 ]
-=======
-
-]
->>>>>>> e93de42686eb4635c0b3b9cb83eed556f283df09
