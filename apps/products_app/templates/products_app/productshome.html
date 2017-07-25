@@ -3,8 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <title>Products Page</title>
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-    
+    <div class="container">
+        <div id="header">
+            <p>T-MAN</p>
+            <a href="#">Shopping Cart ({{cartitemscount}})</a>
+        </div>
+        <div id="content">
+            <div id="search">
+                <input type="text" name='search' id='searchbox'>
+                <ul>
+                    {%for category in categories%}
+                    <li><a href="/products/{{category.id}}">{{category.name}}</a></li>
+                </ul>
+            </div>
+            <div id="showproducts"></div>
+        </div>
+    </div>
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+        
+        $('#search>ul>li>a').click(function(e){
+            e.preventDefault()
+            $.ajax({
+                url:$(this).attr('href'),
+                method: 'get',
+                success: function(res){
+                    $('#showproducts').html(res);
+                }
+            })
+        })
+
+        $('.pagination>li>a').click(function(e){
+            e.preventDefault()
+            $.ajax({
+                url:$(this).attr('href'),
+                method: 'get',
+                success: function(res){
+                    $('#showproducts').html(res);
+                }
+            })
+        })
+
+        $('#searchbox').keyup(function(e){
+            e.preventDefault()
+            $.ajax({
+                url:'/products/search/1',
+                method: 'post',
+                data: {'name':$(this).val()},
+                headers:{'X-CSRFToken': csrftoken},
+                success: function(res){
+                    $('#showproducts').html(res);
+                }
+            })
+        })
+    </script>
 </body>
 </html>
