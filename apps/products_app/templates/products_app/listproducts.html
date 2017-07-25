@@ -2,13 +2,13 @@
     <h2>{{category.name}}</h2>
     {%for product in products%}
     <div class="item">
-        <a href="">{{product.image}}</a>
+        <img src='{{product.image}}' alt='{{product.name}}'>
         {{product.price}}
         <a href="">{{product.name}}</a>
     </div>
     {%endfor%}
     <ul class='pagination'>
-        {%for i in numpages%}
+        {%for i in numPages%}
         <li><a href="{{category.id}}/{{i}}">i</a></li>
         {%endfor%}
     </ul>
