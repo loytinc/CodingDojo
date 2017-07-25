@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from ..products_app.models import *
+from ..users_app.models import *
 
 # Create your models here.
 class ShoppingCart(models.Model):
@@ -24,7 +25,7 @@ class ShippingInfo(models.Model):
     address2 = models.CharField(max_length=255,null=True,blank=True)
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
-    zipcode = models.IntegerField(max_length=5)
+    zipcode = models.IntegerField()
     user = models.ForeignKey(User, related_name="shippingInfos")
     order = models.OneToOneField(Order, related_name="shippingInfo")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -37,7 +38,7 @@ class BillingInfo(models.Model):
     address2 = models.CharField(max_length=255,null=True,blank=True)
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
-    zipcode = models.IntegerField(max_length=5)
+    zipcode = models.IntegerField()
     card = models.IntegerField()
     security = models.IntegerField()
     expiration = models.DateField()
