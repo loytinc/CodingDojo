@@ -27,16 +27,26 @@ class UserManager(models.Manager):
             if len(postData['first_name']) == 0:
                 errors.append('Please enter your first name.')
             elif len(postData['first_name']) < 3:
+<<<<<<< HEAD
                 errors.append('First name should be no fewer than 3 letters')
             elif not noNumberPls.match(postData['first_name']):
                 errors.append('First name should have no numbers or special characters in it.')
+=======
+                errors.append('User first name should be no fewer than 3 letters')
+            elif not noNumberPls.match(postData['first_name']):
+                errors.append('User first name should have no numbers or special characters in it.')
+>>>>>>> master
 
         if 'last_name' in postData:
             if len(postData['last_name']) == 0:
                 errors.append('Please enter your last name.')
             elif len(postData['last_name']) < 3:
                 errors.append('Last name should be no fewer than 3 letters')
-            elif not noNumberPls.match(postData['alias']):
+<<<<<<< HEAD
+            elif not noNumberPls.match(postData['last_name']):
+=======
+            elif not noNumberPls.match(postData['last_name']):
+>>>>>>> master
                 errors.append('Last name should have no numbers or special characters in it.')
 
         if 'password' in postData:
