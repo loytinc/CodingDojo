@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Page</title>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <p>T-MAN</p>
+            <a href="#">Shopping Cart</a>
+        </div>
+        <div id="content">
+            <div>
+                <a href="#">Go back</a>
+                <h2>{{product.name}}</h2>
+                <img src="{{product.image}}" alt="prodimg">
+            </div>
+            <div>
+                {{product.description}}
+            </div>
+            <form action="/addtocart">
+                <select name="price" id="item priice">
+                    <option value="{{product.price}}">1 {{product.price}}</option>
+                    <option value="{{product.price*2}}">2 {{product.price*2}}</option>
+                    <option value="{{product.price*3}}">3 {{product.price*3}}</option>
+                </select>
+                <input type="submit" value='Buy'>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
