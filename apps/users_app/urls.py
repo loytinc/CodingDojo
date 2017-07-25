@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^main$', views.index),
 
     #Login & Logout
-    url(r'^login$', views.signin),
+    url(r'^login$', views.login),
     url(r'^logout$', views.logout),
 
     #Register new users
