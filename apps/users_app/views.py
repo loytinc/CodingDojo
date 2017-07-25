@@ -49,6 +49,11 @@ def login(request):
             messages.error(request, 'Your information is incorrect. Please try again.')
     return redirect('/index')
 
+def register(request):
+    if 'user_id' in request.session:
+        return redirect('/dashboard')
+    return render(request, 'dash_app/registration.html')
+
 def create_user(request):
     #---------------------------------------------
     #------------- make a new user ---------------
@@ -148,6 +153,24 @@ def profile(request, user_id):
     }
 
     return render(request, 'user_app/profile.html', context)
+
+def warning(request, user_id):
+    if 'user_id' not in request.session:
+        messages.error(request, 'You are not logged in.')
+        return redirect('/')
+
+    if request.session['isAdmin'] == False:
+        return redirect('/dashboard')
+
+    user = User.objects.get(id=user_id)
+
+    context = {
+        'current_user_id' : request.session['user_id'],
+        'user_to_delete'  : user.id,
+        'user'            : user
+    }
+
+    return render(request, 'dash_app/warning.html', context)
 
 def logout(request):
     request.session.clear()
