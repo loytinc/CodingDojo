@@ -1,0 +1,15 @@
+<div id="allproducts">
+    <h2>{{category.name}}</h2>
+    {%for product in products%}
+    <div class="item">
+        <a href="">{{product.image}}</a>
+        {{product.price}}
+        <a href="">{{product.name}}</a>
+    </div>
+    {%endfor%}
+    <ul class='pagination'>
+        {%for i in numpages%}
+        <li><a href="{{category.id}}/i">i</a></li>
+        {%endfor%}
+    </ul>
+</div>
