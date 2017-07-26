@@ -58,3 +58,24 @@ def addtocart(request):
     prod.save()
     User.objects.get(id=request.session['user_id']).shoppingCart.products.add(prod)
     return redirect('prodcuts/all/1')
+
+def edit(request, id):
+    context={
+        'categories': Category.objects.all(), 'product':Product.objects.get(id=id)
+    }
+    return render(request, 'products_app/editproduct.html', context)
+
+def processEdit(request, id):
+    prod=Product.objects.get(id=id)
+    prod.name=request.POST['name']
+    prod.description=request.POST['description']
+    if request.POST['newcategory'] == '':
+        prod.category=Category.objects.get(name=request.POST['category'])
+    else:
+        tempcategory=Category.objects.create(name=request.POST['newcategory'])
+        prod.category=tempcategory
+    return redirect('/dashboard/products')
+
+def delete(request, id):
+    Product.objects.get(id=id).delete()
+    return redirect('/dashboard/products')
