@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        {% load static %}
+    <link rel="stylesheet" href="{% static 'dash_app/style.css' %}">
+    <link rel="stylesheet" href="{% static 'dash_app/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'dash_app/bootstrap-theme.css' %}">
+    <title>Warning!</title>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1 class="navbar-brand" id="heading_name">Test App</h1>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="nav-link top_space" href="/dashboard">Dashboard</a></li>
+                    <li><a class="nav-link top_space" href="/users/show/{{current_user_id}}">Profile</a></li>
+                    <li><a class="nav-link top_space" href="/logoff">Log off</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <p>Are you sure want to delete {{user.first_name}}?</p>
+    <a href="/dashboard/admin/remove/{{user_to_delete}}/delete">Yes</a>
+    <a href="/dashboard/admin">No</a>
+</body>
+</html>

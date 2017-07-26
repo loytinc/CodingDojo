@@ -21,7 +21,5 @@ urlpatterns = [
     url(r'^users/new/add$', views.admin_create_user),
     url(r'^users/edit/(?P<user_id>\d+)/update_user$', views.update_user),
     url(r'^users/edit/(?P<user_id>\d+)/update_password$', views.update_password),
-#    url(r'^users/show/(?P<user_id>\d+)/post$', views.new_post),
-#    url(r'^users/show/(?P<user_id>\d+)/comment$', views.new_comment),
     url(r'^dashboard/admin/remove/(?P<user_id>\d+)/delete$', views.delete_user),
 ]
