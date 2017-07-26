@@ -80,6 +80,7 @@ def create_user(request):
                 messages.success(request, 'You have successfully registered')
     return redirect('/index')
 
+<<<<<<< HEAD
 def user(request, user_id):
     if 'user_id' not in request.session:
         messages.error(request, 'You are not logged in.')
@@ -91,6 +92,8 @@ def user(request, user_id):
         'user' : user,
     }
     return render(request, 'users_app/user.html', context)
+=======
+>>>>>>> master
 
 def edit_user(request):
     if 'user_id' not in request.session:
@@ -267,3 +270,7 @@ def delete_user(request, user_id):
     user = User.objects.get(id=user_id)
     user.delete()
     return redirect('/dashboard/admin')
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
