@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'userDashboard/style.css' %}">
+    <link rel="stylesheet" href="{% static 'userDashboard/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'userDashboard/bootstrap-theme.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1 class="navbar-brand" id="heading_name">Test App</h1>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="nav-link top_space" href="/dashboard">Dashboard</a></li>
+                    <li><a class="nav-link top_space" href="/users/show/{{current_user_id}}">Profile</a></li>
+                    <li><a class="nav-link top_space" href="/logoff">Log off</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li><a class="nav-link top_space" href="/dashboard">Users</a></li>
+                    <li class='active'><a class="nav-link top_space" href="/dashboard/products">Products</a></li>
+                    <li><a class="nav-link top_space" href="/logoff">Orders</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-md-12">
+                <div class="row-fluid">
+                    <div class="col-md-3">
+                        <h1>Manage Products</h1>
+                    </div>
+                    <div class="col-md-offset-11">
+                        {% if isAdmin %}
+                        <a class="btn btn-success" id="spacing_add" href="/products/new">Add product</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div>
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Picture</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Inventory Count</th>
+                            <th>Quantity Sold</th>
+                            <!-- {% if isAdmin %} -->
+                            <th>Actions</th>
+                            <!-- {% endif %} -->
+                        </tr>
+                        {% for product in products %}
+                        <tr>
+                            <td><img src="{{product.image}}" alt="{{product.name}}"></td>
+                            <td>{{product.id}}</td>
+                            <td>{{product.name}}</td>
+                            <td>{{product.inventory}}</td>
+                            <!-- {% if user.user_level == 9 %} -->
+                            <td>{{product.quantity}}</td>
+                            <!-- {% elif user.user_level == 1 %} -->
+                            <!-- {% endif %} -->
+                            <!-- {% if isAdmin %} -->
+                            <td>
+                                <a href="/products/edit/{{product.id}}">Edit</a>
+                                <a data-toggle='modal' href='#confirm{{product.id}}'>Delete</a>
+                                <div class='modal fade' id='confirm{{product.id}}' tabindex='-1' role='dialog'>
+                                <div class="modal-dialog">
+                                    <div class='modal-content'>
+                                        <div class='modal-header'>
+                                            <h2>Are you sure?</h2>
+                                        </div>
+                                        <div class='modal-body'>
+                                            <p>Are you sure you want to delete this?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a class='btn btn-primary' href="{%url 'delete' id=user.id%}">Yes!</a>
+                                            <a class='btn btn-danger' href="/products/delete/{{product.id}}">No!</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <!-- {% endif %} -->
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
