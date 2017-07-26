@@ -6,14 +6,15 @@
 </head>
 <body>
     <h2>Edit Product - ID {{product.id}}</h2>
-    <form action="/products/edit/{{product.id}}/process">
+    <form action="/products/edit/{{product.id}}/process" method='POST'>
+        {%csrf_token%}
         <div>
             <label>Name</label>
             <input type="text" name='name'>
         </div>
         <div>
             <label>Description</label>
-            <textarea name="desc" id="" cols="30" rows="10"></textarea>
+            <textarea name="description" id="" cols="30" rows="10"></textarea>
         </div>
         <div>
             <label>Categories</label>
@@ -27,7 +28,7 @@
             <label>or add a new category</label>
             <input type="text" name='newcategory'>
         </div>
-        <a href="">Cancel</a>
+        <a href="/dashboard/products">Cancel</a>
         <a href="">Preview</a>
         <input type="submit" value='Update'>
     </form>

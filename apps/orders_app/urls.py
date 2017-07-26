@@ -9,5 +9,7 @@ urlpatterns = [
 
     # order tracker
     url(r'^orders$', views.track_orders),
+    url(r'^orders/status_update$', views.update_status),
+    url(r'^orders/(?P<order_id>\d+)$', views.update_status),
 
 ]

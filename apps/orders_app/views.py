@@ -31,7 +31,7 @@ def checkout(request):
         shoppingCart = ShoppingCart.objects.get(id=request.session['user_id'])
         user = User.objects.get(id=request.session['user_id'])
         # create an order
-        order = Order(shoppingCart=shoppingCart,status="pending",total=request.session['cart_total'])
+        order = Order(shoppingCart=shoppingCart,status="orderin",total=request.session['cart_total'])
         order.save()
 
         shipping = ShippingInfo(first_name = request.POST['shipping_first_name'],last_name = request.POST['shipping_last_name'],address = request.POST['shipping_address'],address2 = request.POST['shipping_address2'],city = request.POST['shipping_city'],state = request.POST['shipping_state'],zipcode = request.POST['shipping_zipcode'],user = user,order = order)
@@ -48,9 +48,9 @@ def checkout_success(request):
     return render(request, 'orders_app/payment_confirmation.html')
 
 
-# pending
-# in transit
-# delivered
+
+
+# Order tracking
 def track_orders(request):
     orders = Order.objects.all()
     
@@ -58,3 +58,21 @@ def track_orders(request):
         'orders' : orders
     }
     return render(request, 'orders_app/order_tracker.html',context)
+
+
+def update_status(request):
+    if request.method == 'POST':
+        order = Order.objects.get(id=request.POST['order_id'])
+        order.status = request.POST['status']
+        order.save()
+    return redirect('/carts/orders')
+
+
+def view_order(request, order_id):
+    order = Order.objects.get(id=order_id)
+    products = order.shoppingCart.products.all()
+    context = {
+        'order' : order,
+        'products' : products
+    }
+    return render(request, 'orders_app/view_order.html', context)
