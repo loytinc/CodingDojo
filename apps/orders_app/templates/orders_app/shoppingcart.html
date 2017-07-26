@@ -4,82 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'orders_app/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <title>Shopping Cart</title>
 </head>
 <body>
     <nav>
         <h1>Title of Site Goes Here</h1>
-        Shopping Cart ( {{orders.count}} )
+        Shopping Cart ( {{shoppingCart.products.count}} )
     </nav>
-    <table>
+    <table class="table">
         <tr>
             <th>Item</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Total</th>
         </tr>
+        {% for product in shoppingCart.products %}
         <tr>
             <td>{{product.name}}</td>
             <td>{{product.price}}</td>
-            <td>{{order.product.quantity}}</td>
-            <td>{{order.product.total}}</td>
+            <td>{{product.quantity}}</td>
+            <td>{{product.get_price_total}}</td>
         </tr>
+        {% endfor %}
     </table>
-    <p>Total: {{order.total}}</p>
+    <p>Total: {{total}}</p>
     <a href="#">Continue Shopping</a>
 
     <fieldset>
         <legend>Shipping Information</legend>
         <form action="">
-            <label>First Name: 
-                <input type="text" name="first_name">
+            <label class="block_up">First Name: 
+                <input type="text" name="shipping_first_name">
             </label>
-            <label>Last Name: 
-                <input type="text" name="last_name">
+            <label class="block_up">Last Name: 
+                <input type="text" name="shipping_last_name">
             </label>
-            <label>Address: 
-                <input type="text" name="address">
+            <label class="block_up">Address: 
+                <input type="text" name="shipping_address">
             </label>
-            <label>Address 2: 
-                <input type="text" name="address2">
+            <label class="block_up">Address 2: 
+                <input type="text" name="shipping_address2">
             </label>
-            <label>City: 
-                <input type="text" name="city">
+            <label class="block_up">City: 
+                <input type="text" name="shipping_city">
             </label>
-            <label>State: 
-                <input type="text" name="state">
+            <label class="block_up">State: 
+                <input type="text" name="shipping_state">
             </label>
-            <label>Zipcode:
-                <input type="text" name="zipcode">
+            <label class="block_up">Zipcode:
+                <input type="text" name="shipping_zipcode">
             </label>
     </fieldset>
     <fieldset>
         <legend>Billing Information</legend>
             <input id="sameAsShipping" type="checkbox" name="sameAsShipping">
-            <label for="sameAsShipping"></label>
-            <label>First Name: 
-                <input type="text" name="first_name">
+            <label for="sameAsShipping">Same as Shipping</label>
+            <label class="block_up">First Name: 
+                <input type="text" name="billing_first_name">
             </label>
-            <label>Last Name: 
-                <input type="text" name="last_name">
+            <label class="block_up">Last Name: 
+                <input type="text" name="billing_last_name">
             </label>
-            <label>Address: 
-                <input type="text" name="address">
+            <label class="block_up">Address: 
+                <input type="text" name="billing_address">
             </label>
-            <label>Address 2: 
-                <input type="text" name="address2">
+            <label class="block_up">Address 2: 
+                <input type="text" name="billing_address2">
             </label>
-            <label>City: 
-                <input type="text" name="city">
+            <label class="block_up">City: 
+                <input type="text" name="billing_city">
             </label>
-            <label>State: 
-                <input type="text" name="state">
+            <label class="block_up">State: 
+                <input type="text" name="billing_state">
             </label>
-            <label>Zipcode:
-                <input type="text" name="zipcode">
+            <label class="block_up">Zipcode:
+                <input type="text" name="billing_zipcode">
             </label>
-            <input type="submit" value="Pay">
+            <label class="block_up">Card:
+                <input type="text" name="card">
+            </label>
+            <label class="block_up">Security Code:
+                <input type="text" name="security">
+            </label>
+            <label class="block_up">Expiration Date:
+                <input type="date" name="expiration">
+            </label>
+            <input type="submit" class="btn btn-primary" value="Pay">
         </form>
     </fieldset>
 </body>
