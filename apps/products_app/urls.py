@@ -11,5 +11,7 @@ urlpatterns=[
     url(r'^edit/(?P<id>[0-9]+)$', views.edit, name='edit'),
     url(r'^delete/(?P<id>[0-9]+)$', views.delete, name='delete'),
     url(r'^edit/(?P<id>[0-9]+)/process$', views.processEdit, name='processEdit'),
+    url(r'^new$', views.new, name='new'),
+    url(r'^new/process$', views.processNew, name='processNew'),
 ]
 
