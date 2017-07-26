@@ -16,6 +16,7 @@ from ..products_app.models import *
 from ..orders_app.models import *
 from django.contrib import messages
 import bcrypt
+import math
 
 def index(request):
     return render(request, 'userDashboard/index.html')
@@ -34,6 +35,20 @@ def dashboard(request):
     else:
         return redirect('/')
 
+<<<<<<< HEAD
+def prodDashboard(request,page):
+    productCount=Product.objects.all().count()
+    allProducts=Product.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
+
+    newArr=[]
+    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+        newArr.append(i)
+    
+    context={
+        'products':allProducts, 'numPages':newArr
+    }
+    return render(request, 'userDashboard/productDash.html', context)
+=======
 def prodDashboard(request):
     #user must be logged in and must be an admin to see page
     if request.session.get('user_id', False):
@@ -47,6 +62,7 @@ def prodDashboard(request):
             return redirect('/')
     else:
         return redirect('/')
+>>>>>>> master
 
 def signin(request):
     if 'user_id' in request.session:
