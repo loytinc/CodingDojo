@@ -81,7 +81,7 @@ def delete(request, id):
     return redirect('/dashboard/products')
 
 def new(request):
-    context{
+    context = {
         'categories': Category.objects.all()
     }
     return render(request, 'products_app/newproduct.html', context)

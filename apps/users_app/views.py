@@ -83,7 +83,7 @@ def create_user(request):
 
                 # hash password
                 hash_it = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
-
+                
                 # insert user into database
                 user = User(first_name=request.POST['first_name'], last_name=request.POST['last_name'],email=request.POST['email'],user_level=user_level,password=hash_it)
                 user.save()
