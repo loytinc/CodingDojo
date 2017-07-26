@@ -80,6 +80,18 @@ def create_user(request):
                 messages.success(request, 'You have successfully registered')
     return redirect('/index')
 
+def user(request, user_id):
+    if 'user_id' not in request.session:
+        messages.error(request, 'You are not logged in.')
+
+        return redirect('/index')
+
+    user = User.objects.get(id=user_id)
+
+    context = {
+        'user' : user,
+    }
+    return render(request, 'users_app/user.html', context)
 
 def edit_user(request):
     if 'user_id' not in request.session:
@@ -168,6 +180,7 @@ def signin(request):
                 return redirect('/dashboard')
         except:
             messages.error(request, 'Your Login information does not match our database. Please try again.')
+    return redirect('/signin')
     return redirect('/dashboard')
 
 
@@ -257,4 +270,3 @@ def delete_user(request, user_id):
     user = User.objects.get(id=user_id)
     user.delete()
     return redirect('/dashboard/admin')
-
