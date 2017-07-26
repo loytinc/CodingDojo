@@ -7,7 +7,6 @@ urlpatterns = [
     url(r'^signin$', views.login),
     url(r'^register$', views.register),
     url(r'^dashboard$', views.dashboard),
-    url(r'^dashboard/admin$', views.dashboard),
     url(r'^dashboard/products$', views.prodDashboard),
     url(r'^users/new$', views.add_user),
     url(r'^users/edit$', views.edit_user),
