@@ -33,9 +33,14 @@ def dashboard(request):
 
     return render(request, 'userDashboard/dashboard.html')#, context)
 
+def prodDashboard(request):
+    return render(request, 'userDashboard/productDash.html')
+
 def login(request):
     if 'user_id' in request.session:
-        return redirect('/dashboard')
+        if request.session['isAdmin'] == True:
+            return redirect('/dashboard')
+        return redirect('/products')
     return render(request, 'userDashboard/login.html')
 
 def register(request):
@@ -182,13 +187,7 @@ def signin(request):
 
         except:
             messages.error(request, 'Your Login information does not match our database. Please try again.')
-<<<<<<< HEAD
     return redirect('/')
-=======
-    return redirect('/signin')
-    return redirect('/dashboard')
-
->>>>>>> master
 
 def admin_create_user(request):
     if request.method == 'POST':
