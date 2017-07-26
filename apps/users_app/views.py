@@ -174,12 +174,13 @@ def logout(request):
 
 def signin(request):
     if request.method == 'POST':
-        try:
-            get_email = User.objects.get(email = request.POST['email'])
-            if bcrypt.checkpw(request.POST['password'].encode(), get_email.password.encode()):
-                request.session['user_id'] = get_email.id
+        try:#if no user with this email, flash error msg.
+            current_user = User.objects.get(email = request.POST['email'])
 
-                current_user = User.objects.get(id=request.session['user_id'])
+            #if entered hashed input password does not match the user's hashed password
+            #flash error msg.
+            if bcrypt.checkpw(request.POST['password'].encode(), current_user.password.encode()):
+                request.session['user_id'] = current_user.id
 
                 # checks if current user is admin
                 if current_user.user_level == 9:
@@ -188,10 +189,12 @@ def signin(request):
                 else:
                     request.session['isAdmin'] = False
                     return redirect('/products')
+            else:
+                messages.error(request, 'Your Login information does not match our database. Please try again.')
 
         except:
             messages.error(request, 'Your Login information does not match our database. Please try again.')
-    return redirect('/')
+    return redirect('/signin')
 
 def admin_create_user(request):
     if request.method == 'POST':
