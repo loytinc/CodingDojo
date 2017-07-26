@@ -17,30 +17,37 @@ from django.contrib import messages
 import bcrypt
 
 def index(request):
-
     return render(request, 'userDashboard/index.html')
 
 def dashboard(request):
-#    users = User.objects.all()
-
-#    current_user = User.objects.get(id=request.session['user_id'])
-
-
-#    context = {
-#        'current_user_id' : request.session['user_id'],
-#        'users'           : users,
-#        'isAdmin'         : request.session['isAdmin']
-#    }
-
-    return render(request, 'userDashboard/dashboard.html')#, context)
+    #user must be logged in and must be an admin to see page
+    if request.session.get('user_id', False):
+        user = User.objects.get(id=request.session['user_id'])
+        if user.user_level == 9:
+            context = {
+               'users': User.objects.all()
+            }
+            return render(request, 'userDashboard/dashboard.html', context)
+        else:
+            return redirect('/')
+    else:
+        return redirect('/')
 
 def prodDashboard(request):
-    context={
-        'products':Product.objects.all()
-    }
-    return render(request, 'userDashboard/productDash.html', context)
+    #user must be logged in and must be an admin to see page
+    if request.session.get('user_id', False):
+        user = User.objects.get(id=request.session['user_id'])
+        if user.user_level == 9:
+            context={
+                'products': Product.objects.all()
+            }
+            return render(request, 'userDashboard/productDash.html', context)
+        else:
+            return redirect('/')
+    else:
+        return redirect('/')
 
-def login(request):
+def signin(request):
     if 'user_id' in request.session:
         if request.session['isAdmin'] == True:
             return redirect('/dashboard')
@@ -48,8 +55,6 @@ def login(request):
     return render(request, 'userDashboard/login.html')
 
 def register(request):
-    if 'user_id' in request.session:
-        return redirect('/dashboard')
     return render(request, 'userDashboard/registration.html')
 
 def create_user(request):
@@ -62,7 +67,7 @@ def create_user(request):
         if len(errors):
             for error in errors:
                 messages.error(request, error)
-            return redirect('/index')
+            return redirect('/register')
         else:
         # if errors FREE
             try:
@@ -74,7 +79,8 @@ def create_user(request):
 
             except:
                 users = User.objects.count()
-                print users
+
+                #if the user count is less than 4, the next user created with become an admin
                 if users < 4:
                     user_level=9
                 else:
@@ -88,7 +94,7 @@ def create_user(request):
                 user = User(first_name=request.POST['first_name'], last_name=request.POST['last_name'],email=request.POST['email'],user_level=user_level,password=hash_it)
                 user.save()
                 messages.success(request, 'You have successfully registered')
-    return redirect('/signin')
+    return redirect('/register')
 
 def user(request, user_id):
     if 'user_id' not in request.session:
@@ -172,14 +178,15 @@ def logout(request):
     request.session.clear()
     return redirect('/')
 
-def signin(request):
+def login(request):
     if request.method == 'POST':
-        try:
-            get_email = User.objects.get(email = request.POST['email'])
-            if bcrypt.checkpw(request.POST['password'].encode(), get_email.password.encode()):
-                request.session['user_id'] = get_email.id
+        try:#if no user with this email, flash error msg.
+            current_user = User.objects.get(email = request.POST['email'])
 
-                current_user = User.objects.get(id=request.session['user_id'])
+            #if entered hashed input password does not match the user's hashed password
+            #flash error msg.
+            if bcrypt.checkpw(request.POST['password'].encode(), current_user.password.encode()):
+                request.session['user_id'] = current_user.id
 
                 # checks if current user is admin
                 if current_user.user_level == 9:
@@ -188,10 +195,12 @@ def signin(request):
                 else:
                     request.session['isAdmin'] = False
                     return redirect('/products')
+            else:
+                messages.error(request, 'Your Login information does not match our database. Please try again.')
 
         except:
             messages.error(request, 'Your Login information does not match our database. Please try again.')
-    return redirect('/')
+    return redirect('/signin')
 
 def admin_create_user(request):
     if request.method == 'POST':
