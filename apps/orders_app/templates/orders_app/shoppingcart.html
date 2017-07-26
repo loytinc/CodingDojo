@@ -21,7 +21,7 @@
             <th>Quantity</th>
             <th>Total</th>
         </tr>
-        {% for product in shoppingCart.products %}
+        {% for product in shoppingCart.products.all %}
         <tr>
             <td>{{product.name}}</td>
             <td>{{product.price}}</td>
@@ -31,11 +31,12 @@
         {% endfor %}
     </table>
     <p>Total: {{total}}</p>
-    <a href="#">Continue Shopping</a>
+    <a href="/products">Continue Shopping</a>
 
     <fieldset>
         <legend>Shipping Information</legend>
-        <form action="">
+        <form action="/carts/checkout" method="post">
+            {% csrf_token %}
             <label class="block_up">First Name: 
                 <input type="text" name="shipping_first_name">
             </label>

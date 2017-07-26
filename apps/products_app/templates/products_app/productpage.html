@@ -19,14 +19,15 @@
             <div>
                 {{product.description}}
             </div>
-            <form action="/products/addtocart">
+            <form action="/products/addtocart" method="post">
+                {% csrf_token %}
                 <input type="hidden" name='prodid' value='{{product.id}}'>
-                <select name="price" id="item priice">
-                    <option value="{{product.price}}">1 {{product.price}}</option>
-                     <option value="{{product2}}">2 {{product2}}</option> 
-                     <option value="{{product3}}">3 {{product3}}</option> 
+                <select name="quantity" id="item priice">
+                    <option value="1">1</option>
+                     <option value="2">2</option> 
+                     <option value="3">3</option> 
                 </select>
-                <input type="submit" value='Buy'>
+                <input type="submit" value='Add to Cart'>
             </form>
         </div>
     </div>

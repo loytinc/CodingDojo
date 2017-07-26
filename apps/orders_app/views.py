@@ -9,19 +9,19 @@ from .models import *
 # shopping cart
 def shoppingCart(request):
 
-    shoppingCart = ShoppingCart.objects.get(id=request.session['user_id'])
+    shoppingCart = User.objects.get(id=request.session['user_id']).shoppingCart
 
     total = 0
-    for product in shoppingCart.products:
+    for product in shoppingCart.products.all():
         total += product.get_price_total()
 
-    request.session['cart_total'] = total
+    request.session['cart_total'] = float(total)
 
     context = {
         'shoppingCart' : shoppingCart,
         'total'        : request.session['cart_total']
     }
-    return render(request, 'orders_app/shoppingcart.html')
+    return render(request, 'orders_app/shoppingcart.html',context)
 
 
 def checkout(request):
@@ -34,9 +34,9 @@ def checkout(request):
         order = Order(shoppingCart=shoppingCart,status="orderin",total=request.session['cart_total'])
         order.save()
 
-        shipping = ShippingInfo(first_name = request.POST['shipping_first_name'],last_name = request.POST['shipping_last_name'],address = request.POST['shipping_address'],address2 = request.POST['shipping_address2'],city = request.POST['shipping_city'],state = request.POST['shipping_state'],zipcode = request.POST['shipping_zipcode'],user = user,order = order)
+        shipping = ShippingInfo(first_name = request.POST['shipping_first_name'],last_name = request.POST['shipping_last_name'],address = request.POST['shipping_address'],address2 = request.POST['shipping_address2'],city = request.POST['shipping_city'],state = request.POST['shipping_state'],zipcode = request.POST['shipping_zipcode'],user = user, order = order)
         shipping.save()
-        billing = BillingInfo(first_name = request.POST['billing_first_name'],last_name = request.POST['billing_last_name'],address = request.POST['billing_address'],address2 = request.POST['billing_address2'],city = request.POST['billing_city'],state = request.POST['billing_state'],zipcode = request.POST['billing_zipcode'],card = request.POST['card'],security = request.POST['security'],expiration = request.POST['expiration'],user = user,order = order)
+        billing = BillingInfo(first_name = request.POST['billing_first_name'],last_name = request.POST['billing_last_name'],address = request.POST['billing_address'],address2 = request.POST['billing_address2'],city = request.POST['billing_city'],state = request.POST['billing_state'],zipcode = request.POST['billing_zipcode'],card = request.POST['card'],security = request.POST['security'],expiration = request.POST['expiration'],user = user, order = order)
         billing.save()
 
         # process the payment

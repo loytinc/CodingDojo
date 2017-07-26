@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from models import *
+from ..users_app.models import *
+from ..orders_app.models import *
 import math
 # Create your views here.
 def home(request):
@@ -58,11 +60,13 @@ def product(request, id):
     return render(request, 'products_app/productpage.html', context)
 
 def addtocart(request):
-    prod = Product.objects.get(id=id)
-    prod.quantity=request.POST['quantity']
-    prod.save()
-    User.objects.get(id=request.session['user_id']).shoppingCart.products.add(prod)
-    return redirect('prodcuts/all/1')
+    # changed id to request.POST['prodid'] by Art
+    if request.method == 'POST':
+        prod = Product.objects.get(id=request.POST['prodid'])
+        prod.quantity=request.POST['quantity']
+        prod.save()
+        User.objects.get(id=request.session['user_id']).shoppingCart.products.add(prod)
+    return redirect('/products')
 
 def edit(request, id):
     context={
