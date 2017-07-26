@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from models import *
+import math
 # Create your views here.
 def home(request):
     context={
@@ -16,20 +17,24 @@ def category(request, id, page):
     #         allProducts.append([products[i].name, products[i].price, products[i].image])
 
     context={
-        'products':allProducts, 'numPages':productCount/10, 'category': Category.objects.get(id=id)
+        'products':allProducts, 'numPages':(productCount/10)+1, 'category': Category.objects.get(id=id)
     }
     return render(request, 'products_app/listproducts.html', context)
 
 def allprod(request, page):
+    # print "TYPE PAGE: ", type(int(page))
     # allProducts=[]
     productCount=Product.objects.all().count()
-    allProducts=Product.objects.all()[(page-1)*10:((page-1)*10)+10]
+    allProducts=Product.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
     # for i in range(10*(page-1), 10*(page-1) + 11): #product in category.products:
     #     if i < len(products):
     #         allProducts.append([products[i].name, products[i].price, products[i].image])
+    newArr=[]
+    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+        newArr.append(i)
 
-    context={
-        'products':allProducts, 'numPages':productCount/10, 'category': Category.objects.get(id=id)
+    context = {
+        'products':allProducts, 'numPages':newArr
     }
     return render(request, 'products_app/listproducts.html', context)
 
@@ -48,7 +53,7 @@ def search(request, searchname, page):
 
 def product(request, id):
     context={
-        'product':Product.objects.get(id=id)
+        'product':Product.objects.get(id=id), 'product2': Product.objects.get(id=id).price*2, 'product3': Product.objects.get(id=id).price*3
     }
     return render(request, 'products_app/productpage.html', context)
 
@@ -74,6 +79,7 @@ def processEdit(request, id):
     else:
         tempcategory=Category.objects.create(name=request.POST['newcategory'])
         prod.category=tempcategory
+    prod.save()
     return redirect('/dashboard/products')
 
 def delete(request, id):
@@ -81,11 +87,7 @@ def delete(request, id):
     return redirect('/dashboard/products')
 
 def new(request):
-<<<<<<< HEAD
-    context={
-=======
     context = {
->>>>>>> master
         'categories': Category.objects.all()
     }
     return render(request, 'products_app/newproduct.html', context)

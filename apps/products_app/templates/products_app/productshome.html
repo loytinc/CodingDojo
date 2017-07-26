@@ -28,13 +28,13 @@
                 </ul>
             </div>
             <div id="showproducts">
-                {%for product in products%}
+                <!-- {%for product in products%}
                 <div class="item">
                     <img src='{{product.image}}' alt='{{product.name}}'>
                     {{product.price}}
                     <a href="/products/product/{{product.id}}">{{product.name}}</a>
                 </div>
-                {%endfor%}
+                {%endfor%} -->
             </div>
         </div>
     </div>
@@ -57,6 +57,25 @@
         var csrftoken = getCookie('csrftoken');
         
 
+        $.ajax({
+                url:'/products/all/1',
+                // method: 'get',
+                success: function(res){
+                    console.log(res)
+                    $('#showproducts').html(res);
+                }
+            })
+
+        $(document).on('click', '.pagination>li>a', function(e){
+            e.preventDefault();
+            $.ajax({
+                url:$(this).attr('href'),
+                method: 'get',
+                success: function(res){
+                    $('#showproducts').html(res);
+                }
+            })
+        })
 
         $('#search>ul>li>.showall').click(function(e){
             e.preventDefault()
