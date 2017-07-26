@@ -181,6 +181,8 @@ def signin(request):
         except:
             messages.error(request, 'Your Login information does not match our database. Please try again.')
     return redirect('/signin')
+    return redirect('/dashboard')
+
 
 def admin_create_user(request):
     if request.method == 'POST':
