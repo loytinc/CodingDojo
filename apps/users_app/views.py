@@ -13,6 +13,7 @@ from models import User
 from django.shortcuts import render, redirect, HttpResponse
 from .models import User
 from ..products_app.models import *
+from ..orders_app.models import *
 from django.contrib import messages
 import bcrypt
 
@@ -87,6 +88,11 @@ def create_user(request):
                 # insert user into database
                 user = User(first_name=request.POST['first_name'], last_name=request.POST['last_name'],email=request.POST['email'],user_level=user_level,password=hash_it)
                 user.save()
+                
+                # assign a shopping cart for the user by Art
+                shoppingCart = ShoppingCart(user=user)
+                shoppingCart.save()
+
                 messages.success(request, 'You have successfully registered')
     return redirect('/signin')
 
@@ -180,6 +186,13 @@ def signin(request):
                 request.session['user_id'] = get_email.id
 
                 current_user = User.objects.get(id=request.session['user_id'])
+
+                # check if user has shoppingcart
+                try:
+                    shoppingCart = ShoppingCart.objects.get(id=current_user.id)
+                except:
+                    shoppingCart = ShoppingCart(user=current_user)
+                    shoppingCart.save()
 
                 # checks if current user is admin
                 if current_user.user_level == 9:
