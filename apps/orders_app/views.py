@@ -5,7 +5,9 @@ from .models import *
 
 
 # Create your views here.
-def shoppingCart(request,user_id):
+
+# shopping cart
+def shoppingCart(request):
 
     shoppingCart = ShoppingCart.objects.get(id=request.session['user_id'])
 
@@ -22,14 +24,14 @@ def shoppingCart(request,user_id):
     return render(request, 'orders_app/shoppingcart.html')
 
 
-def checkout(request,user_id):
+def checkout(request):
     if request.method == 'POST':
         # validate the form
 
         shoppingCart = ShoppingCart.objects.get(id=request.session['user_id'])
         user = User.objects.get(id=request.session['user_id'])
         # create an order
-        order = Order(shoppingCart=shoppingCart)
+        order = Order(shoppingCart=shoppingCart,status="pending",total=request.session['cart_total'])
         order.save()
 
         shipping = ShippingInfo(first_name = request.POST['shipping_first_name'],last_name = request.POST['shipping_last_name'],address = request.POST['shipping_address'],address2 = request.POST['shipping_address2'],city = request.POST['shipping_city'],state = request.POST['shipping_state'],zipcode = request.POST['shipping_zipcode'],user = user,order = order)
@@ -39,8 +41,20 @@ def checkout(request,user_id):
 
         # process the payment
         print 'Processing the payment'
-    return redirect('/carts/success')
+    return redirect('/carts/checkout/success')
 
 
 def checkout_success(request):
     return render(request, 'orders_app/payment_confirmation.html')
+
+
+# pending
+# in transit
+# delivered
+def track_orders(request):
+    orders = Order.objects.all()
+    
+    context = {
+        'orders' : orders
+    }
+    return render(request, 'orders_app/order_tracker.html',context)

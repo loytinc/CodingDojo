@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Order Tracker</title>
+</head>
+<body>
+    <form action="">
+        <input type="search" placeholder="Search">
+    </form>
+    <form action="">
+        <select name="status">
+            <option value="showall">Show All</option>
+            <option value="orderin">Order In Process</option>
+            <option value="shipped">Shipped</option>
+            <option value="completed">Completed</option>
+        </select>
+    </form>
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Billing Address</th>
+            <th>Total</th>
+            <th>Status</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td><a href="#">{{order.id}}</a></td>
+            <td>{{order.shoppingCart.user.first_name}}</td>
+            <td>{{order.created_at}}</td>
+            <td>{{order.billingInfo.address}}</td>
+            <td>{{order.total}}</td>
+            <td>
+                <form action="">
+                    <select name="status">
+                        <option value="orderin">Order In Process</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </form>
+                {{order.status}}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

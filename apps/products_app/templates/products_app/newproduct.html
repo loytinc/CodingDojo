@@ -5,7 +5,8 @@
     <title>Add product</title>
 </head>
 <body>
-    <form action="/products/new/process">
+    <form action="/products/new/process" method='POST'>
+        {%csrf_token%}
         <div>
             <label>Name:</label>
             <input type="text" name='name'>
