@@ -72,12 +72,10 @@
                             {% elif user.user_level == 1 %}
                             <td>normal</td>
                             {% endif %}
-                            {% if isAdmin %}
                             <td>
                                 <a href="/users/edit/{{user.id}}">Edit</a>
                                 <a href="/dashboard/admin/remove/{{user.id}}">Remove</a>
                             </td>
-                            {% endif %}
                         </tr>
                         {% endfor %}
                     </table>

@@ -17,36 +17,29 @@ from django.contrib import messages
 import bcrypt
 
 def index(request):
-
     return render(request, 'userDashboard/index.html')
 
 def dashboard(request):
+    #user must be logged in and must be an admin to see page
     if request.session.get('user_id', False):
         user = User.objects.get(id=request.session['user_id'])
         if user.user_level == 9:
-        #    users = User.objects.all()
-
-        #    current_user = User.objects.get(id=request.session['user_id'])
-
-
-        #    context = {
-        #        'current_user_id' : request.session['user_id'],
-        #        'users'           : users,
-        #        'isAdmin'         : request.session['isAdmin']
-        #    }
-
-            return render(request, 'userDashboard/dashboard.html')#, context)
+            context = {
+               'users': User.objects.all()
+            }
+            return render(request, 'userDashboard/dashboard.html', context)
         else:
             return redirect('/')
     else:
         return redirect('/')
 
 def prodDashboard(request):
+    #user must be logged in and must be an admin to see page
     if request.session.get('user_id', False):
         user = User.objects.get(id=request.session['user_id'])
         if user.user_level == 9:
             context={
-                'products':Product.objects.all()
+                'products': Product.objects.all()
             }
             return render(request, 'userDashboard/productDash.html', context)
         else:
@@ -54,7 +47,7 @@ def prodDashboard(request):
     else:
         return redirect('/')
 
-def login(request):
+def signin(request):
     if 'user_id' in request.session:
         if request.session['isAdmin'] == True:
             return redirect('/dashboard')
@@ -185,7 +178,7 @@ def logout(request):
     request.session.clear()
     return redirect('/')
 
-def signin(request):
+def login(request):
     if request.method == 'POST':
         try:#if no user with this email, flash error msg.
             current_user = User.objects.get(email = request.POST['email'])
