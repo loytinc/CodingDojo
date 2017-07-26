@@ -6,11 +6,18 @@ from ..users_app.models import *
 
 # Create your models here.
 class ShoppingCart(models.Model):
-    total = models.IntegerField()
     products = models.ManyToManyField(Product, related_name="orders")
     user = models.OneToOneField(User, related_name="shoppingCart")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def get_total_price(self):
+        if self.products:
+            total = 0
+            for product in self.products:
+                total += product.get_price_total()
+
+            return total
 
 class Order(models.Model):
     shoppingCart = models.OneToOneField(ShoppingCart, related_name="order")
