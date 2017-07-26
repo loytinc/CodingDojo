@@ -3,7 +3,7 @@ from models import *
 # Create your views here.
 def home(request):
     context={
-        'categories': Category.objects.all(),
+        'categories': Category.objects.all(), 'products':Product.objects.all()
     }
     return render(request, 'products_app/productshome.html', context)
 
