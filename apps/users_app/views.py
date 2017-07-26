@@ -15,6 +15,7 @@ from .models import User
 from ..products_app.models import *
 from django.contrib import messages
 import bcrypt
+import math
 
 def index(request):
 
@@ -34,9 +35,16 @@ def dashboard(request):
 
     return render(request, 'userDashboard/dashboard.html')#, context)
 
-def prodDashboard(request):
+def prodDashboard(request,page):
+    productCount=Product.objects.all().count()
+    allProducts=Product.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
+
+    newArr=[]
+    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+        newArr.append(i)
+    
     context={
-        'products':Product.objects.all()
+        'products':allProducts, 'numPages':newArr
     }
     return render(request, 'userDashboard/productDash.html', context)
 
