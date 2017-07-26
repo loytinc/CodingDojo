@@ -12,6 +12,7 @@ from models import User
 
 from django.shortcuts import render, redirect, HttpResponse
 from .models import User
+from ..products_app.models import *
 from django.contrib import messages
 import bcrypt
 
@@ -34,7 +35,10 @@ def dashboard(request):
     return render(request, 'userDashboard/dashboard.html')#, context)
 
 def prodDashboard(request):
-    return render(request, 'userDashboard/productDash.html')
+    context={
+        'products':Product.objects.all()
+    }
+    return render(request, 'userDashboard/productDash.html', context)
 
 def login(request):
     if 'user_id' in request.session:

@@ -79,3 +79,20 @@ def processEdit(request, id):
 def delete(request, id):
     Product.objects.get(id=id).delete()
     return redirect('/dashboard/products')
+
+def new(request):
+    context{
+        'categories': Category.objects.all()
+    }
+    return render(request, 'products_app/newproduct.html', context)
+
+def processNew(request):
+    # print request.POST['newcategory']
+    if request.POST['newcategory'] == '':
+        newcategory=Category.objects.get(name=request.POST['category'])
+    else:
+        newcategory=Category.objects.create(name=request.POST['newcategory'])
+
+    Product.objects.create(name=request.POST['name'], description=request.POST['desc'], price=request.POST['price'], inventory=request.POST['inventory'], quantity='0', sold='0', image=request.POST['image'], category=newcategory)
+    return redirect('/dashboard/products')
+
