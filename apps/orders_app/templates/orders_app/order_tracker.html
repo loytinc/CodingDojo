@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'orders_app/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <title>Order Tracker</title>
 </head>
 <body>
@@ -11,6 +14,7 @@
         <input type="search" placeholder="Search">
     </form>
     <form action="">
+        {% csrf_token %}
         <select name="status">
             <option value="showall">Show All</option>
             <option value="orderin">Order In Process</option>
@@ -18,7 +22,7 @@
             <option value="completed">Completed</option>
         </select>
     </form>
-    <table>
+    <table class="table">
         <tr>
             <th>Order ID</th>
             <th>Name</th>
@@ -29,23 +33,27 @@
         </tr>
         {% for order in orders %}
         <tr>
-            <td><a href="#">{{order.id}}</a></td>
+            <td><a href="/carts/orders/{{order.id}}">{{order.id}}</a></td>
             <td>{{order.shoppingCart.user.first_name}}</td>
             <td>{{order.created_at}}</td>
             <td>{{order.billingInfo.address}}</td>
             <td>{{order.total}}</td>
             <td>
+                {{order.status}}
                 <form action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="order_id" value="{{order.id}}">
                     <select name="status">
                         <option value="orderin">Order In Process</option>
                         <option value="shipped">Shipped</option>
                         <option value="completed">Completed</option>
                     </select>
+                    <input type="submit" value="Update Status">
                 </form>
-                {{order.status}}
             </td>
         </tr>
         {% endfor %}
     </table>
+
 </body>
 </html>

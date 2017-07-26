@@ -52,6 +52,6 @@ class BillingInfo(models.Model):
     security = models.IntegerField()
     expiration = models.DateField()
     user = models.ForeignKey(User, related_name="billingInfos")
-    order = models.OneToOneField(User, related_name="billingInfo")
+    order = models.OneToOneField(Order, related_name="billingInfo")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
