@@ -17,47 +17,33 @@ import bcrypt
 
 def index(request):
 
-    return render(request, 'users_app/index.html')
+    return render(request, 'userDashboard/index.html')
 
 def dashboard(request):
+#    users = User.objects.all()
 
-    users = User.objects.all()
-
-    current_user = User.objects.get(id=request.session['user_id'])
+#    current_user = User.objects.get(id=request.session['user_id'])
 
 
-    context = {
-        'current_user_id' : request.session['user_id'],
-        'users'           : users,
-        'isAdmin'         : request.session['isAdmin']
-    }
+#    context = {
+#        'current_user_id' : request.session['user_id'],
+#        'users'           : users,
+#        'isAdmin'         : request.session['isAdmin']
+#    }
 
-    return render(request, '/users_app/dashboard.html', context)
+    return render(request, 'userDashboard/dashboard.html')#, context)
 
 def login(request):
-    if request.method == 'POST':
-        try:
-            get_email = User.objects.get(email = request.POST['email'])
-            if bcrypt.checkpw(request.POST['password'].encode(), get_email.password.encode()):
-                request.session['user_id'] = get_email.id
-
-                current_user = User.objects.get(id=request.session['user_id'])
-
-                return redirect('/dashboard')
-
-        except:
-            messages.error(request, 'Your information is incorrect. Please try again.')
-    return redirect('/index')
+    if 'user_id' in request.session:
+        return redirect('/dashboard')
+    return render(request, 'userDashboard/login.html')
 
 def register(request):
     if 'user_id' in request.session:
         return redirect('/dashboard')
-    return render(request, 'dash_app/registration.html')
+    return render(request, 'userDashboard/registration.html')
 
 def create_user(request):
-    #---------------------------------------------
-    #------------- make a new user ---------------
-    #---------------------------------------------
     if request.method == 'POST':
 
         # validate all form data
@@ -94,19 +80,6 @@ def create_user(request):
                 messages.success(request, 'You have successfully registered')
     return redirect('/index')
 
-def user(request, user_id):
-    if 'user_id' not in request.session:
-        messages.error(request, 'You are not logged in.')
-
-        return redirect('/index')
-
-    user = User.objects.get(id=user_id)
-
-    context = {
-        'user' : user,
-    }
-    return render(request, 'users_app/user.html', context)
-
 def edit_user(request):
     if 'user_id' not in request.session:
         messages.error(request, 'You are not logged in.')
@@ -119,7 +92,7 @@ def edit_user(request):
         'user'            : user,
     }
 
-    return render(request, 'user_app/edit_user.html', context)
+    return render(request, 'userDashboard/edit_user.html', context)
 
 
 def edit_user_admin(request, user_id):
@@ -137,7 +110,7 @@ def edit_user_admin(request, user_id):
         'user'            : user,
     }
 
-    return render(request, 'user_app/admin_edit_user.html', context)
+    return render(request, 'userDashboard/admin_edit_user.html', context)
 
 
 def profile(request, user_id):
@@ -152,7 +125,7 @@ def profile(request, user_id):
         'user' : owner,
     }
 
-    return render(request, 'user_app/profile.html', context)
+    return render(request, 'userDashboard/profile.html', context)
 
 def warning(request, user_id):
     if 'user_id' not in request.session:
@@ -170,11 +143,11 @@ def warning(request, user_id):
         'user'            : user
     }
 
-    return render(request, 'dash_app/warning.html', context)
+    return render(request, 'userDashboard/warning.html', context)
 
 def logout(request):
     request.session.clear()
-    return redirect('/index')
+    return redirect('/')
 
 def signin(request):
     if request.method == 'POST':
@@ -194,7 +167,7 @@ def signin(request):
                 return redirect('/dashboard')
         except:
             messages.error(request, 'Your Login information does not match our database. Please try again.')
-    return redirect('/signin')
+    return redirect('/dashboard')
 
 def admin_create_user(request):
     if request.method == 'POST':
