@@ -27,15 +27,7 @@
                     <li><a class='showall' href="/products/all/1">Show all</a></li>
                 </ul>
             </div>
-            <div id="showproducts">
-                <!-- {%for product in products%}
-                <div class="item">
-                    <img src='{{product.image}}' alt='{{product.name}}'>
-                    {{product.price}}
-                    <a href="/products/product/{{product.id}}">{{product.name}}</a>
-                </div>
-                {%endfor%} -->
-            </div>
+            <div id="showproducts"></div>
         </div>
     </div>
     <script>
@@ -111,14 +103,26 @@
         })
 
         $('#searchbox').keyup(function(e){
-            e.preventDefault()
-            $.ajax({
-                url:'/products/search/'+$(this).val()+'/1',
+            
+            if($(this).val() == ''){
+                $.ajax({
+                url:'/products/all/1',
                 method: 'get',
                 success: function(res){
                     $('#showproducts').html(res);
                 }
-            })
+                })
+            }
+            else{
+                $.ajax({
+                    url:'/products/search/'+$(this).val()+'/1',
+                    method: 'get',
+                    success: function(res){
+                        $('#showproducts').html(res);
+                    }
+                })
+            }
+            e.preventDefault()
         })
     </script>
 </body>

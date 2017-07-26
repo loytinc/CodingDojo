@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from models import *
+from ..users_app.models import *
+from ..orders_app.models import *
 import math
+import re
 # Create your views here.
 def home(request):
     context={
@@ -10,14 +13,16 @@ def home(request):
 
 def category(request, id, page):
     allProducts=[]
-    productCount=Category.objects.get(id=id).products.count()
-    allProducts=Category.objects.get(id=id).products[(page-1)*10:((page-1)*10)+10]
+    productCount=Category.objects.get(id=id).products.all().count()
+    allProducts=Category.objects.get(id=id).products.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
     # for i in range(10*(page-1), 10*(page-1) + 11): #product in category.products:
     #     if i < len(products):
     #         allProducts.append([products[i].name, products[i].price, products[i].image])
-
+    newArr=[]
+    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+        newArr.append(i)
     context={
-        'products':allProducts, 'numPages':(productCount/10)+1, 'category': Category.objects.get(id=id)
+        'products':allProducts, 'numPages':newArr, 'category': Category.objects.get(id=id)
     }
     return render(request, 'products_app/listproducts.html', context)
 
@@ -39,17 +44,23 @@ def allprod(request, page):
     return render(request, 'products_app/listproducts.html', context)
 
 def search(request, searchname, page):
+    if searchname == '':
+        return redirect('/products/all/1')
     # allProducts=[]
-    productCount=Product.objects.filter(name__startswith=searchname).count()
-    allProducts=Product.objects.filter(name__startswith=searchname)[(page-1)*10:((page-1)*10)+10]
+    productCount=Product.objects.filter(name__regex=r""+searchname+"").count()
+    allProducts=Product.objects.filter(name__regex=r""+searchname+"")[(int(page)-1)*10:((int(page)-1)*10)+10]
     # for i in range(10*(page-1), 10*(page-1) + 11): #product in category.products:
     #     if i < len(products):
     #         allProducts.append([products[i].name, products[i].price, products[i].image])
 
+    newArr=[]
+    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+        newArr.append(i)
+
     context={
-        'products':allProducts, 'numPages':productCount/10, 'searchitem':searchname, 
+        'products':allProducts, 'numPages':newArr, 'searchitem':searchname, 
     }
-    return render(request, 'products_app/listproducts.html', context)
+    return render(request, 'products_app/searchproducts.html', context)
 
 def product(request, id):
     context={
@@ -58,11 +69,13 @@ def product(request, id):
     return render(request, 'products_app/productpage.html', context)
 
 def addtocart(request):
-    prod = Product.objects.get(id=id)
-    prod.quantity=request.POST['quantity']
-    prod.save()
-    User.objects.get(id=request.session['user_id']).shoppingCart.products.add(prod)
-    return redirect('prodcuts/all/1')
+    # changed id to request.POST['prodid'] by Art
+    if request.method == 'POST':
+        prod = Product.objects.get(id=request.POST['prodid'])
+        prod.quantity=request.POST['quantity']
+        prod.save()
+        User.objects.get(id=request.session['user_id']).shoppingCart.products.add(prod)
+    return redirect('/products')
 
 def edit(request, id):
     context={
@@ -100,5 +113,5 @@ def processNew(request):
         newcategory=Category.objects.create(name=request.POST['newcategory'])
 
     Product.objects.create(name=request.POST['name'], description=request.POST['desc'], price=request.POST['price'], inventory=request.POST['inventory'], quantity='0', sold='0', image=request.POST['image'], category=newcategory)
-    return redirect('/dashboard/products')
+    return redirect('/dashboard/products/1')
 

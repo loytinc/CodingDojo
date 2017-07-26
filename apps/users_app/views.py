@@ -13,8 +13,10 @@ from models import User
 from django.shortcuts import render, redirect, HttpResponse
 from .models import User
 from ..products_app.models import *
+from ..orders_app.models import *
 from django.contrib import messages
 import bcrypt
+import math
 
 def index(request):
     return render(request, 'userDashboard/index.html')
@@ -33,6 +35,20 @@ def dashboard(request):
     else:
         return redirect('/')
 
+<<<<<<< HEAD
+def prodDashboard(request,page):
+    productCount=Product.objects.all().count()
+    allProducts=Product.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
+
+    newArr=[]
+    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+        newArr.append(i)
+    
+    context={
+        'products':allProducts, 'numPages':newArr
+    }
+    return render(request, 'userDashboard/productDash.html', context)
+=======
 def prodDashboard(request):
     #user must be logged in and must be an admin to see page
     if request.session.get('user_id', False):
@@ -46,6 +62,7 @@ def prodDashboard(request):
             return redirect('/')
     else:
         return redirect('/')
+>>>>>>> master
 
 def signin(request):
     if 'user_id' in request.session:
@@ -93,6 +110,11 @@ def create_user(request):
                 # insert user into database
                 user = User(first_name=request.POST['first_name'], last_name=request.POST['last_name'],email=request.POST['email'],user_level=user_level,password=hash_it)
                 user.save()
+                
+                # assign a shopping cart for the user by Art
+                shoppingCart = ShoppingCart(user=user)
+                shoppingCart.save()
+
                 messages.success(request, 'You have successfully registered')
     return redirect('/register')
 
@@ -187,6 +209,13 @@ def login(request):
             #flash error msg.
             if bcrypt.checkpw(request.POST['password'].encode(), current_user.password.encode()):
                 request.session['user_id'] = current_user.id
+
+                # check if user has shoppingcart
+                try:
+                    shoppingCart = ShoppingCart.objects.get(id=current_user.id)
+                except:
+                    shoppingCart = ShoppingCart(user=current_user)
+                    shoppingCart.save()
 
                 # checks if current user is admin
                 if current_user.user_level == 9:
