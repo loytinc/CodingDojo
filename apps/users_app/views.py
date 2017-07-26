@@ -64,36 +64,23 @@ def create_user(request):
                 return redirect('/index')
 
             except:
-                if request.session['isAdmin'] == False:
-                    return redirect('/dashboard')
+                users = User.objects.count()
+                print users
+                if users < 4:
+                    user_level=9
+                else:
+                    user_level=1
 
-                context = {
-                    'current_user_id' : request.session['user_id'],
-                }
 
                 # hash password
                 hash_it = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
 
                 # insert user into database
-                user = User(user_name=request.POST['first_name'], alias=request.POST['last_name'],email=request.POST['email'],password=hash_it)
+                user = User(first_name=request.POST['first_name'], last_name=request.POST['last_name'],email=request.POST['email'],user_level=user_level,password=hash_it)
                 user.save()
                 messages.success(request, 'You have successfully registered')
-    return redirect('/index')
+    return redirect('/signin')
 
-<<<<<<< HEAD
-def user(request, user_id):
-    if 'user_id' not in request.session:
-        messages.error(request, 'You are not logged in.')
-        return redirect('/index')
-
-    user = User.objects.get(id=user_id)
-
-    context = {
-        'user' : user,
-    }
-    return render(request, 'users_app/user.html', context)
-=======
->>>>>>> master
 
 def edit_user(request):
     if 'user_id' not in request.session:
@@ -176,13 +163,14 @@ def signin(request):
                 # checks if current user is admin
                 if current_user.user_level == 9:
                     request.session['isAdmin'] = True
+                    return redirect('/dashboard')
                 else:
                     request.session['isAdmin'] = False
+                    return redirect('/products')
 
-                return redirect('/dashboard')
         except:
             messages.error(request, 'Your Login information does not match our database. Please try again.')
-    return redirect('/dashboard')
+    return redirect('/')
 
 def admin_create_user(request):
     if request.method == 'POST':
@@ -270,7 +258,3 @@ def delete_user(request, user_id):
     user = User.objects.get(id=user_id)
     user.delete()
     return redirect('/dashboard/admin')
-<<<<<<< HEAD
-=======
-
->>>>>>> master
