@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'userDashboard/style.css' %}">
     <link rel="stylesheet" href="{% static 'userDashboard/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'userDashboard/bootstrap-theme.css' %}">
-    <title>Home Page</title>
+    <title>T-MAN Home Page</title>
 </head>
 <body>
     <nav class="navbar navbar-default">
@@ -16,11 +16,11 @@
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="icon-bar"><a class="nav-link top_space" href="/signin">Sign In</a></span>
+                    <span class="icon-bar"><a class="nav-link top_space" href="/register">Register</a></span>
                     <span class="icon-bar"></span>
                 </button>
-                <h1 class="navbar-brand" id="heading_name">Test App</h1>
+                <h1 class="navbar-brand" id="heading_name">T-MAN</h1>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
@@ -33,22 +33,33 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="col-md-1"></div>
-            <div class="col-md-10 jumbotron">
-                <h1>Welcome to the User Dashboard</h1>
-                <p>This is the default for the 'Admin' users</p>
-                <a class="btn btn-primary" href="/signin">Start</a>
+            <div id="homeHead" class="col-md-10 jumbotron">
+                <h1>Welcome to T-MAN</h1>
+                <p>Where all your T's come true</p>
+                <a class="btn btn-primary" href="/signin">Sign In</a>
             </div>
             <div class="col-md-1"></div>
         </div>
         <div class="row-fluid">
-            <div class="col-md-6">
-                <h2>Manage Users</h2>
+            <div class="bg"><div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+              <div id="hotPress">
+                <h2>HOT OFF THE PRESS</h2>
                 <p>Add, Update & Delete Users</p>
+              </div>
             </div>
-            <div class="col-md-6">
-                <h2>Product Manager</h2>
+            <div class="col-md-5">
+              <div id="classics">
+                <h2>CLASSICS</h2>
                 <p>Add, Update & Delete Products</p>
+              </div>
             </div>
+            <div class="col-md-1"></div>
         </div>
     </div>
 </body>
