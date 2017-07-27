@@ -33,7 +33,7 @@
                 </ul>
                 <ul class="nav navbar-nav">
                     <li><a class="nav-link top_space" href="/dashboard">Users</a></li>
-                    <li class='active'><a class="nav-link top_space" href="/dashboard/products">Products</a></li>
+                    <li class='active'><a class="nav-link top_space" href="/dashboard/products/1">Products</a></li>
                     <li><a class="nav-link top_space" href="/logoff">Orders</a></li>
                 </ul>
             </div>
@@ -57,6 +57,7 @@
                                 <th>Picture</th>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Price</th>
                                 <th>Inventory Count</th>
                                 <th>Quantity Sold</th>
                                 <th>Actions</th>
@@ -68,6 +69,7 @@
                             <td><img src="{{product.image}}" alt="{{product.name}}"></td>
                             <td>{{product.id}}</td>
                             <td>{{product.name}}</td>
+                            <td>${{product.price}}</td>
                             <td>{{product.inventory}}</td>
                             <td>{{product.sold}}</td>
                             <td>
@@ -96,6 +98,11 @@
                 </div>
             </div>
         </div>
+        <ul class='pagination'>
+        {%for i in numPages%}
+        <li><a href="/dashboard/products/{{i}}">{{i}}</a></li>
+        {%endfor%}
+    </ul>
     </div>
     <script src="{%static 'userDashboard/bootstrap.js'%}"></script>
 </body>
