@@ -15,7 +15,6 @@
                 <td>{{order.billingInfo.address}}</td>
                 <td>{{order.total}}</td>
                 <td>
-                    {{order.status}}
                     <form action="">
                         {% csrf_token %}
                         <input type="hidden" name="order_id" value="{{order.id}}">
@@ -24,7 +23,6 @@
                             <option value="shipped" {%if order.status == 'shipped'%}selected{%endif%}>Shipped</option>
                             <option value="completed" {%if order.status == 'completed'%}selected{%endif%}>Completed</option>
                         </select>
-                        <input type="submit" value="Update Status">
                     </form>
                 </td>
             </tr>
