@@ -8,6 +8,7 @@ import re
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 noNumberPls = re.compile(r'^[a-zA-Z]+$')
+numbersOnly = re.compile(r'[\d]+')
 
 # Create your models here.
 class ShoppingCartManager(models.Manager):
@@ -20,7 +21,7 @@ class ShoppingCartManager(models.Manager):
             elif len(postData['shipping_first_name']) < 2:
                 errors.append('Shipping first name should be no fewer than 2 letters')
             elif not noNumberPls.match(postData['shipping_first_name']):
-                errors.append('Shipping first name should have no numbers or special characters in it.')
+                errors.append('Shipping first name should only contain letters.')
 
         if 'shipping_last_name' in postData:
             if len(postData['shipping_last_name']) == 0:
@@ -28,7 +29,7 @@ class ShoppingCartManager(models.Manager):
             elif len(postData['shipping_last_name']) < 2:
                 errors.append('Shipping last name should be no fewer than 2 letters')
             elif not noNumberPls.match(postData['shipping_last_name']):
-                errors.append('Shipping last name should have no numbers or special characters in it.')
+                errors.append('Shipping last name should only contain letters.')
 
         if 'shipping_address' in postData:
             if len(postData['shipping_address']) == 0:
@@ -45,6 +46,10 @@ class ShoppingCartManager(models.Manager):
         if 'shipping_zipcode' in postData:
             if len(postData['shipping_zipcode']) == 0:
                 errors.append('Please enter your shipping zip code.')
+            elif len(postData['shipping_zipcode']) != 5:
+                errors.append('Zip code must be a 5 digit number.')
+            elif not numbersOnly.match(postData['shipping_zipcode']):
+                errors.append('Zip code should only be in numbers.')
 
         # billing validation
         
@@ -54,7 +59,7 @@ class ShoppingCartManager(models.Manager):
             elif len(postData['billing_first_name']) < 2:
                 errors.append('Billing first name should be no fewer than 2 letters')
             elif not noNumberPls.match(postData['billing_first_name']):
-                errors.append('First name should have no numbers or special characters in it.')
+                errors.append('First name should only contain letters.')
 
         if 'billing_last_name' in postData:
             if len(postData['billing_last_name']) == 0:
@@ -62,7 +67,7 @@ class ShoppingCartManager(models.Manager):
             elif len(postData['billing_last_name']) < 2:
                 errors.append('Billing last name should be no fewer than 2 letters')
             elif not noNumberPls.match(postData['billing_last_name']):
-                errors.append('Billing last name should have no numbers or special characters in it.')
+                errors.append('Billing last name should only contain letters.')
 
         if 'billing_address' in postData:
             if len(postData['billing_address']) == 0:
@@ -79,24 +84,40 @@ class ShoppingCartManager(models.Manager):
         if 'billing_zipcode' in postData:
             if len(postData['billing_zipcode']) == 0:
                 errors.append('Please enter your billing zip code.')
+            elif len(postData['billing_zipcode']) != 5:
+                errors.append('Zip code must be a 5 digit number.')
+            elif not numbersOnly.match(postData['billing_zipcode']):
+                errors.append('Zip code should only be in numbers.')
 
         if 'card' in postData:
             if len(postData['card']) == 0:
                 errors.append('Please enter your 16 digit credit card number.')
             elif len(postData['card']) != 16:
                 errors.append('Please enter 16 digits for your credit card number.')
+            elif not numbersOnly.match(postData['card']):
+                errors.append('Card entry should only be in numbers.')
 
         if 'security' in postData:
             if len(postData['security']) == 0:
                 errors.append('Please enter your three digit security number on the back of your card.')
             elif len(postData['security']) != 3:
                 errors.append('Please enter 3 digits for your security number.')
-            
+            elif not numbersOnly.match(postData['security']):
+                errors.append('Security code should only be in numbers.')
+
         if 'expiration' in postData:
             if len(postData['expiration']) == 0:
                 errors.append('Please enter your credit card expiration date.')
+            else:
+                expiration = postData['expiration']
+                date_format = "%Y-%m-%d"
+                expire = datetime.strptime(expiration, date_format).date()
+                now = datetime.now().date()
 
-        
+                if expire < now:
+                    errors.append('Expiration Date cannot be in the past.')
+                elif expire == now:
+                    errors.append('Expiration Date cannot be today')
         return errors
 
 
