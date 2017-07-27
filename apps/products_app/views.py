@@ -20,7 +20,7 @@ def category(request, id, page):
     for i in range(1,int(math.ceil((productCount/12.0)) + 1)):
         newArr.append(i)
     context={
-        'products':allProducts, 'numPages':newArr, 'category': Category.objects.get(id=id)
+        'products':allProducts, 'numPages':newArr, 'category': Category.objects.get(id=id), 'currPage':page
     }
     return render(request, 'products_app/listproducts.html', context)
 
@@ -33,7 +33,7 @@ def allprod(request, page):
         newArr.append(i)
 
     context = {
-        'products':allProducts, 'numPages':newArr
+        'products':allProducts, 'numPages':newArr, 'currPage':page
     }
     return render(request, 'products_app/listproducts.html', context)
 
