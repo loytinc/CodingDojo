@@ -83,7 +83,7 @@
             <h3 style='margin-top: 50px;'>Categories</h3>
             <ul>
                 {%for category in categories%}
-                <li><a class='category' href="/products/{{category.id}}/1">{{category.name}}</a></li>
+                <li><a class='category' href="/products/{{category.id}}/1">{{category.name}} ({{category.amount}})</a></li>
                 {%endfor%}
                 <li><a class='showall' href="/products/all/1">Show all</a></li>
             </ul>

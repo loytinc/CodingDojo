@@ -7,6 +7,10 @@ class Category(models.Model):
     name=models.CharField(max_length=255)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+
+    def amount(self):
+        print self.products
+        return len(self.products.all())
     
 class Product(models.Model):
     name=models.CharField(max_length=255)
