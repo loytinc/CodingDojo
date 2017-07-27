@@ -131,7 +131,6 @@ def search_process(request, searchname, page_num):
     context = {
         'total_pages' : newArr,
         'orders' : orderSection,
-        
     }
 
     return render(request, 'orders_app/searchorders.html', context)
