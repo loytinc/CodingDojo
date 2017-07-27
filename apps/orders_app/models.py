@@ -6,8 +6,8 @@ from ..users_app.models import *
 
 # Create your models here.
 class ShoppingCart(models.Model):
-    products = models.ManyToManyField(Product, related_name="orders")
-    user = models.OneToOneField(User, related_name="shoppingCart")
+    products = models.ManyToManyField(Product, related_name="shoppingCarts")
+    user = models.OneToOneField(User, related_name="shoppingCart",null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -21,6 +21,7 @@ class ShoppingCart(models.Model):
 
 class Order(models.Model):
     shoppingCart = models.OneToOneField(ShoppingCart, related_name="order")
+    user = models.ForeignKey(User, related_name="orders", null=True)
     status = models.CharField(max_length=150,null=True,blank=True)
     total  = models.DecimalField(max_digits=10, decimal_places=2,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
