@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
+from django.contrib import messages
 from ..products_app.models import *
 from ..users_app.models import *
 from .models import *
@@ -27,31 +28,35 @@ def shoppingCart(request):
 def checkout(request):
     if request.method == 'POST':
         # validate the form
+        errors = ShippingInfo.objects.payment_validator(request.POST)
 
-        user = User.objects.get(id=request.session['user_id'])
-        shoppingCart = user.shoppingCart
-        shoppingCart.user = None
-        shoppingCart.save()
-        shoppingCart = ShoppingCart.objects.create(user=user)
-        # create an order
-        order = Order(shoppingCart=shoppingCart,status="orderin",total=request.session['cart_total'],user=user)
-        order.save()
+        if len(errors):
+            for error in errors:
+                messages.error(request, error)
+            return redirect('/carts')
+        else:
+            user = User.objects.get(id=request.session['user_id'])
+            shoppingCart = user.shoppingCart
+            shoppingCart.user = None
+            shoppingCart.save()
+            shoppingCart = ShoppingCart.objects.create(user=user)
+            # create an order
+            order = Order(shoppingCart=shoppingCart,status="orderin",total=request.session['cart_total'],user=user)
+            order.save()
 
-        shipping = ShippingInfo(first_name = request.POST['shipping_first_name'],last_name = request.POST['shipping_last_name'],address = request.POST['shipping_address'],address2 = request.POST['shipping_address2'],city = request.POST['shipping_city'],state = request.POST['shipping_state'],zipcode = request.POST['shipping_zipcode'],user = user, order = order)
-        shipping.save()
-        billing = BillingInfo(first_name = request.POST['billing_first_name'],last_name = request.POST['billing_last_name'],address = request.POST['billing_address'],address2 = request.POST['billing_address2'],city = request.POST['billing_city'],state = request.POST['billing_state'],zipcode = request.POST['billing_zipcode'],card = request.POST['card'],security = request.POST['security'],expiration = request.POST['expiration'],user = user, order = order)
-        billing.save()
+            shipping = ShippingInfo(first_name = request.POST['shipping_first_name'],last_name = request.POST['shipping_last_name'],address = request.POST['shipping_address'],address2 = request.POST['shipping_address2'],city = request.POST['shipping_city'],state = request.POST['shipping_state'],zipcode = request.POST['shipping_zipcode'],user = user, order = order)
+            shipping.save()
+            billing = BillingInfo(first_name = request.POST['billing_first_name'],last_name = request.POST['billing_last_name'],address = request.POST['billing_address'],address2 = request.POST['billing_address2'],city = request.POST['billing_city'],state = request.POST['billing_state'],zipcode = request.POST['billing_zipcode'],card = request.POST['card'],security = request.POST['security'],expiration = request.POST['expiration'],user = user, order = order)
+            billing.save()
 
-        # process the payment
-        print 'Processing the payment'
+            # process the payment
+            print 'Processing the payment'
 
     return redirect('/carts/checkout/success')
 
 
 def checkout_success(request):
     return render(request, 'orders_app/payment_confirmation.html')
-
-
 
 
 # Order tracking
