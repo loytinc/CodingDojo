@@ -30,19 +30,19 @@
             </div>
         </div>
     </nav>
+  <div id="signinPage" class="container-fluid">
     <div class="row-fluid">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <h1>Sign in</h1>
-            <form action="/signin/login" method="post" class="form-horizontal">
-
-            {% if messages %}
-            <ul class="messages">
+            <form id="signinForm" action="/signin/login" method="post" class="form-horizontal">
+              <h1>Sign in</h1>
+              {% if messages %}
+              <ul class="messages">
                 {% for message in messages %}
                 <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                 {% endfor %}
-            </ul>
-            {% endif %}
+              </ul>
+              {% endif %}
                 {% csrf_token %}
                 <div class="form-group">
                     <label>Email Address:
@@ -57,10 +57,12 @@
                 <div class="form-group">
                     <input class="btn btn-success" type="submit" value="Sign In">
                 </div>
-            <a class="top_space" href="/register">Don't have an account? Register</a>
+                <a href="/register">Don't have an account? Register</a>
             </form>
+
         </div>
         <div class="col-md-4"></div>
+      </div>
     </div>
 </body>
 </html>

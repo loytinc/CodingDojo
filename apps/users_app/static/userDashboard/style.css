@@ -9,3 +9,58 @@
 #spacing_add {
     margin-top: 28px;
 }
+
+#signinPage {
+  background: url('https://github.com/loyti/images/blob/master/tmansignin.jpg?raw=true');
+  max-width: 100%;
+  min-height: 500px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 0px -50px;
+}
+
+#siginForm {
+  color: #fff;
+  text-align: center;
+  font-size: large;
+  margin: 20px;
+  text-align: center;
+}
+#signinForm .form-group {
+  color: #eee;
+  text-align: center;
+  font-size: large;
+  margin: 20px;
+}
+#signinForm h1 {
+  text-align: center;
+  color: #fff;
+}
+#signinForm a {
+  color: #ADD1D4;
+  text-align: center;
+  font-size: large;
+}
+
+
+#registerPage {
+  background: url('https://github.com/loyti/images/blob/master/tmanregister.jpg?raw=true');
+  max-width: 100%;
+  min-height: 500px;
+  background-size: cover;
+  margin: 20px;
+}
+
+#registerForm {
+  color: #eee;
+  text-align: center;
+  font-size: large;
+  margin: 20px;
+}
+
+#registerForm h1 {
+  color: #fff;
+}
+#registerForm a {
+  color: #ADD1D4;
+}
