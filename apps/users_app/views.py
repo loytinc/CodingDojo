@@ -212,7 +212,7 @@ def login(request):
                 messages.error(request, 'Your Login information does not match our database. Please try again.')
 
         except:
-            messages.error(request, 'asdfdasfsdYour Login information does not match our database. Please try again.')
+            messages.error(request, 'Your Login information does not match our database. Please try again.')
     return redirect('/signin')
 
 def admin_create_user(request):
