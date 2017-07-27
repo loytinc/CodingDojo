@@ -35,7 +35,6 @@ def dashboard(request):
     else:
         return redirect('/')
 
-<<<<<<< HEAD
 def prodDashboard(request,page):
     productCount=Product.objects.all().count()
     allProducts=Product.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
@@ -48,21 +47,6 @@ def prodDashboard(request,page):
         'products':allProducts, 'numPages':newArr
     }
     return render(request, 'userDashboard/productDash.html', context)
-=======
-def prodDashboard(request):
-    #user must be logged in and must be an admin to see page
-    if request.session.get('user_id', False):
-        user = User.objects.get(id=request.session['user_id'])
-        if user.user_level == 9:
-            context={
-                'products': Product.objects.all()
-            }
-            return render(request, 'userDashboard/productDash.html', context)
-        else:
-            return redirect('/')
-    else:
-        return redirect('/')
->>>>>>> master
 
 def signin(request):
     if 'user_id' in request.session:

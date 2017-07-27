@@ -7,12 +7,8 @@ urlpatterns = [
     url(r'^signin$', views.signin),
     url(r'^register$', views.register),
     url(r'^dashboard$', views.dashboard),
-<<<<<<< HEAD
     url(r'^dashboard/admin$', views.dashboard),
     url(r'^dashboard/products/(?P<page>[0-9]+)$', views.prodDashboard),
-=======
-    url(r'^dashboard/products$', views.prodDashboard),
->>>>>>> master
     url(r'^users/new$', views.add_user),
     url(r'^users/edit$', views.edit_user),
     url(r'^users/edit/(?P<user_id>\d+)$', views.edit_user_admin),
