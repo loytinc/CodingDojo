@@ -10,8 +10,14 @@
     <link rel="stylesheet" href="{% static 'userDashboard/bootstrap-theme.css' %}">
     <script
   src="https://code.jquery.com/jquery-3.2.1.js"
-  integrity="sha256DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
   crossorigin="anonymous"></script>
+    <style>
+        img{
+            height:100px;
+            width: 100px;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-default">
@@ -28,7 +34,6 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a class="nav-link top_space" href="/dashboard">Dashboard</a></li>
-                    <li><a class="nav-link top_space" href="/users/show/{{current_user_id}}">Profile</a></li>
                     <li><a class="nav-link top_space" href="/logoff">Log off</a></li>
                 </ul>
                 <ul class="nav navbar-nav">
@@ -40,7 +45,7 @@
         </div>
     </nav>
     <div class="container-fluid">
-        <div class="row-fluid">
+        
             <div class="col-md-12">
                 <div class="row-fluid">
                     <div class="col-md-3">
@@ -97,12 +102,12 @@
                     </table>
                 </div>
             </div>
-        </div>
+        
         <ul class='pagination'>
         {%for i in numPages%}
         <li><a href="/dashboard/products/{{i}}">{{i}}</a></li>
         {%endfor%}
-    </ul>
+        </ul>
     </div>
     <script src="{%static 'userDashboard/bootstrap.js'%}"></script>
 </body>
