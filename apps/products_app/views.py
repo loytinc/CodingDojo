@@ -14,12 +14,10 @@ def home(request):
 def category(request, id, page):
     allProducts=[]
     productCount=Category.objects.get(id=id).products.all().count()
-    allProducts=Category.objects.get(id=id).products.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
-    # for i in range(10*(page-1), 10*(page-1) + 11): #product in category.products:
-    #     if i < len(products):
-    #         allProducts.append([products[i].name, products[i].price, products[i].image])
+    allProducts=Category.objects.get(id=id).products.all()[(int(page)-1)*12:((int(page)-1)*12)+12]
+
     newArr=[]
-    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+    for i in range(1,int(math.ceil((productCount/12.0)) + 1)):
         newArr.append(i)
     context={
         'products':allProducts, 'numPages':newArr, 'category': Category.objects.get(id=id)
@@ -27,15 +25,11 @@ def category(request, id, page):
     return render(request, 'products_app/listproducts.html', context)
 
 def allprod(request, page):
-    # print "TYPE PAGE: ", type(int(page))
-    # allProducts=[]
     productCount=Product.objects.all().count()
-    allProducts=Product.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
-    # for i in range(10*(page-1), 10*(page-1) + 11): #product in category.products:
-    #     if i < len(products):
-    #         allProducts.append([products[i].name, products[i].price, products[i].image])
+    allProducts=Product.objects.all()[(int(page)-1)*12:((int(page)-1)*12)+12]
+
     newArr=[]
-    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+    for i in range(1,int(math.ceil((productCount/12.0)) + 1)):
         newArr.append(i)
 
     context = {
@@ -44,17 +38,14 @@ def allprod(request, page):
     return render(request, 'products_app/listproducts.html', context)
 
 def search(request, searchname, page):
-    if searchname == '':
-        return redirect('/products/all/1')
-    # allProducts=[]
+    # if searchname == '':
+    #     return redirect('/products/all/1')
+
     productCount=Product.objects.filter(name__regex=r""+searchname+"").count()
-    allProducts=Product.objects.filter(name__regex=r""+searchname+"")[(int(page)-1)*10:((int(page)-1)*10)+10]
-    # for i in range(10*(page-1), 10*(page-1) + 11): #product in category.products:
-    #     if i < len(products):
-    #         allProducts.append([products[i].name, products[i].price, products[i].image])
+    allProducts=Product.objects.filter(name__regex=r""+searchname+"")[(int(page)-1)*12:((int(page)-1)*12)+12]
 
     newArr=[]
-    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+    for i in range(1,int(math.ceil((productCount/12.0)) + 1)):
         newArr.append(i)
 
     context={

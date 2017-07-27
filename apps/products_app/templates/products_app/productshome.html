@@ -24,7 +24,35 @@
             margin-right: 20px;
         }
         #showproducts{
+            width: 900px;
             display: inline-block;
+        }
+        #prodcontainer{
+            height:1150px;
+        }
+        img{
+            height:200px;
+            width: 200px;
+        }
+        .item{
+            display: inline-block;
+            margin-right: 50px;;
+            margin-bottom: 50px;
+        }
+        .item>a{
+            color: black;
+            text-decoration: none;
+        }
+        ul{
+            margin: 0;
+            padding: 0;
+            list-style-type: None;
+        }
+        .category:hover{
+            text-decoration: none;
+        }
+        .showall:hover{
+            text-decoration: none;
         }
     </style>
 </head>
@@ -49,19 +77,18 @@
         </div>
     </nav>
     <div class="container">
-        <div id="content">
-            <div id="search" class='col-md-4'>
-
-                <input type="text" name='search' id='searchbox'>
-                <ul>
-                    {%for category in categories%}
-                    <li><a class='category' href="/products/{{category.id}}/1">{{category.name}}</a></li>
-                    {%endfor%}
-                    <li><a class='showall' href="/products/all/1">Show all</a></li>
-                </ul>
-            </div>
-            <div id="showproducts"></div>
+        <div id="search" class='col-md-2'>
+            <h3>Search</h3>
+            <input type="text" name='search' id='searchbox' class='col-md-12'>
+            <h3 style='margin-top: 50px;'>Categories</h3>
+            <ul>
+                {%for category in categories%}
+                <li><a class='category' href="/products/{{category.id}}/1">{{category.name}}</a></li>
+                {%endfor%}
+                <li><a class='showall' href="/products/all/1">Show all</a></li>
+            </ul>
         </div>
+        <div id="showproducts" class='col-md-10'></div>
     </div>
     <script>
         function getCookie(name) {
@@ -81,16 +108,15 @@
         }
         var csrftoken = getCookie('csrftoken');
         
-
         $.ajax({
                 url:'/products/all/1',
                 // method: 'get',
                 success: function(res){
-                    console.log(res)
                     $('#showproducts').html(res);
                 }
             })
-
+        $('.showall').parent().css('font-weight', 'bold');
+        $('.showall').parent().css('text-decoration', 'underline');
         $(document).on('click', '.pagination>li>a', function(e){
             e.preventDefault();
             $.ajax({
@@ -104,6 +130,10 @@
 
         $('#search>ul>li>.showall').click(function(e){
             e.preventDefault()
+            $(this).parent().siblings().css('font-weight', 'normal');
+            $(this).parent().siblings().css('text-decoration', 'none');
+            $(this).parent().css('font-weight', 'Bold');
+            $(this).parent().css('text-decoration', 'Underline');
             $.ajax({
                 url:$(this).attr('href'),
                 method: 'get',
@@ -115,6 +145,10 @@
 
         $('#search>ul>li>.category').click(function(e){
             e.preventDefault()
+            $(this).parent().siblings().css('font-weight', 'normal');
+            $(this).parent().siblings().css('text-decoration', 'none');
+            $(this).parent().css('font-weight', 'Bold');
+            $(this).parent().css('text-decoration', 'Underline');
             $.ajax({
                 url:$(this).attr('href'),
                 method: 'get',
