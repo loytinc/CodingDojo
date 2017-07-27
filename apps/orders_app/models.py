@@ -32,12 +32,22 @@ class ShoppingCartManager(models.Manager):
 
         if 'shipping_address' in postData:
             if len(postData['shipping_address']) == 0:
-                errors.append('Please enter your last name.')
-            elif len(postData['shipping_address']) < 2:
-                errors.append('Last name should be no fewer than 2 letters')
-            elif not noNumberPls.match(postData['shipping_address']):
-                errors.append('Last name should have no numbers or special characters in it.')
+                errors.append('Please enter your shipping address.')
 
+        if 'shipping_city' in postData:
+            if len(postData['shipping_city']) == 0:
+                errors.append('Please enter your shipping city.')
+
+        if 'shipping_state' in postData:
+            if len(postData['shipping_state']) == 0:
+                errors.append('Please enter your shipping state.')
+
+        if 'shipping_zipcode' in postData:
+            if len(postData['shipping_zipcode']) == 0:
+                errors.append('Please enter your shipping zip code.')
+            elif not noNumberPls.match(postData['shipping_last_name']):
+                errors.append('Last name should have no numbers or special characters in it.')
+        
         
 
 
