@@ -7,18 +7,51 @@
   src="https://code.jquery.com/jquery-3.2.1.js"
   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
   crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'products_app/style.css' %}">
+    <link rel="stylesheet" href="{% static 'products_app/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'products_app/bootstrap.js' %}">
+    <link rel="stylesheet" href="{% static 'products_app/bootstrap-theme.css' %}">
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+    <style>
+        #search{
+            display:inline-block;
+            vertical-align: top;
+            margin-top: 25px;
+            margin-right: 20px;
+        }
+        #showproducts{
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div id="header">
-            <p>T-MAN</p>
-            <a href="/carts">Shopping Cart ({{cartitemscount}})</a>
-            <a href="/logoff">Logoff</a>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1 class="navbar-brand" id="heading_name">T MAN</h1>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="nav-link top_space" href="/carts">Shopping Cart</a></li>
+                    <li><a class="nav-link top_space" href="/logoff">Log off</a></li>
+                </ul>
+            </div>
         </div>
+    </nav>
+    <div class="container">
         <div id="content">
-            <div id="search">
+            <div id="search" class='col-md-4'>
+
                 <input type="text" name='search' id='searchbox'>
                 <ul>
                     {%for category in categories%}
