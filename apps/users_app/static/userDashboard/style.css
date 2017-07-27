@@ -9,3 +9,102 @@
 #spacing_add {
     margin-top: 28px;
 }
+
+.messages {
+  color: rgba(255,0,0,1)
+}
+#signinPage {
+  background: url('https://github.com/loyti/images/blob/master/tmanSignIn.jpg?raw=true');
+  max-width: 100%;
+  min-height: 500px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 0px -50px;
+  margin-top: -18px;
+}
+
+#siginForm {
+  color: #fff;
+  text-align: center;
+  font-size: large;
+  text-align: center;
+}
+#signinForm .form-group {
+  color: #fff;
+  text-align: center;
+  font-size: large;
+}
+#signinForm h1 {
+  text-align: center;
+  color: #fff;
+}
+
+#signinForm a {
+  color: #eee;
+  text-align: inherit;
+  font-size: large;
+}
+
+#registerPage {
+  background: url('https://github.com/loyti/images/blob/master/tmanregister.jpg?raw=true');
+  max-width: 100%;
+  min-height: 500px;
+  background-size: cover;
+  margin-top: -18px;
+}
+
+#registerForm {
+  color: #eee;
+  text-align: center;
+  font-size: large;
+  margin: 20px;
+}
+
+#registerForm h1 {
+  color: #fff;
+}
+#registerForm a {
+  color: #ADD1D4;
+}
+
+.bg {
+  background: url('https://github.com/loyti/images/blob/master/tmanhomeimg.jpg?raw=true') no-repeat center center;
+  position: fixed;
+  width: 100%;
+  height: 750px;
+  top:0;
+  left:0;
+  z-index: -1;
+}
+
+#homeHead {
+  color: #eee;
+  text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
+}
+#homeHead p {
+  color: #fff;
+  text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
+}
+
+#hotPress {
+  color: rgba(255,0,0,.75);
+  margin: 10px;
+  padding: 10px;
+  font-size: large;
+  border-radius: 5px;
+  background-color: rgba(0,0,0, .1);
+  letter-spacing: .1em;
+  text-shadow: 0 -1px 0 #fff, 0 1px 0 #2e2e2e, 0 2px 0 #2c2c2c, 0 3px 0 #2a2a2a, 0 4px 0 #282828, 0 5px 0 #262626, 0 6px 0 #242424, 0 7px 0 #222, 0 8px 0 #202020, 0 9px 0 #1e1e1e, 0 10px 0 #1c1c1c, 0 11px 0 #1a1a1a, 0 12px 0 #181818, 0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212, 0 22px 30px rgba(0, 0, 0, 0.9);
+}
+
+
+#classics {
+  color: rgba(0,255,0,.9);
+  margin: 10px;
+  padding: 10px;
+  font-size: large;
+  border-radius: 5px;
+  background-color: rgba(0,0,0, .1);
+  letter-spacing: .05em;
+  text-shadow: 4px 4px 0px rgba(255,255,255,.1), 7px 7px 0px rgba(0, 0, 0, 0.2);
+}
