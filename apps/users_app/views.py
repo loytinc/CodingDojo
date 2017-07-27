@@ -225,7 +225,7 @@ def admin_create_user(request):
         if len(errors):
             for error in errors:
                 messages.error(request, error)
-            return redirect('/users/new')
+            return redirect('/carts')
         else:
         # if no errors
             try:

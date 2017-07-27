@@ -18,17 +18,17 @@ class ShoppingCartManager(models.Manager):
             if len(postData['shipping_first_name']) == 0:
                 errors.append('Please enter your first name.')
             elif len(postData['shipping_first_name']) < 2:
-                errors.append('First name should be no fewer than 2 letters')
+                errors.append('Shipping first name should be no fewer than 2 letters')
             elif not noNumberPls.match(postData['shipping_first_name']):
-                errors.append('First name should have no numbers or special characters in it.')
+                errors.append('Shipping first name should have no numbers or special characters in it.')
 
         if 'shipping_last_name' in postData:
             if len(postData['shipping_last_name']) == 0:
                 errors.append('Please enter your last name.')
             elif len(postData['shipping_last_name']) < 2:
-                errors.append('Last name should be no fewer than 2 letters')
+                errors.append('Shipping last name should be no fewer than 2 letters')
             elif not noNumberPls.match(postData['shipping_last_name']):
-                errors.append('Last name should have no numbers or special characters in it.')
+                errors.append('Shipping last name should have no numbers or special characters in it.')
 
         if 'shipping_address' in postData:
             if len(postData['shipping_address']) == 0:
@@ -45,10 +45,59 @@ class ShoppingCartManager(models.Manager):
         if 'shipping_zipcode' in postData:
             if len(postData['shipping_zipcode']) == 0:
                 errors.append('Please enter your shipping zip code.')
-            elif not noNumberPls.match(postData['shipping_last_name']):
-                errors.append('Last name should have no numbers or special characters in it.')
+
+        # billing validation
         
+        if 'billing_first_name' in postData:
+            if len(postData['billing_first_name']) == 0:
+                errors.append('Please enter your first name.')
+            elif len(postData['billing_first_name']) < 2:
+                errors.append('Billing first name should be no fewer than 2 letters')
+            elif not noNumberPls.match(postData['billing_first_name']):
+                errors.append('First name should have no numbers or special characters in it.')
+
+        if 'billing_last_name' in postData:
+            if len(postData['billing_last_name']) == 0:
+                errors.append('Please enter your last name.')
+            elif len(postData['billing_last_name']) < 2:
+                errors.append('Billing last name should be no fewer than 2 letters')
+            elif not noNumberPls.match(postData['billing_last_name']):
+                errors.append('Billing last name should have no numbers or special characters in it.')
+
+        if 'billing_address' in postData:
+            if len(postData['billing_address']) == 0:
+                errors.append('Please enter your billing address.')
+
+        if 'billing_city' in postData:
+            if len(postData['billing_city']) == 0:
+                errors.append('Please enter your billing city.')
+
+        if 'billing_state' in postData:
+            if len(postData['billing_state']) == 0:
+                errors.append('Please enter your billing state.')
+
+        if 'billing_zipcode' in postData:
+            if len(postData['billing_zipcode']) == 0:
+                errors.append('Please enter your billing zip code.')
+
+        if 'card' in postData:
+            if len(postData['card']) == 0:
+                errors.append('Please enter your 16 digit credit card number.')
+            elif len(postData['card']) != 16:
+                errors.append('Please enter 16 digits for your credit card number.')
+
+        if 'security' in postData:
+            if len(postData['security']) == 0:
+                errors.append('Please enter your three digit security number on the back of your card.')
+            elif len(postData['security']) != 3:
+                errors.append('Please enter 3 digits for your security number.')
+            
+        if 'expiration' in postData:
+            if len(postData['expiration']) == 0:
+                errors.append('Please enter your credit card expiration date.')
+
         
+        return errors
 
 
 class ShoppingCart(models.Model):
@@ -86,6 +135,7 @@ class ShippingInfo(models.Model):
     order = models.OneToOneField(Order, related_name="shippingInfo")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = ShoppingCartManager()
 
 class BillingInfo(models.Model):
     first_name = models.CharField(max_length=255)
@@ -102,3 +152,5 @@ class BillingInfo(models.Model):
     order = models.OneToOneField(Order, related_name="billingInfo")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = ShoppingCartManager()
+
