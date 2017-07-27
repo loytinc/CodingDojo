@@ -6,54 +6,27 @@
         <a class="btn btn-success" id="spacing_add" href="/products/new">Add product</a>
     </div>
 </div>
-<div>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Picture</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Inventory Count</th>
-                <th>Quantity Sold</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-        <tr>
-            <td><img src="{{product.image}}" alt="{{product.name}}"></td>
-            <td>{{product.id}}</td>
-            <td>{{product.name}}</td>
-            <td>${{product.price}}</td>
-            <td>{{product.inventory}}</td>
-            <td>{{product.sold}}</td>
-            <td>
-                <a href="/products/edit/{{product.id}}">Edit</a>
-                <a data-toggle='modal' href='#confirm{{product.id}}'>Delete</a>
-                <div class='modal fade' id='confirm{{product.id}}' tabindex='-1' role='dialog'>
-                <div class="modal-dialog">
-                    <div class='modal-content'>
-                        <div class='modal-header'>
-                            <h2>Are you sure?</h2>
-                        </div>
-                        <div class='modal-body'>
-                            <p>Are you sure you want to delete this?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a class='btn btn-primary' href="/products/delete/{{product.id}}">Yes!</a>
-                            <a class='btn btn-danger' href="/dashboard/products">No!</a>
-                        </div>
-                    </div>
-                </div>
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div id='prodTable'>
 </div>
-<ul class='pagination'>
-{%for i in numPages%}
-<li><a href="/dashboard/products/{{i}}">{{i}}</a></li>
-{%endfor%}
-</ul>
+
+<script>
+    $(document).on('click', '.pagination>li>a', function(e){
+            e.preventDefault();
+            console.log('QQQ')
+            $.ajax({
+                url:$(this).attr('href'),
+                method: 'get',
+                success: function(res){
+                    $('#prodTable').html(res);
+                }
+            })
+        })
+
+    $.ajax({
+            url:'/dashboard/products/1',
+            // method: 'get',
+            success: function(res){
+                $('#prodTable').html(res);
+            }
+        })
+</script>

@@ -15,6 +15,12 @@
     <link rel="stylesheet" href="{% static 'userDashboard/bootstrap-theme.css' %}">
     
     <title>User Dashboard</title>
+    <style>
+        img{
+            height:100px;
+            width: 100px;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-default">
@@ -36,7 +42,7 @@
                 <ul class="nav navbar-nav">
                     <li class='active'><a class="nav-link top_space" id='users'href="/dashboard">Users</a></li>
                     <li><a class="nav-link top_space" id='products' href="/dashboard/products/1">Products</a></li>
-                    <li><a class="nav-link top_space" href="/carts/orders">Orders</a></li>
+                    <li><a class="nav-link top_space" id='orders' href="/carts/orders">Orders</a></li>
                 </ul>
             </div>
         </div>
@@ -52,11 +58,14 @@
     <script>
         $(document).on('click', '.pagination>li>a', function(e){
             e.preventDefault();
+            // console.log()
             $.ajax({
                 url:$(this).attr('href'),
-                method: 'get',
+                // method: 'get',
                 success: function(res){
-                    $('#tablecontainer').html(res);
+                    // console.log(res)
+                    console.log('AFASDFADFA')
+                    // $('#tablecontainer').html(res);
                 }
             })
         })
@@ -73,7 +82,7 @@
             $(this).parent().siblings().removeClass("active")
             $(this).parent().addClass("active")
             $.ajax({
-                url:'/dashboard/products/1',
+                url:'/dashboard/products',
                 success: function(res){
                     $('#tableContainer').html(res);
                 }
@@ -86,6 +95,18 @@
             $(this).parent().addClass("active")
             $.ajax({
                 url:'/dashboard/users/1',
+                success: function(res){
+                    $('#tableContainer').html(res);
+                }
+            })
+        })
+
+        $('#orders').click(function(e){
+            e.preventDefault()
+            $(this).parent().siblings().removeClass("active")
+            $(this).parent().addClass("active")
+            $.ajax({
+                url:'/carts/orders',
                 success: function(res){
                     $('#tableContainer').html(res);
                 }

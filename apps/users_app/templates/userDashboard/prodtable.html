@@ -1,0 +1,97 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Picture</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Inventory Count</th>
+            <th>Quantity Sold</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for product in products %}
+    <tr>
+        <td><img src="{{product.image}}" alt="{{product.name}}"></td>
+        <td>{{product.id}}</td>
+        <td>{{product.name}}</td>
+        <td>${{product.price}}</td>
+        <td>{{product.inventory}}</td>
+        <td>{{product.sold}}</td>
+        <td>
+            <a data-toggle='modal' href="#edit{{product.id}}">Edit</a>
+            <div class='modal fade' id='edit{{product.id}}' tabindex='-1' role='dialog'>
+                <div class="modal-dialog">
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h2>Edit Product - ID {{product.id}}</h2>
+                        </div>
+                        <div class='modal-body'>
+                            <form action="/products/edit/{{product.id}}/process" method='POST'>
+                                {%csrf_token%}
+                                <div>
+                                    <label>Name</label>
+                                    <input type="text" name='name'>
+                                </div>
+                                <div>
+                                    <label>Description</label>
+                                    <textarea name="description" id="" cols="30" rows="10"></textarea>
+                                </div>
+                                <div>
+                                    <label>Price</label>
+                                    <input type="number" step=0.01 name='price'>
+                                </div>
+                                <div>
+                                    <label>Categories</label>
+                                    <select name="category">
+                                        {%for category in categories%}
+                                        <option value="{{category.name}}">{{category.name}}</option>
+                                        {%endfor%}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>or add a new category</label>
+                                    <input type="text" name='newcategory'>
+                                </div>
+                                <!-- <a href="/dashboard/products">Cancel</a>
+                                <a href="">Preview</a> -->
+                                <input class='btn btn-primary' type="submit" value='Update'>
+                                <a class='btn btn-danger' href="/dashboard/products">Cancel</a>
+                            </form>
+                        </div>
+                        <!-- <div class="modal-footer">
+                            <a class='btn btn-primary' href="/products/delete/{{product.id}}">Yes!</a>
+                            <a class='btn btn-danger' href="/dashboard/products">No!</a>
+                        </div> -->
+                    </div>
+                </div>
+
+            </div>
+            <a data-toggle='modal' href='#confirm{{product.id}}'>Delete</a>
+            <div class='modal fade' id='confirm{{product.id}}' tabindex='-1' role='dialog'>
+                <div class="modal-dialog">
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h2>Are you sure?</h2>
+                        </div>
+                        <div class='modal-body'>
+                            <p>Are you sure you want to delete this?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a class='btn btn-primary' href="/products/delete/{{product.id}}">Yes!</a>
+                            <a class='btn btn-danger' href="/dashboard/products">No!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<ul class='pagination'>
+{%for i in numPages%}
+<li><a href="/dashboard/products/{{i}}">{{i}}</a></li>
+{%endfor%}
+</ul>

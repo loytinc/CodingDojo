@@ -35,16 +35,16 @@ def dashboard(request):
     else:
         return redirect('/')
 
-def prodDashboard(request,page):
-    productCount=Product.objects.all().count()
-    allProducts=Product.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
+def prodDashboard(request):
+    # productCount=Product.objects.all().count()
+    # allProducts=Product.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
 
-    newArr=[]
-    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
-        newArr.append(i)
+    # newArr=[]
+    # for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+    #     newArr.append(i)
     
     context={
-        'products':allProducts, 'numPages':newArr
+        'products':Product.objects.all()#, 'numPages':newArr
     }
     return render(request, 'userDashboard/productDash.html', context)
 
@@ -313,3 +313,16 @@ def userdashboard(request, page):
         'users': User.objects.all(), 'numPages':newArr
     }
     return render(request, 'userDashboard/userdash.html', context)
+
+def prodDashboardload(request, page):
+    productCount=Product.objects.all().count()
+    allProducts=Product.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
+
+    newArr=[]
+    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+        newArr.append(i)
+    
+    context={
+        'products':allProducts, 'numPages':newArr
+    }
+    return render(request, 'userDashboard/prodtable.html', context)
