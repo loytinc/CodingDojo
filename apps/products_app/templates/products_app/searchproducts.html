@@ -1,12 +1,14 @@
 <div id="allproducts">
     <h2>Searching: {{searchitem}}</h2>
-    {%for product in products%}
-    <div class="item">
-        <a href="">{{product.image}}</a>
-        {{product.price}}
-        <a href="">{{product.name}}</a>
+    <div id='prodcontainer'>
+        {%for product in products%}
+        <div class="item">
+            <img src="{{product.image}}" alt={{product.name}}>
+            <p style='margin: 0'>${{product.price}}</p>
+            <a href="">{{product.name}}</a>
+        </div>
+        {%endfor%}
     </div>
-    {%endfor%}
     <ul class='pagination'>
         {%for i in numPages%}
         <li><a href="search/{{searchitem}}/{{i}}">{{i}}</a></li>
