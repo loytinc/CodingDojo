@@ -4,7 +4,43 @@ from django.db import models
 from ..products_app.models import *
 from ..users_app.models import *
 
+import re
+
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+noNumberPls = re.compile(r'^[a-zA-Z]+$')
+
 # Create your models here.
+class ShoppingCartManager(models.Manager):
+    def payment_validator(self, postData):
+        errors = []
+
+        if 'shipping_first_name' in postData:
+            if len(postData['shipping_first_name']) == 0:
+                errors.append('Please enter your first name.')
+            elif len(postData['shipping_first_name']) < 2:
+                errors.append('First name should be no fewer than 2 letters')
+            elif not noNumberPls.match(postData['shipping_first_name']):
+                errors.append('First name should have no numbers or special characters in it.')
+
+        if 'shipping_last_name' in postData:
+            if len(postData['shipping_last_name']) == 0:
+                errors.append('Please enter your last name.')
+            elif len(postData['shipping_last_name']) < 2:
+                errors.append('Last name should be no fewer than 2 letters')
+            elif not noNumberPls.match(postData['shipping_last_name']):
+                errors.append('Last name should have no numbers or special characters in it.')
+
+        if 'shipping_address' in postData:
+            if len(postData['shipping_address']) == 0:
+                errors.append('Please enter your last name.')
+            elif len(postData['shipping_address']) < 2:
+                errors.append('Last name should be no fewer than 2 letters')
+            elif not noNumberPls.match(postData['shipping_address']):
+                errors.append('Last name should have no numbers or special characters in it.')
+
+        
+
+
 class ShoppingCart(models.Model):
     products = models.ManyToManyField(Product, related_name="shoppingCarts")
     user = models.OneToOneField(User, related_name="shoppingCart",null=True)
