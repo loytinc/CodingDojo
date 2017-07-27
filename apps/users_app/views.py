@@ -92,7 +92,7 @@ def create_user(request):
                 hash_it = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
                 
                 # insert user into database
-                user = User(first_name=request.POST['first_name'], last_name=request.POST['last_name'],email=request.POST['email'],user_level=user_level,password=hash_it)
+                user = User(first_name=request.POST['first_name'], last_name=request.POST['last_name'],email=request.POST['email'],birthday=request.POST['birthday'],user_level=user_level,password=hash_it)
                 user.save()
                 
                 # assign a shopping cart for the user by Art
@@ -195,11 +195,11 @@ def login(request):
                 request.session['user_id'] = current_user.id
 
                 # check if user has shoppingcart
-                try:
-                    shoppingCart = ShoppingCart.objects.get(id=current_user.id)
-                except:
-                    shoppingCart = ShoppingCart(user=current_user)
-                    shoppingCart.save()
+                # try:
+                #     shoppingCart = ShoppingCart.objects.get(id=current_user.id)
+                # except:
+                #     shoppingCart = ShoppingCart(user=current_user)
+                #     shoppingCart.save()
 
                 # checks if current user is admin
                 if current_user.user_level == 9:
@@ -212,7 +212,7 @@ def login(request):
                 messages.error(request, 'Your Login information does not match our database. Please try again.')
 
         except:
-            messages.error(request, 'Your Login information does not match our database. Please try again.')
+            messages.error(request, 'asdfdasfsdYour Login information does not match our database. Please try again.')
     return redirect('/signin')
 
 def admin_create_user(request):
