@@ -32,6 +32,7 @@ def checkout(request):
         shoppingCart = user.shoppingCart
         shoppingCart.user = None
         shoppingCart.save()
+        shoppingCart = ShoppingCart.objects.create(user=user)
         # create an order
         order = Order(shoppingCart=shoppingCart,status="orderin",total=request.session['cart_total'],user=user)
         order.save()
@@ -44,7 +45,6 @@ def checkout(request):
         # process the payment
         print 'Processing the payment'
 
-        shoppingCart = ShoppingCart.objects.create(user=user)
     return redirect('/carts/checkout/success')
 
 

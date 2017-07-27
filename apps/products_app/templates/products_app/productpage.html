@@ -2,13 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Product Page</title>
+    <title>Products Page</title>
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'products_app/style.css' %}">
+    <link rel="stylesheet" href="{% static 'products_app/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'products_app/bootstrap.js' %}">
+    <link rel="stylesheet" href="{% static 'products_app/bootstrap-theme.css' %}">
 </head>
 <body>
     <div id="container">
+
+
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <h1 class="navbar-brand" id="heading_name">T MAN</h1>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="nav-link top_space" href="/carts">Shopping Cart</a></li>
+                        <li><a class="nav-link top_space" href="/logoff">Log off</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
         <div id="header">
             <p>T-MAN</p>
-            <a href="#">Shopping Cart</a>
+            <a href="/carts">Shopping Cart</a>
         </div>
         <div id="content">
             <div>
