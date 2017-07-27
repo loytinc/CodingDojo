@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from ..products_app.models import *
 from ..users_app.models import *
 from .models import *
-
+import math
 
 # Create your views here.
 
@@ -28,10 +28,12 @@ def checkout(request):
     if request.method == 'POST':
         # validate the form
 
-        shoppingCart = ShoppingCart.objects.get(id=request.session['user_id'])
         user = User.objects.get(id=request.session['user_id'])
+        shoppingCart = user.shoppingCart
+        shoppingCart.user = None
+        shoppingCart.save()
         # create an order
-        order = Order(shoppingCart=shoppingCart,status="orderin",total=request.session['cart_total'])
+        order = Order(shoppingCart=shoppingCart,status="orderin",total=request.session['cart_total'],user=user)
         order.save()
 
         shipping = ShippingInfo(first_name = request.POST['shipping_first_name'],last_name = request.POST['shipping_last_name'],address = request.POST['shipping_address'],address2 = request.POST['shipping_address2'],city = request.POST['shipping_city'],state = request.POST['shipping_state'],zipcode = request.POST['shipping_zipcode'],user = user, order = order)
@@ -41,6 +43,8 @@ def checkout(request):
 
         # process the payment
         print 'Processing the payment'
+
+        shoppingCart = ShoppingCart.objects.create(user=user)
     return redirect('/carts/checkout/success')
 
 
@@ -76,3 +80,64 @@ def view_order(request, order_id):
         'products' : products
     }
     return render(request, 'orders_app/view_order.html', context)
+
+
+def page_process(request, page_num):
+
+    total_pages = Order.objects.count()
+    section_pages=Order.objects.all()[(int(page_num)-1)*10:((int(page_num)-1)*10)+10]
+
+    newArr=[]
+    for i in range(1,int(math.ceil((total_pages/10.0)) + 1)):
+        newArr.append(i)
+
+    context = {
+        'total_pages' : newArr,
+        'orders' : section_pages,
+        
+    }
+    return render(request, 'orders_app/searchorders.html', context)
+
+def status_process(request, status, page):
+
+    total_pages = Order.objects.filter(status=status).count()
+    section_pages = Order.objects.filter(status=status)[(int(page)-1)*10:((int(page)-1)*10)+10]
+
+    newArr=[]
+    for i in range(1,int(math.ceil((total_pages/10.0)) + 1)):
+        newArr.append(i)
+
+    context = {
+        'total_pages' : newArr,
+        'orders' : section_pages,
+        
+    }
+    return render(request, 'orders_app/searchorders.html', context)
+
+
+def search_process(request, searchname, page_num):
+    allOrders = []
+    tempUsers = User.objects.filter(first_name__regex=r''+searchname+'')
+    for user in tempUsers:
+        for order in user.orders.all():
+            allOrders.append(order)
+    orderCount=len(allOrders)
+    orderSection=allOrders[(int(page_num)-1)*10:((int(page_num)-1)*10)+10]
+
+    newArr=[]
+    for i in range(1,int(math.ceil((orderCount/10.0)) + 1)):
+        newArr.append(i)
+
+    context = {
+        'total_pages' : newArr,
+        'orders' : orderSection,
+        
+    }
+
+    return render(request, 'orders_app/searchorders.html', context)
+
+def changestatus(request, id, status):
+    temporder=Order.objects.get(id=id)
+    temporder.status=status
+    temporder.save()
+    return redirect('/carts/orders/page/1')
