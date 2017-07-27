@@ -66,7 +66,7 @@ def addtocart(request):
         prod.quantity=request.POST['quantity']
         prod.save()
         User.objects.get(id=request.session['user_id']).shoppingCart.products.add(prod)
-    return redirect('/products')
+    return redirect('/carts')
 
 def edit(request, id):
     context={

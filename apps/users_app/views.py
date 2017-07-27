@@ -212,7 +212,7 @@ def login(request):
                 messages.error(request, 'Your Login information does not match our database. Please try again.')
 
         except:
-            messages.error(request, 'asdfdasfsdYour Login information does not match our database. Please try again.')
+            messages.error(request, 'Your Login information does not match our database. Please try again.')
     return redirect('/signin')
 
 def admin_create_user(request):
@@ -301,3 +301,15 @@ def delete_user(request, user_id):
     user = User.objects.get(id=user_id)
     user.delete()
     return redirect('/dashboard/admin')
+
+def userdashboard(request, page):
+    userCount = User.objects.count()
+    getUsers =  User.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
+    newArr=[]
+    for i in range(1,int(math.ceil((userCount/10.0)) + 1)):
+        newArr.append(i)
+
+    context={
+        'users': User.objects.all(), 'numPages':newArr
+    }
+    return render(request, 'userDashboard/userdash.html', context)
