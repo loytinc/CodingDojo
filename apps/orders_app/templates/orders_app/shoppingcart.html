@@ -120,22 +120,15 @@
                 var state = $('#s_state').val();
                 var zipcode = $('#s_zipcode').val();
 
-                $('#b_first_name').val(first_name).prop('disabled', true);
-                $('#b_last_name').val(last_name).prop('disabled', true);
-                $('#b_address').val(address).prop('disabled', true);
-                $('#b_address2').val(address2).prop('disabled', true);
-                $('#b_city').val(city).prop('disabled', true);
-                $('#b_state').val(state).prop('disabled', true);
-                $('#b_zipcode').val(zipcode).prop('disabled', true);
-            } else {
-                $('#b_first_name').prop('disabled', false);
-                $('#b_last_name').prop('disabled', false);
-                $('#b_address').prop('disabled', false);
-                $('#b_address2').prop('disabled', false);
-                $('#b_city').prop('disabled', false);
-                $('#b_state').prop('disabled', false);
-                $('#b_zipcode').prop('disabled', false);
-            }
+                $('#b_first_name').val(first_name);
+                $('#b_last_name').val(last_name);
+                $('#b_address').val(address);
+                $('#b_address2').val(address2);
+                $('#b_city').val(city);
+                $('#b_state').val(state);
+                $('#b_zipcode').val(zipcode);
+            } 
+
         })
     </script>
 </body>
