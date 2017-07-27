@@ -37,20 +37,35 @@ def checkout(request):
         else:
             user = User.objects.get(id=request.session['user_id'])
             shoppingCart = user.shoppingCart
-            shoppingCart.user = None
-            shoppingCart.save()
-            shoppingCart = ShoppingCart.objects.create(user=user)
-            # create an order
-            order = Order(shoppingCart=shoppingCart,status="orderin",total=request.session['cart_total'],user=user)
-            order.save()
+            
+            # check if shopping cart is empty
+            products = shoppingCart.products.all()
+            if len(products) == 0:
+                messages.error(request,'Shopping Cart is empty.')
+                return redirect('/carts')
+            else:
+                shoppingCart.user = None
+                shoppingCart.save()
+                new_shopping_cart = ShoppingCart.objects.create(user=user)
 
-            shipping = ShippingInfo(first_name = request.POST['shipping_first_name'],last_name = request.POST['shipping_last_name'],address = request.POST['shipping_address'],address2 = request.POST['shipping_address2'],city = request.POST['shipping_city'],state = request.POST['shipping_state'],zipcode = request.POST['shipping_zipcode'],user = user, order = order)
-            shipping.save()
-            billing = BillingInfo(first_name = request.POST['billing_first_name'],last_name = request.POST['billing_last_name'],address = request.POST['billing_address'],address2 = request.POST['billing_address2'],city = request.POST['billing_city'],state = request.POST['billing_state'],zipcode = request.POST['billing_zipcode'],card = request.POST['card'],security = request.POST['security'],expiration = request.POST['expiration'],user = user, order = order)
-            billing.save()
+                # create an order
+                order = Order(shoppingCart=shoppingCart,status="orderin",total=request.session['cart_total'],user=user)
+                order.save()
 
-            # process the payment
-            print 'Processing the payment'
+                shipping = ShippingInfo(first_name = request.POST['shipping_first_name'],last_name = request.POST['shipping_last_name'],address = request.POST['shipping_address'],address2 = request.POST['shipping_address2'],city = request.POST['shipping_city'],state = request.POST['shipping_state'],zipcode = request.POST['shipping_zipcode'],user = user, order = order)
+                shipping.save()
+                billing = BillingInfo(first_name = request.POST['billing_first_name'],last_name = request.POST['billing_last_name'],address = request.POST['billing_address'],address2 = request.POST['billing_address2'],city = request.POST['billing_city'],state = request.POST['billing_state'],zipcode = request.POST['billing_zipcode'],card = request.POST['card'],security = request.POST['security'],expiration = request.POST['expiration'],user = user, order = order)
+                billing.save()
+
+                # process the payment
+                print 'Processing the payment'
+                print 'Success!'
+
+                # add to quantity of product sold
+                for product in products:
+                    product.sold += product.quantity
+                    product.inventory -= product.quantity
+                    product.save()
 
     return redirect('/carts/checkout/success')
 
