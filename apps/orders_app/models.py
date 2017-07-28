@@ -183,3 +183,12 @@ class BillingInfo(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     objects = ShoppingCartManager()
 
+class Quantity(models.Model):
+    amount = models.IntegerField()
+    shopping_cart = models.ForeignKey(ShoppingCart, related_name="quantities")
+    product = models.ForeignKey(Product, related_name="quantities")
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+
+    def get_price_total(self):
+        return self.product.price*self.amount
