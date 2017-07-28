@@ -9,9 +9,9 @@
         </div>
         {%endfor%}
     </div>
-    <ul class='pagination'>
+    <ul class='pagination' style="display: flex;">
         {%for i in numPages%}
-        <li id="pagPage"><a href="/products/{%if category%}{{category.id}}{%else%}all{%endif%}/{{i}}">{{i}}</a></li>
+        <li id="pagPage" style="flex-wrap: wrap; max-width: 50px;"><a href="/products/{%if category%}{{category.id}}{%else%}all{%endif%}/{{i}}">{{i}}</a></li>
         {%endfor%}
     </ul>
 </div>

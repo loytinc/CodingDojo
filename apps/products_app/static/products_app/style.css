@@ -18,3 +18,24 @@ img {
   margin-top: 250px;
 
 }
+
+#productName {
+  flex-wrap: wrap;
+  text-align: center;
+}
+#prodDesc{
+  margin-top: 25px;
+  padding-top: 25px;
+  vertical-align: bottom;
+}
+#addCart{
+  padding: 25px;
+  margin: 20px;
+}
+#addCount{
+  font-size: large;
+}
+#itemA a, #itemA>a{
+  flex-wrap: wrap;
+  max-width: 50px;
+}
