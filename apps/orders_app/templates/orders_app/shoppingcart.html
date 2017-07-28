@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% load static %}
     <link rel="stylesheet" href="{% static 'orders_app/style.css' %}">
-    <link rel="stylesheet" href="{% static 'userDashboard/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'userDashboard/bootstrap-theme.css' %}">
+    <link rel="stylesheet" href="{% static 'orders_app/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'orders_app/bootstrap-theme.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script
     src="https://code.jquery.com/jquery-3.2.1.js"
@@ -19,21 +19,22 @@
   <nav class="navbar-inverse">
       <div class="container-fluid">
           <div class="navbar-header">
+            <img id="logo" class="icon-bar" src="https://github.com/loyti/images/blob/master/white+t%20(1).png?raw=true">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                   <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"><a class="nav-link top_space" href="/signin">Sign In</a></span>
-                  <span class="icon-bar"><a class="nav-link top_space" href="/register">Register</a></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-              <img class="logo"src="https://github.com/loyti/images/blob/master/white+t.png?raw=true" max-width="25px" max-height="25px"><h1 class="navbar-brand" id="heading_name">T-MAN</h1>
           </div>
+          <h3 class="navbar-brand" id="heading_name" style="margin-top:0px; margin-bottom:0px;">T-MAN</h3>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
-                  <li><a class="nav-link top_space" href="/signin">Sign In</a></li>
-                  <li><a class="nav-link top_space" href="/register">Register</a></li>
-              </ul>
-          </div>
+          <li><a style="margin-top:0px; margin-bottom:0px;" class="nav-link top_space" href="/carts">Shopping Cart</a></li>
+          <li><a style="margin-top:0px; margin-bottom:0px;" class="nav-link top_space" href="/logoff">Log off</a></li>
+        </ul>
       </div>
+    </div>
   </nav>
   <div class="container-fluid">
     <div class="row-fluid">

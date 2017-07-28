@@ -1,7 +1,10 @@
 .block_up {
     display: block;
 }
-
+#logo, #logo>img {
+  max-width: 50px;
+  vertical-align: center;
+}
 #totalCart {
   margin-top: 20px;
   text-align: center;

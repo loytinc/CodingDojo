@@ -2,6 +2,12 @@
     margin-top: 25px;
 }
 
+#logo, #logo>img {
+  max-width: 50px;
+  max-height: 50px;
+  vertical-align: center;
+}
+
 #heading_name {
     font-size: 3em;
 }
@@ -15,7 +21,7 @@ img {
 }
 
 #pagPage>a {
-  margin-top: 250px;
+  margin-top: 20px;
 
 }
 
@@ -38,4 +44,8 @@ img {
 #itemA a, #itemA>a{
   flex-wrap: wrap;
   max-width: 50px;
+}
+#allproducts{
+  max-width: 100%;
+  columns:
 }

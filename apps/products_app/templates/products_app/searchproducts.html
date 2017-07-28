@@ -1,17 +1,72 @@
+<style>
+  .top_space {
+      margin-top: 25px;
+  }
+
+  #logo, #logo>img {
+    max-width: 50px;
+    max-height: 50px;
+    vertical-align: center;
+  }
+
+  #heading_name {
+      font-size: 3em;
+  }
+
+  #spacing_add {
+      margin-top: 28px;
+  }
+
+  img {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  }
+
+  #pagPage>a {
+    margin-top: 20px;
+
+  }
+
+  #productName {
+    flex-wrap: wrap;
+    text-align: center;
+  }
+  #prodDesc{
+    margin-top: 25px;
+    padding-top: 25px;
+    vertical-align: bottom;
+  }
+  #addCart{
+    padding: 25px;
+    margin: 20px;
+  }
+  #addCount{
+    font-size: large;
+  }
+  #itemA a, #itemA>a{
+    flex-wrap: wrap;
+    max-width: 50px;
+  }
+  #allproducts{
+    max-width: 100%;
+    columns:
+  }
+
+</style>
 <div id="allproducts">
     <h2>Searching: {{searchitem}}</h2>
     <div id='prodcontainer'>
         {%for product in products%}
         <div class="item">
-            <img src="{{product.image}}" alt={{product.name}}>
+            <a href="/products/product/{{product.id}}"><img src="{{product.image}}" alt={{product.name}}></a>
             <p style='margin: 0'>${{product.price}}</p>
-            <a href="">{{product.name}}</a>
+            <p><a id="itemA" href="/products/product/{{product.id}}">{{product.name}}</a></p>
         </div>
         {%endfor%}
-    </div>
-    <ul class='pagination'>
+    <div><ul class='pagination'>
         {%for i in numPages%}
         <li id = 'pagPage' {%if i == request.session.lastpage%}class='active'{%endif%}><a href="search/{{searchitem}}/{{i}}">{{i}}</a></li>
         {%endfor%}
     </ul>
+  </div>
+    </div>
 </div>
