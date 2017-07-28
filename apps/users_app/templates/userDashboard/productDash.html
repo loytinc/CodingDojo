@@ -27,6 +27,10 @@
         }
         var csrftoken = getCookie('csrftoken');
 
+        $(document).on('change', '#first_name', function(e){
+            console.log('GGGFGGGG')
+        })
+
         $(document).on('click', '#update', function(e){
             e.preventDefault()
             
