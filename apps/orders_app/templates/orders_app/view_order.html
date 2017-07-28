@@ -35,13 +35,13 @@
             <th>Quantity</th>
             <th>Total</th>
         </tr>
-        {% for product in products %}
+        {% for quantity in quantities %}
         <tr>
-            <td>{{product.id}}</td>
-            <td>{{product.name}}</td>
-            <td>{{product.price}}</td>
-            <td>{{product.quantity}}</td>
-            <td>{{product.get_price_total}}</td>
+            <td>{{quantity.product.id}}</td>
+            <td>{{quantity.product.name}}</td>
+            <td>{{quantity.product.price}}</td>
+            <td>{{quantity.amount}}</td>
+            <td>{{quantity.get_price_total}}</td>
         </tr>
         {% endfor %}
     </table>
