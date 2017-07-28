@@ -3,15 +3,16 @@
     <div id='prodcontainer'>
         {%for product in products%}
         <div class="item">
-            <a href="/products/product/{{product.id}}"><img src='{{product.image}}' alt='{{product.name}}'></a>
+            <a href="/products/product/{{product.id}}"><img style="max-width:200px;" src='{{product.image}}' alt='{{product.name}}'></a>
             <p>${{product.price}}</p>
-            <p><a id="itemA" href="/products/product/{{product.id}}">{{product.name}}</a></p>
+            <p id="itemA"><a href="/products/product/{{product.id}}">{{product.name}}</a></p>
         </div>
         {%endfor%}
-    </div>
-    <ul class='pagination'>
+
+    <ul class='pagination' style="display: flex;">
         {%for i in numPages%}
-        <li id="pagPage" {%if i == request.session.lastpage%}class='active'{%endif%}><a href="/products/{%if category%}{{category.id}}{%else%}all{%endif%}/{{i}}">{{i}}</a></li>
+        <li id="pagPage" style="flex-wrap: wrap; max-width: 50px;" {%if i == request.session.lastpage%}class='active'{%endif%}><a href="/products/{%if category%}{{category.id}}{%else%}all{%endif%}/{{i}}">{{i}}</a></li>
         {%endfor%}
     </ul>
+    </div>
 </div>
