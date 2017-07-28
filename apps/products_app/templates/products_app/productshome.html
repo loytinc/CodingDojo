@@ -63,7 +63,7 @@
         ul{
             margin: 0;
             padding: 0;
-            list-style-type: None;
+            list-style-type: none;
         }
         .category:hover{
             text-decoration: none;
@@ -101,7 +101,7 @@
         <h3 style='margin-top: 50px; padding: 0px 0px 5px 0px;'>Categories</h3>
         <ul>
           {%for category in categories%}
-          <li><a class='category' href="/products/{{category.id}}/1">{{category.name}}</a></li>
+          <li><a class='category' href="/products/{{category.id}}/1">{{category.name}} ({{category.amount}})</a></li>
           {%endfor%}
           <li style="margin-top: 20px; margin-bottom: 50px;"><a class='showall' href="/products/all/1">Show all</a></li>
         </ul>
