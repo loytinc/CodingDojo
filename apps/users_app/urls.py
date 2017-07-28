@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^dashboard/users$', views.userDashboard),
     url(r'^dashboard/users/(?P<page>[0-9]+)$', views.userDashboardload),
     url(r'^dashboard/products/(?P<page>[0-9]+)$', views.prodDashboardload),
+    url(r'^dashboard/products/search/(?P<searchname>[a-zA-Z]+)/(?P<page>[0-9]+)$', views.prodDashboardsearch),
+    url(r'^dashboard/products/(?P<id>[0-9\-]+)/(?P<page>[0-9]+)$', views.prodDashboardloadcat),
     url(r'^users/new$', views.add_user),
     url(r'^users/edit$', views.edit_user),
     url(r'^users/delete/(?P<id>\d+)$', views.delete_user),

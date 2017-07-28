@@ -2,9 +2,6 @@
     <div class="col-md-3">
         <h1>Manage Users</h1>
     </div>
-    <div class="col-md-offset-11">
-        <a class="btn btn-success" id="spacing_add" href="/users/new">Add new</a>
-    </div>
 </div>
 <div id='userTable'>
 </div>
@@ -40,25 +37,24 @@
 
     $(document).on('click', '#updateUser', function(e){
         e.preventDefault()
-        console.log($('#first_name').val())
+        console.log($('#efirst_name').val())
         editurl='/users/edit/'+$(this).attr('info')+'/update_user';
+        currid=$(this).attr('info')
         var correct='#edituser' + $(this).attr('info')
-        console.log('AHH' + $('#first_name').val())
+        console.log('AHH' + $('#efirst_name').val())
         $.ajax({
                 url:editurl,
                 method:'post',
                 headers:{'X-CSRFToken': csrftoken},
-                data:{'first_name': $('#first_name').val(), 'last_name': $('#last_name').val(), 'email':$('#email').val()},
+                data:{'first_name': $('#efirst_name'+currid).val(), 'last_name': $('#elast_name'+currid).val(), 'email':$('#eemail'+currid).val()},
                 success: function(res){
                     console.log('faaaaaaq')
-                    $('#prodTable').html(res)
+                    $('#userTable').html(res)
                     $(correct).modal('hide');
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
                 }
             })
-        // var correct='#edit' + $(this).attr('info')
-        // $(correct).modal('toggle')
     })
 
     $(document).on('click', '#deleteUser', function(e){

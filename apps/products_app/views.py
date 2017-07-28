@@ -13,6 +13,7 @@ def home(request):
 
 def category(request, id, page):
     allProducts=[]
+    request.session['lastpage']=int(page)
     productCount=Category.objects.get(id=id).products.all().count()
     allProducts=Category.objects.get(id=id).products.all()[(int(page)-1)*12:((int(page)-1)*12)+12]
 
@@ -25,6 +26,7 @@ def category(request, id, page):
     return render(request, 'products_app/listproducts.html', context)
 
 def allprod(request, page):
+    request.session['lastpage']=int(page)
     productCount=Product.objects.all().count()
     allProducts=Product.objects.all()[(int(page)-1)*12:((int(page)-1)*12)+12]
 
@@ -40,7 +42,7 @@ def allprod(request, page):
 def search(request, searchname, page):
     # if searchname == '':
     #     return redirect('/products/all/1')
-
+    request.session['lastpage']=int(page)
     productCount=Product.objects.filter(name__regex=r""+searchname+"").count()
     allProducts=Product.objects.filter(name__regex=r""+searchname+"")[(int(page)-1)*12:((int(page)-1)*12)+12]
 
@@ -91,6 +93,7 @@ def processEdit(request, id):
     prod.name=request.POST['name']
     prod.description=request.POST['description']
     if request.POST['newcategory'] == '':
+        print 'FFFF' + request.POST['category']
         prod.category=Category.objects.get(name=request.POST['category'])
     else:
         tempcategory=Category.objects.create(name=request.POST['newcategory'])
@@ -111,10 +114,13 @@ def new(request):
 def processNew(request):
     # print request.POST['newcategory']
     if request.POST['newcategory'] == '':
+        print 'AAAAA' + request.POST['category']
         newcategory=Category.objects.get(name=request.POST['category'])
     else:
         newcategory=Category.objects.create(name=request.POST['newcategory'])
 
     Product.objects.create(name=request.POST['name'], description=request.POST['desc'], price=request.POST['price'], inventory=request.POST['inventory'], quantity='0', sold='0', image=request.POST['image'], category=newcategory)
-    return redirect('/dashboard/products/1')
+    lastpage=int(math.ceil(Product.objects.all().count()/10))+1
+    print lastpage
+    return redirect('/dashboard/products/'+str(lastpage))
 

@@ -72,15 +72,16 @@
 
         $('#status').change(function(e){
             e.preventDefault()
-            if($(this).val()=='showall'){
-                $.ajax({
-                url:'/carts/orders/page/1',
-                method: 'get',
-                success: function(res){
-                    $('#orderTable').html(res);
-                }
-            })
-            }
+            // if($(this).val()=='showall'){
+            //     $.ajax({
+            //     url:'/carts/orders/page/1',
+            //     method: 'get',
+            //     success: function(res){
+            //         $('#orderTable').html(res);
+            //     }
+            // })
+            // }
+            // else{
             $.ajax({
                 url:'/carts/orders/status/'+$(this).val()+'/1',
                 method: 'get',
@@ -88,5 +89,6 @@
                     $('#orderTable').html(res);
                 }
             })
+            // }
         })
     </script>

@@ -11,7 +11,7 @@
     </div>
     <ul class='pagination'>
         {%for i in numPages%}
-        <li id="pagPage"><a href="/products/{%if category%}{{category.id}}{%else%}all{%endif%}/{{i}}">{{i}}</a></li>
+        <li id="pagPage" {%if i == request.session.lastpage%}class='active'{%endif%}><a href="/products/{%if category%}{{category.id}}{%else%}all{%endif%}/{{i}}">{{i}}</a></li>
         {%endfor%}
     </ul>
 </div>

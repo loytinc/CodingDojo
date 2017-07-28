@@ -37,7 +37,7 @@ def dashboard(request):
 
 def prodDashboard(request):
     context={
-        'products':Product.objects.all()#, 'numPages':newArr
+        'products':Product.objects.all(), 'categories':Category.objects.all()#, 'numPages':newArr
     }
     return render(request, 'userDashboard/productDash.html', context)
 
@@ -69,7 +69,7 @@ def create_user(request):
                 check_email = User.objects.get(email = request.POST['email'])
                 messages.error(request, 'Please try another email input.')
 
-                return redirect('/index')
+                return redirect('/signin')
 
             except:
                 users = User.objects.count()
@@ -304,20 +304,10 @@ def delete_user(request, user_id):
     user.delete()
     return redirect('/dashboard/admin')
 
-# def userdashboard(request, page):
-#     userCount = User.objects.count()
-#     getUsers =  User.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
-#     newArr=[]
-#     for i in range(1,int(math.ceil((userCount/10.0)) + 1)):
-#         newArr.append(i)
-
-#     context={
-#         'users': User.objects.all(), 'numPages':newArr
-#     }
-#     return render(request, 'userDashboard/userdash.html', context)
-
 def prodDashboardload(request, page):
+    request.session['currcategory'] = '-1'
     request.session['prodpage']=page
+    request.session['iprodpage']=int(page)
     productCount=Product.objects.all().count()
     allProducts=Product.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
 
@@ -330,8 +320,45 @@ def prodDashboardload(request, page):
     }
     return render(request, 'userDashboard/prodtable.html', context)
 
+def prodDashboardsearch(request, searchname, page):
+    request.session['currcategory'] = '-2'
+    request.session['prodpage']=page
+    request.session['iprodpage']=int(page)
+    productCount=Product.objects.filter(name__regex=r""+searchname+"").count()
+    allProducts=Product.objects.filter(name__regex=r""+searchname+"")[(int(page)-1)*10:((int(page)-1)*10)+10]
+
+    newArr=[]
+    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+        newArr.append(i)
+    
+    context={
+        'products':allProducts, 'numPages':newArr, 'categories':Category.objects.all()
+    }
+    return render(request, 'userDashboard/prodtable.html', context)
+
+def prodDashboardloadcat(request, id, page):
+    request.session['currcategory']=id
+    request.session['prodpage']=page
+    request.session['iprodpage']=int(page)
+    if id == '-1':
+        productCount=Product.objects.count()
+        allProducts=Product.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
+    else:
+        productCount=Category.objects.get(id=id).products.count()
+        allProducts=Category.objects.get(id=id).products.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
+
+    newArr=[]
+    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+        newArr.append(i)
+    
+    context={
+        'products':allProducts, 'numPages':newArr, 'categories':Category.objects.all()
+    }
+    return render(request, 'userDashboard/prodtable.html', context)
+
 def userDashboardload(request, page):
     request.session['userpage']=page
+    request.session['iuserpage']=int(page)
     userCount=User.objects.all().count()
     allUsers=User.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
 
