@@ -10,23 +10,10 @@
                         <option value="orderin">Order In Process</option>
                         <option value="shipped">Shipped</option>
                         <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
                     </select>
                 </div>
             </div>
-<<<<<<< HEAD
-            <input id="search" type="search" placeholder="Search">
-            <form action="">
-                {% csrf_token %}
-                <select name="status" id='status'>
-                    <option value="showall">Show All</option>
-                    <option value="orderin">Order In Process</option>
-                    <option value="shipped">Shipped</option>
-                    <option value="completed">Completed</option>
-                    <option value="cancelled">Cancelled</option>
-                </select>
-            </form>
-=======
->>>>>>> master
             <div id="orderTable">
             </div>
 
@@ -85,15 +72,16 @@
 
         $('#status').change(function(e){
             e.preventDefault()
-            if($(this).val()=='showall'){
-                $.ajax({
-                url:'/carts/orders/page/1',
-                method: 'get',
-                success: function(res){
-                    $('#orderTable').html(res);
-                }
-            })
-            }
+            // if($(this).val()=='showall'){
+            //     $.ajax({
+            //     url:'/carts/orders/page/1',
+            //     method: 'get',
+            //     success: function(res){
+            //         $('#orderTable').html(res);
+            //     }
+            // })
+            // }
+            // else{
             $.ajax({
                 url:'/carts/orders/status/'+$(this).val()+'/1',
                 method: 'get',
@@ -101,5 +89,6 @@
                     $('#orderTable').html(res);
                 }
             })
+            // }
         })
     </script>
