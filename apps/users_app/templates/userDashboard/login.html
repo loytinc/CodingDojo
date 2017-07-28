@@ -11,7 +11,7 @@
     <title>Signin Page</title>
 </head>
 <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -30,8 +30,9 @@
             </div>
         </div>
     </nav>
-  <div id="signinPage" class="container-fluid">
-    <div class="row-fluid">
+    <div id="signinPage" class="bg"></div>
+    <div class="container-fluid">
+      <div class="row-fluid">
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <form id="signinForm" class="form-horizontal" action="/signin/login" method="post">
@@ -57,7 +58,7 @@
                 <div class="form-group">
                   <input class="btn btn-success" type="submit" value="Sign In">
                 </div>
-                <a class="login" href="/register">Don't have an account? Register</a>
+                <p><a id="loginA" href="/register">Don't have an account? Register</a></p>
             </form>
         </div>
         <div class="col-md-4"></div>
