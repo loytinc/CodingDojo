@@ -18,7 +18,7 @@
                     <form action="">
                         {% csrf_token %}
                         <input type="hidden" name="order_id" value="{{order.id}}">
-                        <select name="status" route='/carts/{{order.id}}/changestatus/'id="changestatus">
+                        <select name="status" route='/carts/{{order.id}}/changestatus/' id="changestatus">
                             <option value="orderin" {%if order.status == 'orderin'%}selected{%endif%}>Order In Process</option>
                             <option value="shipped" {%if order.status == 'shipped'%}selected{%endif%}>Shipped</option>
                             <option value="completed" {%if order.status == 'completed'%}selected{%endif%}>Completed</option>

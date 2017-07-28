@@ -1,0 +1,104 @@
+{%if messages%}
+{%for message in messages%}
+<p class='{{message.tags}}'>{{message}}</p>
+{%endfor%}
+{%endif%}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Created At</th>
+            <th>User Level</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{user.id}}</td>
+            <td><a href="/users/show/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></td>
+            <td>{{user.email}}</td>
+            <td>{{user.created_at}}</td>
+            {% if user.user_level == 9 %}
+            <td>admin</td>
+            {% elif user.user_level == 1 %}
+            <td>normal</td>
+            {% endif %}
+            <td>
+                <a data-toggle='modal' href="#edituser{{user.id}}">Edit</a>
+                <div class='modal fade' id='edituser{{user.id}}' tabindex='-1' role='dialog'>
+                    <div class="modal-dialog">
+                        <div class='modal-content'>
+                            <div class='modal-header'>
+                                <h2>Edit User</h2>
+                                <h3>{{user.first_name}} {{user.last_name}}</h3>
+                            </div>
+                            <div class='modal-body'>
+                                <form action="/users/edit/{{user.id}}/update_user" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label>Email Address:
+                                            <input id="email" class="form-control" type="text" name="email" value="{{user.email}}">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>First Name:
+                                            <input class="form-control" type="text" name="first_name" id='first_name' value="{{user.first_name}}">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Last Name:
+                                            <input class="form-control" type="text" name="last_name" id='last_name' value="{{user.last_name}}">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-success" info='{{user.id}}' id='updateUser' type="submit">Save</button>
+                                    </div>
+                                </form>
+                                <form action="/users/edit/{{user.id}}/update_password">
+                                    <div class="form-group">
+                                        <label>Password:
+                                            <input class="form-control" type="password" id='password' name="password">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password Confirmation:
+                                            <input class="form-control" type="password" id='conf_pass' name="conf_pass">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit">Change Password</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a data-toggle='modal' href="#rmuser{{user.id}}">Remove</a>
+                <div class='modal fade' id='rmuser{{user.id}}' tabindex='-1' role='dialog'>
+                    <div class="modal-dialog">
+                        <div class='modal-content'>
+                            <div class='modal-header'>
+                                <h2>Are you sure?</h2>
+                            </div>
+                            <div class='modal-body'>
+                                <p>Are you sure you want to delete {{user.first_name}}?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button id='deleteUser' info='{{user.id}}' class='btn btn-primary'>Yes!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<ul class='pagination'>
+    {%for i in numPages%}
+    <li><a href="/dashboard/users/{{i}}">{{i}}</a></li>
+    {%endfor%}
+</ul>

@@ -1,0 +1,86 @@
+<div class="row-fluid">
+    <div class="col-md-3">
+        <h1>Manage Users</h1>
+    </div>
+    <div class="col-md-offset-11">
+        <a class="btn btn-success" id="spacing_add" href="/users/new">Add new</a>
+    </div>
+</div>
+<div id='userTable'>
+</div>
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    $(document).on('click', '.pagination>li>a', function(e){
+            e.preventDefault();
+            console.log('QQQ')
+            $.ajax({
+                url:$(this).attr('href'),
+                method: 'get',
+                success: function(res){
+                    $('#userTable').html(res);
+                }
+            })
+        })
+
+    $(document).on('click', '#updateUser', function(e){
+        e.preventDefault()
+        
+        editurl='/users/edit/'+$(this).attr('info')+'/update_user';
+        var correct='#editUser' + $(this).attr('info')
+        $.ajax({
+                url:editurl,
+                method:'post',
+                headers:{'X-CSRFToken': csrftoken},
+                data:{'first_name': $('#first_name').val(), 'last_name': $('#last_name').val(), 'email':$('#email').val()},
+                success: function(res){
+                    $('#prodTable').html(res)
+                    $(correct).modal('hide');
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                }
+            })
+        // var correct='#edit' + $(this).attr('info')
+        // $(correct).modal('toggle')
+    })
+
+    $(document).on('click', '#deleteUser', function(e){
+            e.preventDefault()
+            console.log('QQQDDDD')
+            editurl='/users/delete/'+$(this).attr('info');
+            var correct='#rmuser' + $(this).attr('info')
+            $.ajax({
+                    url:editurl,
+                    success: function(res){
+                        $('#userTable').html(res)
+                        $(correct).modal('hide');
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                    }
+                })
+        })
+
+    $.ajax({
+            url:'/dashboard/users/1',
+            // method: 'get',
+            success: function(res){
+                $('#userTable').html(res);
+            }
+        })
+</script>
+

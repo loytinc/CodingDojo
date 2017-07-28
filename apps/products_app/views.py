@@ -84,11 +84,11 @@ def processEdit(request, id):
         tempcategory=Category.objects.create(name=request.POST['newcategory'])
         prod.category=tempcategory
     prod.save()
-    return redirect('/dashboard/products')
+    return redirect('/dashboard/products/'+request.session['prodpage'])
 
 def delete(request, id):
     Product.objects.get(id=id).delete()
-    return redirect('/dashboard/products')
+    return redirect('/dashboard/products/'+request.session['prodpage'])
 
 def new(request):
     context = {

@@ -119,7 +119,7 @@ def page_process(request, page_num):
     return render(request, 'orders_app/searchorders.html', context)
 
 def status_process(request, status, page):
-
+    request.session['statuspage'] = status
     total_pages = Order.objects.filter(status=status).count()
     section_pages = Order.objects.filter(status=status)[(int(page)-1)*10:((int(page)-1)*10)+10]
 
@@ -136,6 +136,7 @@ def status_process(request, status, page):
 
 
 def search_process(request, searchname, page_num):
+    request.session['statuspage'] = searchname
     allOrders = []
     tempUsers = User.objects.filter(first_name__regex=r''+searchname+'')
     for user in tempUsers:
@@ -151,13 +152,18 @@ def search_process(request, searchname, page_num):
     context = {
         'total_pages' : newArr,
         'orders' : orderSection,
-        
     }
 
     return render(request, 'orders_app/searchorders.html', context)
 
 def changestatus(request, id, status):
+    print request.session['statuspage']
+    if request.session['statuspage'] != 'showall' and request.session['statuspage'] != 'orderin' and request.session['statuspage'] != 'shipped' and request.session['completed']:
+        return redirect('/carts/orders/search/'+request.session['search']+'/1')
+    if request.session['statuspage'] == 'showall':
+        return redirect('/carts/orders/search/1')
     temporder=Order.objects.get(id=id)
+    prev=request.session['statuspage']
     temporder.status=status
     temporder.save()
-    return redirect('/carts/orders/page/1')
+    return redirect('/carts/orders/status/'+prev+'/1')

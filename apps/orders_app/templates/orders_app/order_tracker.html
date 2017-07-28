@@ -1,68 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script
-  src="https://code.jquery.com/jquery-3.2.1.js"
-  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-  crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'userDashboard/style.css' %}">
-    <link rel="stylesheet" href="{% static 'userDashboard/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'userDashboard/bootstrap.js' %}">
-    <link rel="stylesheet" href="{% static 'userDashboard/bootstrap-theme.css' %}">
-    <link rel="stylesheet" href="{% static 'orders_app/style.css' %}">
-    <title>Order Tracker</title>
-</head>
-<body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <h1 class="navbar-brand" id="heading_name">Test App</h1>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a class="nav-link top_space" href="/dashboard">Dashboard</a></li>
-                    <li><a class="nav-link top_space" href="/logoff">Log off</a></li>
-                </ul>
-                <ul class="nav navbar-nav">
-                    <li><a class="nav-link top_space" href="/dashboard">Users</a></li>
-                    <li><a class="nav-link top_space" href="/dashboard/products/1">Products</a></li>
-                    <li class='active'><a class="nav-link top_space" href="/carts/orders">Orders</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container-fluid">
-        <div class="col-md-12">
+
             <div class="row-fluid">
-                <div class="col-md-3">
+                <div>
                     <h1>Manage Orders</h1>
                 </div>
+                <div style='margin-bottom: 10px;'>
+                    <input id="search" type="search" placeholder="Search">
+                    <select name="status" id='status'>
+                        <option value="showall">Show All</option>
+                        <option value="orderin">Order In Process</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
             </div>
-            <input id="search" type="search" placeholder="Search">
-            <form action="">
-                {% csrf_token %}
-                <select name="status" id='status'>
-                    <option value="showall">Show All</option>
-                    <option value="orderin">Order In Process</option>
-                    <option value="shipped">Shipped</option>
-                    <option value="completed">Completed</option>
-                </select>
-            </form>
             <div id="orderTable">
             </div>
-        </div>
-    </div>
 
     <script>
         $(document).on('click', '.pagination>li>a', function(e){
@@ -89,9 +41,7 @@
 
         $.ajax({
             url:'/carts/orders/page/1',
-            // method: 'get',
             success: function(res){
-                console.log(res)
                 $('#orderTable').html(res);
             }
         })
@@ -139,5 +89,3 @@
             })
         })
     </script>
-</body>
-</html>
