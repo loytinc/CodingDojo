@@ -173,6 +173,10 @@ def changestatus(request, id, status):
     if request.session['statuspage'] != 'showall' and request.session['statuspage'] != 'orderin' and request.session['statuspage'] != 'shipped' and request.session['completed']:
         return redirect('/carts/orders/search/'+request.session['search']+'/1')
     if request.session['statuspage'] == 'showall':
+        temporder=Order.objects.get(id=id)
+        prev=request.session['statuspage']
+        temporder.status=status
+        temporder.save()
         return redirect('/carts/orders/search/1')
     temporder=Order.objects.get(id=id)
     prev=request.session['statuspage']

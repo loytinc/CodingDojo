@@ -274,6 +274,7 @@ def update_user(request, user_id):
             user.email = request.POST['email']
             user.first_name = request.POST['first_name']
             user.last_name = request.POST['last_name']
+            
             user.save()
             # print user.first_name
             # print user.last_name

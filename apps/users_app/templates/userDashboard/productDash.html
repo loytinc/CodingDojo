@@ -3,7 +3,54 @@
         <h1>Manage Products</h1>
     </div>
     <div class="col-md-offset-11">
-        <a class="btn btn-success" id="spacing_add" href="/products/new">Add product</a>
+        <a data-toggle='modal' class="btn btn-success" id="spacing_add" href="#newprod">Add product</a>
+        <div class='modal fade' id='newprod' tabindex='-1' role='dialog'>
+                <div class="modal-dialog">
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h2>Add New Product</h2>
+                        </div>
+                        <div class='modal-body'>
+                            <form action="/products/new/process" method='POST'>
+                                {%csrf_token%}
+                                <div>
+                                    <label>Name:</label>
+                                    <input type="text" name='name'>
+                                </div>
+                                <div>
+                                    <label>Description:</label>
+                                    <textarea name="desc" id="" cols="30" rows="10"></textarea>
+                                </div>
+                                <div>
+                                    <label>Categories</label>
+                                    <select name="category">
+                                        {%for category in categories%}
+                                        <option value="{{category.name}}">{{category.name}}</option>
+                                        {%endfor%}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>or add a new category</label>
+                                    <input type="text" name='newcategory'>
+                                </div>
+                                <div>
+                                    <label>Price:</label>
+                                    <input type="number" step=0.01 name='price'>
+                                </div>
+                                <div>
+                                    <label>Inventory:</label>
+                                    <input type="number" name='inventory'>
+                                </div>
+                                <div>
+                                    <label>Image (link to image):</label>
+                                    <input type="text" name='image'>
+                                </div>
+                                <button type="submit" id='addprod'>Add Product</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 </div>
 <div id='prodTable'>
@@ -29,6 +76,10 @@
 
         $(document).on('change', '#first_name', function(e){
             console.log('GGGFGGGG')
+        })
+
+        $('#addprod').click(function(e){
+            e.preventDefault()
         })
 
         $(document).on('click', '#update', function(e){

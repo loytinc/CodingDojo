@@ -22,6 +22,10 @@
             vertical-align: top;
             margin-top: 25px;
             margin-right: 20px;
+            background: rgba(0,0,0,.1);
+            border-radius: 25px;
+            border: solid 3px rgba(0,0,0,.15);
+            margin-bottom: 20px;
         }
         #showproducts{
             width: 900px;
@@ -38,10 +42,23 @@
             display: inline-block;
             margin-right: 50px;;
             margin-bottom: 50px;
+            vertical-align: bottom;
+
         }
-        .item>a{
-            color: black;
-            text-decoration: none;
+        .item>p{
+          font-size: large;
+          color: rgba(0,123,0,.75);
+          text-decoration: none;
+          margin: 10px 0px 0px 0px;
+          padding: 10px;
+          text-align: center;
+        }
+
+        .item a{
+          color: rgba(0,123,255,.75);
+          text-align: center;
+          padding: 10px 20px 10px 20px;
+
         }
         ul{
             margin: 0;
@@ -57,40 +74,41 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <h1 class="navbar-brand" id="heading_name">T MAN</h1>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a class="nav-link top_space" href="/carts">Shopping Cart</a></li>
-                    <li><a class="nav-link top_space" href="/logoff">Log off</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container">
-        <div id="search" class='col-md-2'>
-            <h3>Search</h3>
-            <input type="text" name='search' id='searchbox' class='col-md-12'>
-            <h3 style='margin-top: 50px;'>Categories</h3>
-            <ul>
-                {%for category in categories%}
-                <li><a class='category' href="/products/{{category.id}}/1">{{category.name}}</a></li>
-                {%endfor%}
-                <li><a class='showall' href="/products/all/1">Show all</a></li>
-            </ul>
-        </div>
-        <div id="showproducts" class='col-md-10'></div>
+  <nav class="navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <h1 class="navbar-brand" id="heading_name">T MAN</h1>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a class="nav-link top_space" href="/carts">Shopping Cart</a></li>
+          <li><a class="nav-link top_space" href="/logoff">Log off</a></li>
+        </ul>
+      </div>
     </div>
-    <script>
+  </nav>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div id="search" class='col-md-2'>
+        <h3>Search</h3>
+        <input type="text" name='search' id='searchbox' class='col-md-12'>
+        <h3 style='margin-top: 50px; padding: 0px 0px 5px 0px;'>Categories</h3>
+        <ul>
+          {%for category in categories%}
+          <li><a class='category' href="/products/{{category.id}}/1">{{category.name}}</a></li>
+          {%endfor%}
+          <li style="margin-top: 20px; margin-bottom: 50px;"><a class='showall' href="/products/all/1">Show all</a></li>
+        </ul>
+      </div>
+      <div id="showproducts" class='col-md-10'></div>
+
+      <script>
         function getCookie(name) {
             var cookieValue = null;
             if (document.cookie && document.cookie != '') {
@@ -107,7 +125,7 @@
             return cookieValue;
         }
         var csrftoken = getCookie('csrftoken');
-        
+
         $.ajax({
                 url:'/products/all/1',
                 // method: 'get',
@@ -170,7 +188,7 @@
         })
 
         $('#searchbox').keyup(function(e){
-            
+
             if($(this).val() == ''){
                 $.ajax({
                 url:'/products/all/1',
@@ -192,5 +210,7 @@
             e.preventDefault()
         })
     </script>
+    </div>
+  </div>
 </body>
 </html>

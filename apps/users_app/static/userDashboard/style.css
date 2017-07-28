@@ -10,17 +10,25 @@
     margin-top: 28px;
 }
 
+#myCarousel {
+  min-height: 600px;
+  border-radius: 10px;
+}
+.carousel-inner {
+  border-radius: 10px;
+}
+
 .messages {
   color: rgba(255,0,0,1)
 }
 #signinPage {
   background: url('https://github.com/loyti/images/blob/master/tmanSignIn.jpg?raw=true');
   max-width: 100%;
-  min-height: 500px;
+  min-height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 0px -50px;
-  margin-top: -18px;
+  text-align: center;
 }
 
 #siginForm {
@@ -39,18 +47,23 @@
   color: #fff;
 }
 
-#signinForm a {
+#signinForm a, #signinForm>a {
   color: #eee;
-  text-align: inherit;
+  text-align: center;
+  font-size: large;
+}
+
+#loginA>a, #loginA a, #loginA>p, #loginA p{
+  color: #eee;
+  text-align: center;
   font-size: large;
 }
 
 #registerPage {
   background: url('https://github.com/loyti/images/blob/master/tmanregister.jpg?raw=true');
   max-width: 100%;
-  min-height: 500px;
+  min-height: 100%;
   background-size: cover;
-  margin-top: -18px;
 }
 
 #registerForm {
@@ -71,14 +84,20 @@
   background: url('https://github.com/loyti/images/blob/master/tmanhomeimg.jpg?raw=true') no-repeat center center;
   position: fixed;
   width: 100%;
-  height: 750px;
+  height: 100%;
   top:0;
   left:0;
   z-index: -1;
 }
 
 #homeHead {
-  color: #eee;
+  margin-bottom: -5px;
+  margin-top: -1px;
+  background: url('https://github.com/loyti/images/blob/master/tmanhomeimg.jpg?raw=true') no-repeat center center;
+  position: cover;
+  width: 100%;
+  height: 100%;
+  color: #fff;
   text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
 }
 #homeHead p {
@@ -86,25 +105,79 @@
   text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
 }
 
-#hotPress {
-  color: rgba(255,0,0,.75);
+#goSignin{
+  background-position: 00px -50px;
+  background: url('https://github.com/loyti/images/blob/master/tmanSignIn2.jpg?raw=true');
   margin: 10px;
+  min-height: 590px;
   padding: 10px;
+  padding-bottom: 150px;
   font-size: large;
   border-radius: 5px;
-  background-color: rgba(0,0,0, .1);
+  background-size: cover;
   letter-spacing: .1em;
-  text-shadow: 0 -1px 0 #fff, 0 1px 0 #2e2e2e, 0 2px 0 #2c2c2c, 0 3px 0 #2a2a2a, 0 4px 0 #282828, 0 5px 0 #262626, 0 6px 0 #242424, 0 7px 0 #222, 0 8px 0 #202020, 0 9px 0 #1e1e1e, 0 10px 0 #1c1c1c, 0 11px 0 #1a1a1a, 0 12px 0 #181818, 0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212, 0 22px 30px rgba(0, 0, 0, 0.9);
+  color: #eee;
+  text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
+}
+#goSignin>a, #goSignin a {
+  color: rgba(255,255,255,1);
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+}
+#hotPress {
+  margin: 10px;
+  min-height: 590px;
+  padding: 10px;
+  padding-bottom: 150px;
+  font-size: large;
+  border-radius: 5px;
+  background: url('https://github.com/loyti/images/blob/master/tmanretailtherap2.jpg?raw=true') no-repeat;
+  background-size: cover;
+  letter-spacing: .1em;
+  color: #eee;
+  text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
+}
+#hotPress>p {
+  background: rgba(0,0,0,.25);
+  border-radius: 5px;
+  padding: 10px;
 }
 
-
 #classics {
-  color: rgba(0,255,0,.9);
   margin: 10px;
+  min-height: 590px;
   padding: 10px;
+  padding-bottom: 150px;
   font-size: large;
   border-radius: 5px;
-  background-color: rgba(0,0,0, .1);
+  background: url('https://github.com/loyti/images/blob/master/tmanhiphop2.jpg?raw=true') no-repeat;
+  background-size: cover;
   letter-spacing: .05em;
-  text-shadow: 4px 4px 0px rgba(255,255,255,.1), 7px 7px 0px rgba(0, 0, 0, 0.2);
+  color: #eee;
+  text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
+}
+#classics>p {
+  background: rgba(0,0,0,.25);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+#kidsCorner {
+  margin: 10px;
+  min-height: 590px;
+  padding: 10px;
+  padding-bottom: 150px;
+  font-size: large;
+  border-radius: 5px;
+  background: url('https://github.com/loyti/images/blob/master/tmankidstrong2.jpg?raw=true') no-repeat;
+  background-size: cover;
+  letter-spacing: .1em;
+  color: #eee;
+  text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
+}
+
+#kidsCorner>p {
+  background: rgba(0,0,0,.25);
+  border-radius: 5px;
+  padding: 10px;
 }

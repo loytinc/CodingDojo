@@ -40,15 +40,15 @@
 
     $(document).on('click', '#updateUser', function(e){
         e.preventDefault()
-        console.log($('#first_namef').val())
+        console.log($('#first_name').val())
         editurl='/users/edit/'+$(this).attr('info')+'/update_user';
         var correct='#edituser' + $(this).attr('info')
-        // console.log($('#first_name').val())
+        console.log('AHH' + $('#first_name').val())
         $.ajax({
                 url:editurl,
                 method:'post',
                 headers:{'X-CSRFToken': csrftoken},
-                data:{'first_name': $('#first_namef').val(), 'last_name': $('#last_name').val(), 'email':$('#email').val()},
+                data:{'first_name': $('#first_name').val(), 'last_name': $('#last_name').val(), 'email':$('#email').val()},
                 success: function(res){
                     console.log('faaaaaaq')
                     $('#prodTable').html(res)
