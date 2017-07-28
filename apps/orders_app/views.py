@@ -13,14 +13,16 @@ def shoppingCart(request):
     shoppingCart = User.objects.get(id=request.session['user_id']).shoppingCart
 
     total = 0
-    for product in shoppingCart.products.all():
-        total += product.get_price_total()
+    for quantity in shoppingCart.quantities.all():
+        total += quantity.get_price_total()
 
-    request.session['cart_total'] = float(total)
+    request.session['cart_total'] = str(total)
+
 
     context = {
         'shoppingCart' : shoppingCart,
-        'total'        : request.session['cart_total']
+        'total'        : total,
+        'quantities'   : shoppingCart.quantities.all()
     }
     return render(request, 'orders_app/shoppingcart.html',context)
 
@@ -62,10 +64,19 @@ def checkout(request):
                 print 'Success!'
 
                 # add to quantity of product sold
-                for product in products:
-                    product.sold += product.quantity
-                    product.inventory -= product.quantity
-                    product.save()
+                quantities =  shoppingCart.quantities.all()
+                for quantity in quantities:
+                    print 'first'
+                    print quantity.product.sold
+                    print quantity.product.inventory
+                    print quantity.amount
+                    quantity.product.sold += quantity.amount
+                    quantity.product.inventory -= quantity.amount
+                    quantity.save()
+                    print 'second'
+                    print quantity.product.sold
+                    print quantity.product.inventory
+                    print quantity.amount
 
     return redirect('/carts/checkout/success')
 
@@ -74,6 +85,22 @@ def checkout_success(request):
     return render(request, 'orders_app/payment_confirmation.html')
 
 
+def remove_from_cart(request, product_id):
+    shoppingCart = User.objects.get(id=request.session['user_id']).shoppingCart
+    products = shoppingCart.products.all()
+    quantities = shoppingCart.quantities.all()
+    for product in products:
+        if int(product.id) == int(product_id):
+            shoppingCart.products.remove(product)
+    for quantity in quantities:
+        if int(quantity.product.id) == int(product_id):
+            quantity.delete()
+
+    return redirect('/carts')
+
+
+
+# ----------------------------
 # Order tracking
 def track_orders(request):
     orders = Order.objects.all()
@@ -92,14 +119,7 @@ def update_status(request):
     return redirect('/carts/orders')
 
 
-def view_order(request, order_id):
-    order = Order.objects.get(id=order_id)
-    products = order.shoppingCart.products.all()
-    context = {
-        'order' : order,
-        'products' : products
-    }
-    return render(request, 'orders_app/view_order.html', context)
+
 
 
 def page_process(request, page_num):
@@ -160,4 +180,17 @@ def changestatus(request, id, status):
     temporder=Order.objects.get(id=id)
     temporder.status=status
     temporder.save()
+
     return redirect('/carts/orders/page/1')
+
+# SINGLE ORDER VIEWING
+def view_order(request, order_id):
+    order = Order.objects.get(id=order_id)
+    products = order.shoppingCart.products.all()
+
+    context = {
+        'order' : order,
+        'products' : products,
+        'quantities' : order.shoppingCart.quantities.all()
+    }
+    return render(request, 'orders_app/view_order.html', context)

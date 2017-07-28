@@ -24,13 +24,15 @@
             <th>Price</th>
             <th>Quantity</th>
             <th>Total</th>
+            <th>Action</th>
         </tr>
-        {% for product in shoppingCart.products.all %}
+        {% for quantity in quantities %}
         <tr>
-            <td>{{product.name}}</td>
-            <td>{{product.price}}</td>
-            <td>{{product.quantity}}</td>
-            <td>{{product.get_price_total}}</td>
+            <td>{{quantity.product.name}}</td>
+            <td>{{quantity.product.price}}</td>
+            <td>{{quantity.amount}}</td>
+            <td>{{quantity.get_price_total}}</td>
+            <td><a href="/carts/{{quantity.product.id}}/remove">Remove from Cart</a></td>
         </tr>
         {% endfor %}
     </table>

@@ -62,10 +62,22 @@ def product(request, id):
 def addtocart(request):
     # changed id to request.POST['prodid'] by Art
     if request.method == 'POST':
+        shopping_cart = User.objects.get(id=request.session['user_id']).shoppingCart
+        products = shopping_cart.products.all()
         prod = Product.objects.get(id=request.POST['prodid'])
-        prod.quantity=request.POST['quantity']
-        prod.save()
-        User.objects.get(id=request.session['user_id']).shoppingCart.products.add(prod)
+        inCart = False
+        if products:
+            for product in products:
+                if int(product.id) == int(prod.id):
+                    inCart = True
+                    quantity = shopping_cart.quantities.get(product=prod)
+                    quantity.amount += int(request.POST['quantity'])
+                    quantity.save()
+        if not inCart:
+            print 'something'
+            shopping_cart.products.add(prod)
+            shopping_cart.save()
+            quantity=Quantity.objects.create(amount=int(request.POST['quantity']), shopping_cart=shopping_cart,product=prod)
     return redirect('/carts')
 
 def edit(request, id):
