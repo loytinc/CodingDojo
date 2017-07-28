@@ -8,7 +8,17 @@
     <link rel="stylesheet" href="{% static 'userDashboard/style.css' %}">
     <link rel="stylesheet" href="{% static 'userDashboard/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'userDashboard/bootstrap-theme.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>T-MAN Home Page</title>
+    <style>
+      .carousel-inner > .item > img,
+      .carousel-inner > .item > a > img {
+      width: 70%;
+      margin: auto;
+      }
+    </style>
 </head>
 <body>
     <nav class="navbar-inverse">
@@ -42,36 +52,90 @@
       </div>
     </div>
     <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="bg"></div>
-      </div>
-    </div>
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="col-md-1"></div>
-        <div class="col-md-4">
-          <div id="hotPress">
-            <h2>HOT OFF THE PRESS</h2>
-            <p>Embark upon your best retail therapy experience<p>
-            <p><a class="btn btn-primary" href='/products'>View Newest</a></p>
+      <row-fluid>
+      <div id="myCarousel" class="carousel slide">
+    <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li class="item1 active"></li>
+          <li class="item2"></li>
+          <li class="item3"></li>
+          <li class="item4"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          <div class="item active">
+            <div id="hotPress">
+              <div class="carousel-caption">
+                <h2>HOT OFF THE PRESS</h2>
+                <p>Embark upon your retail therapy experience</p>
+                <a class="btn btn-primary" href='/products'>View Newest</a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="col-md-3">
-          <div id="classics">
-            <h2>CLASSICS</h2>
-            <p>Hip trends join classic fashion for a fully stack style</p>
-            <p><a class="btn btn-primary" href='/products'>View Best Selling</a></p>
+          <div class="item">
+            <div id="classics">
+              <div class="carousel-caption">
+                <h2>CLASSICS</h2>
+                <p>Hip trends join classic fashion for a fully stack style</p>
+                <a class="btn btn-primary" href='/products'>View Best Selling</a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="col-md-3">
+        <div class="item">
           <div id="kidsCorner">
-            <h2>KIDS</h2>
-            <p>Bravery is best suited wearing <em>T-MAN's</em> clothing</p>
-            <p><a class="btn btn-primary" href='/products'>View Juniors</a></p>
+            <div class="carousel-caption">
+              <h2>KIDS</h2>
+              <p>Bravery is best suited wearing <em>T-MAN's</em> clothing</p>
+              <a class="btn btn-primary" href='/products'>View Juniors</a>
+            </div>
           </div>
         </div>
-        <div class="col-md-1"></div>
+        <div class="item">
+          <div id="goSignin">
+            <div class="carousel-caption">
+              <h2><a href="/signin">Sign In</a></h2>
+              <h2><a href="/register">Register</a></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" role="button">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
       </div>
     </div>
+  </div>
+  <script>
+$(document).ready(function(){
+    // Activate Carousel
+    $("#myCarousel").carousel();
+
+    // Enable Carousel Indicators
+    $(".item1").click(function(){
+        $("#myCarousel").carousel(0);
+    });
+    $(".item2").click(function(){
+        $("#myCarousel").carousel(1);
+    });
+    $(".item3").click(function(){
+        $("#myCarousel").carousel(2);
+    });
+    $(".item4").click(function(){
+        $("#myCarousel").carousel(3);
+    });
+
+    // Enable Carousel Controls
+    $(".left").click(function(){
+        $("#myCarousel").carousel("prev");
+    });
+    $(".right").click(function(){
+        $("#myCarousel").carousel("next");
+    });
+});
+</script>
 </body>
 </html>

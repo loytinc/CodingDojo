@@ -10,6 +10,18 @@
     margin-top: 28px;
 }
 
+#myCarousel {
+  min-height: 500px;
+  border-radius: 10px;
+}
+.carousel-inner {
+  border-radius: 10px;
+}
+.item {
+  min-height: 400px;
+}
+
+
 .messages {
   color: rgba(255,0,0,1)
 }
@@ -39,17 +51,16 @@
   color: #fff;
 }
 
-#signinForm a {
+#signinForm a, #signinForm>a {
   color: #eee;
   text-align: center;
   font-size: large;
-
 }
-#loginA {
+
+#loginA>a, #loginA a, #loginA>p, #loginA p{
   color: #eee;
   text-align: center;
   font-size: large;
-  
 }
 
 #registerPage {
@@ -84,6 +95,12 @@
 }
 
 #homeHead {
+  margin-bottom: -5px;
+  margin-top: -1px;
+  background: url('https://github.com/loyti/images/blob/master/tmanhomeimg.jpg?raw=true') no-repeat center center;
+  position: cover;
+  width: 100%;
+  height: 100%;
   color: #eee;
   text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
 }
@@ -92,8 +109,24 @@
   text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
 }
 
+#goSignin{
+  background-position: -500px 00px;
+  background: url('https://github.com/loyti/images/blob/master/tmanSignIn.jpg?raw=true');
+  margin: 10px;
+  min-height: 490px;
+  padding: 10px;
+  padding-bottom: 150px;
+  font-size: large;
+  border-radius: 5px;
+  background-size: cover;
+  letter-spacing: .1em;
+  color: #eee;
+  text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
+
+}
 #hotPress {
   margin: 10px;
+  min-height: 490px;
   padding: 10px;
   padding-bottom: 150px;
   font-size: large;
@@ -104,10 +137,15 @@
   color: #eee;
   text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
 }
-
+#hotPress>p {
+  background: rgba(0,0,0,.25);
+  border-radius: 5px;
+  padding: 10px;
+}
 
 #classics {
   margin: 10px;
+  min-height: 490px;
   padding: 10px;
   padding-bottom: 150px;
   font-size: large;
@@ -118,9 +156,15 @@
   color: #eee;
   text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
 }
+#classics>p {
+  background: rgba(0,0,0,.25);
+  border-radius: 5px;
+  padding: 10px;
+}
 
 #kidsCorner {
   margin: 10px;
+  min-height: 490px;
   padding: 10px;
   padding-bottom: 150px;
   font-size: large;
@@ -130,4 +174,10 @@
   letter-spacing: .1em;
   color: #eee;
   text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
+}
+
+#kidsCorner>p {
+  background: rgba(0,0,0,.25);
+  border-radius: 5px;
+  padding: 10px;
 }
