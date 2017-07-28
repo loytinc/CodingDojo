@@ -38,7 +38,7 @@
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="col-md-1"></div>
-      <div class="col-md-6">
+      <div class="col-md-10">
         <h2>Shopping Cart ( {{shoppingCart.products.count}} )</h2>
         <table class="table table-hover table-striped">
           <tr>
@@ -46,113 +46,107 @@
             <th>Price</th>
             <th>Quantity</th>
             <th>Total</th>
-<<<<<<< HEAD
-          </tr>
-          {% for product in shoppingCart.products.all %}
-          <tr>
-            <td>{{product.name}}</td>
-            <td>{{product.price}}</td>
-            <td>{{product.quantity}}</td>
-            <td>{{product.get_price_total}}</td>
-          </tr>
-          {% endfor %}
-        </table>
-      </div>
-      <div id="totalCart" class="col-md-2">
-        <p>Total: {{total}}</p>
-        <a href="/products">Continue Shopping</a>
-      </div>
-=======
             <th>Action</th>
-        </tr>
-        {% for quantity in quantities %}
-        <tr>
+          </tr>
+          {% for quantity in quantities %}
+          <tr>
             <td>{{quantity.product.name}}</td>
             <td>{{quantity.product.price}}</td>
             <td>{{quantity.amount}}</td>
             <td>{{quantity.get_price_total}}</td>
             <td><a href="/carts/{{quantity.product.id}}/remove">Remove from Cart</a></td>
-        </tr>
-        {% endfor %}
-    </table>
-    <p>Total: {{total}}</p>
-    <a href="/products">Continue Shopping</a>
->>>>>>> master
-
-
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>
   <div class="container-fluid">
     <div class="row-fluid">
-    <fieldset>
-      {% if messages %}
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <p>Total: {{total}}</p>
+        <a href="/products">Continue Shopping</a>
+        {% if messages %}
         <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
         </ul>
         {% endif %}
-        <legend>Shipping Information</legend>
         <form action="/carts/checkout" method="post">
+          <fieldset>
+            <legend>Shipping Information</legend>
             {% csrf_token %}
-            <label class="block_up">First Name:
-                <input id="s_first_name" type="text" name="shipping_first_name">
-            </label>
+            <div class="form-group row">
+              <label for="shipping_first_name" class="block_up" class="col-2 col-form-label">First Name:</label>
+              <div class="col-8">
+                <input id="s_first_name" class="form-control" type="text" name="shipping_first_name" id="shipping_first_name">
+              </div>
+            </div>
             <label class="block_up">Last Name:
-                <input id="s_last_name" type="text" name="shipping_last_name">
+              <input id="s_last_name" type="text" name="shipping_last_name">
             </label>
             <label class="block_up">Address:
-                <input id="s_address" type="text" name="shipping_address">
+              <input id="s_address" type="text" name="shipping_address">
             </label>
             <label class="block_up">Address 2:
-                <input id="s_address2" type="text" name="shipping_address2">
+              <input id="s_address2" type="text" name="shipping_address2">
             </label>
             <label class="block_up">City:
-                <input id="s_city" type="text" name="shipping_city">
+              <input id="s_city" type="text" name="shipping_city">
             </label>
             <label class="block_up">State:
-                <input id="s_state" type="text" name="shipping_state">
+              <input id="s_state" type="text" name="shipping_state">
             </label>
             <label class="block_up">Zipcode:
-                <input id="s_zipcode" type="text" name="shipping_zipcode">
+              <input id="s_zipcode" type="text" name="shipping_zipcode">
             </label>
-    </fieldset>
-    <fieldset>
-        <legend>Billing Information</legend>
-            <input id="sameAsShipping" type="checkbox" name="sameAsShipping">
-            <label for="sameAsShipping">Same as Shipping</label>
-            <label class="block_up">First Name:
+          </fieldset>
+          <fieldset>
+            <legend>Billing Information</legend>
+              <input id="sameAsShipping" type="checkbox" name="sameAsShipping">
+              <label for="sameAsShipping">Same as Shipping
+              </label>
+              <label class="block_up">First Name:
                 <input id="b_first_name" type="text" name="billing_first_name">
-            </label>
-            <label class="block_up">Last Name:
+              </label>
+              <label class="block_up">Last Name:
                 <input id="b_last_name" type="text" name="billing_last_name">
-            </label>
-            <label class="block_up">Address:
+              </label>
+              <label class="block_up">Address:
                 <input id="b_address" type="text" name="billing_address">
-            </label>
-            <label class="block_up">Address 2:
+              </label>
+              <label class="block_up">Address 2:
                 <input id="b_address2" type="text" name="billing_address2">
-            </label>
-            <label class="block_up">City:
+              </label>
+              <label class="block_up">City:
                 <input id="b_city" type="text" name="billing_city">
-            </label>
-            <label class="block_up">State:
+              </label>
+              <label class="block_up">State:
                 <input id="b_state" type="text" name="billing_state">
-            </label>
-            <label class="block_up">Zipcode:
+              </label>
+              <label class="block_up">Zipcode:
                 <input id="b_zipcode" type="text" name="billing_zipcode">
-            </label>
-            <label class="block_up">Card:
+              </label>
+              <label class="block_up">Card:
                 <input type="text" name="card">
-            </label>
-            <label class="block_up">Security Code:
+              </label>
+              <label class="block_up">Security Code:
                 <input type="text" name="security">
-            </label>
-            <label class="block_up">Expiration Date:
+              </label>
+              <label class="block_up">Expiration Date:
                 <input type="date" name="expiration">
-            </label>
-            <input type="submit" class="btn btn-primary" value="Pay">
+              </label>
+              <input type="submit" class="btn btn-primary" value="Pay">
+          </fieldset>
         </form>
-    </fieldset>
-    <script>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+  </div>
+      <script>
         // if #sameAsShipping has checked copy all values
         // from shipping form into billing form
         $('#sameAsShipping').click(function(){
