@@ -7,7 +7,7 @@ from ..users_app.models import *
 import re
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-noNumberPls = re.compile(r'^[a-zA-Z]+$')
+noNumberPls = re.compile(r'^[a-zA-Z ]+$')
 numbersOnly = re.compile(r'[\d]+')
 
 # Create your models here.
@@ -38,18 +38,22 @@ class ShoppingCartManager(models.Manager):
         if 'shipping_city' in postData:
             if len(postData['shipping_city']) == 0:
                 errors.append('Please enter your shipping city.')
+            elif not noNumberPls.match(postData['shipping_city']):
+                errors.append('Shipping city should only contain letters.')
 
         if 'shipping_state' in postData:
             if len(postData['shipping_state']) == 0:
                 errors.append('Please enter your shipping state.')
+            elif not noNumberPls.match(postData['shipping_state']):
+                errors.append('Shipping state should only contain letters.')
 
         if 'shipping_zipcode' in postData:
             if len(postData['shipping_zipcode']) == 0:
                 errors.append('Please enter your shipping zip code.')
             elif len(postData['shipping_zipcode']) != 5:
-                errors.append('Zip code must be a 5 digit number.')
+                errors.append('Shipping zip code must be a 5 digit number.')
             elif not numbersOnly.match(postData['shipping_zipcode']):
-                errors.append('Zip code should only be in numbers.')
+                errors.append('Shipping zip code should only be in numbers.')
 
         # billing validation
         
@@ -76,18 +80,22 @@ class ShoppingCartManager(models.Manager):
         if 'billing_city' in postData:
             if len(postData['billing_city']) == 0:
                 errors.append('Please enter your billing city.')
+        elif not noNumberPls.match(postData['billing_city']):
+                errors.append('Billing city should only contain letters.')
 
         if 'billing_state' in postData:
             if len(postData['billing_state']) == 0:
                 errors.append('Please enter your billing state.')
+            elif not noNumberPls.match(postData['billing_state']):
+                errors.append('Billing state should only contain letters.')
 
         if 'billing_zipcode' in postData:
             if len(postData['billing_zipcode']) == 0:
                 errors.append('Please enter your billing zip code.')
             elif len(postData['billing_zipcode']) != 5:
-                errors.append('Zip code must be a 5 digit number.')
+                errors.append('Billing zip code must be a 5 digit number.')
             elif not numbersOnly.match(postData['billing_zipcode']):
-                errors.append('Zip code should only be in numbers.')
+                errors.append('Billing zip code should only be in numbers.')
 
         if 'card' in postData:
             if len(postData['card']) == 0:

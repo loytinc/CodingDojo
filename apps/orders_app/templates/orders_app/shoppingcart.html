@@ -7,6 +7,10 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'orders_app/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.js"
+    integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+    crossorigin="anonymous"></script>
     <title>Shopping Cart</title>
 </head>
 <body>
@@ -45,25 +49,25 @@
         <form action="/carts/checkout" method="post">
             {% csrf_token %}
             <label class="block_up">First Name: 
-                <input type="text" name="shipping_first_name">
+                <input id="s_first_name" type="text" name="shipping_first_name">
             </label>
             <label class="block_up">Last Name: 
-                <input type="text" name="shipping_last_name">
+                <input id="s_last_name" type="text" name="shipping_last_name">
             </label>
             <label class="block_up">Address: 
-                <input type="text" name="shipping_address">
+                <input id="s_address" type="text" name="shipping_address">
             </label>
             <label class="block_up">Address 2: 
-                <input type="text" name="shipping_address2">
+                <input id="s_address2" type="text" name="shipping_address2">
             </label>
             <label class="block_up">City: 
-                <input type="text" name="shipping_city">
+                <input id="s_city" type="text" name="shipping_city">
             </label>
             <label class="block_up">State: 
-                <input type="text" name="shipping_state">
+                <input id="s_state" type="text" name="shipping_state">
             </label>
             <label class="block_up">Zipcode:
-                <input type="text" name="shipping_zipcode">
+                <input id="s_zipcode" type="text" name="shipping_zipcode">
             </label>
     </fieldset>
     <fieldset>
@@ -71,25 +75,25 @@
             <input id="sameAsShipping" type="checkbox" name="sameAsShipping">
             <label for="sameAsShipping">Same as Shipping</label>
             <label class="block_up">First Name: 
-                <input type="text" name="billing_first_name">
+                <input id="b_first_name" type="text" name="billing_first_name">
             </label>
             <label class="block_up">Last Name: 
-                <input type="text" name="billing_last_name">
+                <input id="b_last_name" type="text" name="billing_last_name">
             </label>
             <label class="block_up">Address: 
-                <input type="text" name="billing_address">
+                <input id="b_address" type="text" name="billing_address">
             </label>
             <label class="block_up">Address 2: 
-                <input type="text" name="billing_address2">
+                <input id="b_address2" type="text" name="billing_address2">
             </label>
             <label class="block_up">City: 
-                <input type="text" name="billing_city">
+                <input id="b_city" type="text" name="billing_city">
             </label>
             <label class="block_up">State: 
-                <input type="text" name="billing_state">
+                <input id="b_state" type="text" name="billing_state">
             </label>
             <label class="block_up">Zipcode:
-                <input type="text" name="billing_zipcode">
+                <input id="b_zipcode" type="text" name="billing_zipcode">
             </label>
             <label class="block_up">Card:
                 <input type="text" name="card">
@@ -103,5 +107,29 @@
             <input type="submit" class="btn btn-primary" value="Pay">
         </form>
     </fieldset>
+    <script>
+        // if #sameAsShipping has checked copy all values 
+        // from shipping form into billing form
+        $('#sameAsShipping').click(function(){
+            if ( $(this).is(':checked') ) {
+                var first_name = $('#s_first_name').val();
+                var last_name = $('#s_last_name').val();
+                var address = $('#s_address').val();
+                var address2 = $('#s_address2').val();
+                var city = $('#s_city').val();
+                var state = $('#s_state').val();
+                var zipcode = $('#s_zipcode').val();
+
+                $('#b_first_name').val(first_name);
+                $('#b_last_name').val(last_name);
+                $('#b_address').val(address);
+                $('#b_address2').val(address2);
+                $('#b_city').val(city);
+                $('#b_state').val(state);
+                $('#b_zipcode').val(zipcode);
+            } 
+
+        })
+    </script>
 </body>
 </html>
