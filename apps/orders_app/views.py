@@ -66,17 +66,9 @@ def checkout(request):
                 # add to quantity of product sold
                 quantities =  shoppingCart.quantities.all()
                 for quantity in quantities:
-                    print 'first'
-                    print quantity.product.sold
-                    print quantity.product.inventory
-                    print quantity.amount
                     quantity.product.sold += quantity.amount
                     quantity.product.inventory -= quantity.amount
-                    quantity.save()
-                    print 'second'
-                    print quantity.product.sold
-                    print quantity.product.inventory
-                    print quantity.amount
+                    quantity.product.save()
 
     return redirect('/carts/checkout/success')
 
