@@ -32,7 +32,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <h1 class="navbar-brand" id="heading_name">Test App</h1>
+                <h1 class="navbar-brand" id="heading_name">T MAN</h1>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
@@ -56,22 +56,22 @@
     </div>
 
     <script>
-        $(document).on('click', '.pagination>li>a', function(e){
-            e.preventDefault();
-            // console.log()
-            $.ajax({
-                url:$(this).attr('href'),
-                // method: 'get',
-                success: function(res){
-                    // console.log(res)
-                    console.log('AFASDFADFA')
-                    // $('#tablecontainer').html(res);
-                }
-            })
-        })
+        // $(document).on('click', '.pagination>li>a', function(e){
+        //     e.preventDefault();
+        //     // console.log()
+        //     $.ajax({
+        //         url:$(this).attr('href'),
+        //         // method: 'get',
+        //         success: function(res){
+        //             // console.log(res)
+        //             console.log('AFASDFADFA')
+        //             // $('#tablecontainer').html(res);
+        //         }
+        //     })
+        // })
 
         $.ajax({
-                url:'/dashboard/users/1',
+                url:'/dashboard/users',
                 success: function(res){
                     $('#tableContainer').html(res);
                 }
@@ -94,7 +94,7 @@
             $(this).parent().siblings().removeClass("active")
             $(this).parent().addClass("active")
             $.ajax({
-                url:'/dashboard/users/1',
+                url:'/dashboard/users',
                 success: function(res){
                     $('#tableContainer').html(res);
                 }

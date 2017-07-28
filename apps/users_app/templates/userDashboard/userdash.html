@@ -3,43 +3,84 @@
         <h1>Manage Users</h1>
     </div>
     <div class="col-md-offset-11">
-        {% if isAdmin %}
         <a class="btn btn-success" id="spacing_add" href="/users/new">Add new</a>
-        {% endif %}
     </div>
 </div>
-<div>
-    <table class="table table-hover">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Created At</th>
-            <th>User Level</th>
-            <th>Actions</th>
-        </tr>
-        {% for user in users %}
-        <tr>
-            <td>{{user.id}}</td>
-            <td><a href="/users/show/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></td>
-            <td>{{user.email}}</td>
-            <td>{{user.created_at}}</td>
-            {% if user.user_level == 9 %}
-            <td>admin</td>
-            {% elif user.user_level == 1 %}
-            <td>normal</td>
-            {% endif %}
-            <td>
-                <a href="/users/edit/{{user.id}}">Edit</a>
-                <a href="/dashboard/admin/remove/{{user.id}}">Remove</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+<div id='userTable'>
 </div>
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
 
-<ul class='pagination'>
-    {%for i in numPages%}
-    <li><a href="/dashboard/users/{{i}}">{{i}}</a></li>
-    {%endfor%}
-</ul>
+    $(document).on('click', '.pagination>li>a', function(e){
+            e.preventDefault();
+            console.log('QQQ')
+            $.ajax({
+                url:$(this).attr('href'),
+                method: 'get',
+                success: function(res){
+                    $('#userTable').html(res);
+                }
+            })
+        })
+
+    $(document).on('click', '#updateUser', function(e){
+        e.preventDefault()
+        
+        editurl='/users/edit/'+$(this).attr('info')+'/update_user';
+        var correct='#editUser' + $(this).attr('info')
+        $.ajax({
+                url:editurl,
+                method:'post',
+                headers:{'X-CSRFToken': csrftoken},
+                data:{'first_name': $('#first_name').val(), 'last_name': $('#last_name').val(), 'email':$('#email').val()},
+                success: function(res){
+                    $('#prodTable').html(res)
+                    $(correct).modal('hide');
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                }
+            })
+        // var correct='#edit' + $(this).attr('info')
+        // $(correct).modal('toggle')
+    })
+
+    $(document).on('click', '#deleteUser', function(e){
+            e.preventDefault()
+            console.log('QQQDDDD')
+            editurl='/users/delete/'+$(this).attr('info');
+            var correct='#rmuser' + $(this).attr('info')
+            $.ajax({
+                    url:editurl,
+                    success: function(res){
+                        $('#userTable').html(res)
+                        $(correct).modal('hide');
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                    }
+                })
+        })
+
+    $.ajax({
+            url:'/dashboard/users/1',
+            // method: 'get',
+            success: function(res){
+                $('#userTable').html(res);
+            }
+        })
+</script>
+

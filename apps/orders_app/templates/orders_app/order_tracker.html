@@ -1,19 +1,18 @@
 
             <div class="row-fluid">
-                <div class="col-md-3">
+                <div>
                     <h1>Manage Orders</h1>
                 </div>
+                <div style='margin-bottom: 10px;'>
+                    <input id="search" type="search" placeholder="Search">
+                    <select name="status" id='status'>
+                        <option value="showall">Show All</option>
+                        <option value="orderin">Order In Process</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
             </div>
-            <input id="search" type="search" placeholder="Search">
-            <form action="">
-                {% csrf_token %}
-                <select name="status" id='status'>
-                    <option value="showall">Show All</option>
-                    <option value="orderin">Order In Process</option>
-                    <option value="shipped">Shipped</option>
-                    <option value="completed">Completed</option>
-                </select>
-            </form>
             <div id="orderTable">
             </div>
 
@@ -42,7 +41,6 @@
 
         $.ajax({
             url:'/carts/orders/page/1',
-            // method: 'get',
             success: function(res){
                 $('#orderTable').html(res);
             }
