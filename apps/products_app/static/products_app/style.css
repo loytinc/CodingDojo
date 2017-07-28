@@ -9,3 +9,12 @@
 #spacing_add {
     margin-top: 28px;
 }
+
+img {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+#pagPage>a {
+  margin-top: 250px;
+
+}
