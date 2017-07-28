@@ -46,6 +46,7 @@
             <th>Price</th>
             <th>Quantity</th>
             <th>Total</th>
+<<<<<<< HEAD
           </tr>
           {% for product in shoppingCart.products.all %}
           <tr>
@@ -61,6 +62,22 @@
         <p>Total: {{total}}</p>
         <a href="/products">Continue Shopping</a>
       </div>
+=======
+            <th>Action</th>
+        </tr>
+        {% for quantity in quantities %}
+        <tr>
+            <td>{{quantity.product.name}}</td>
+            <td>{{quantity.product.price}}</td>
+            <td>{{quantity.amount}}</td>
+            <td>{{quantity.get_price_total}}</td>
+            <td><a href="/carts/{{quantity.product.id}}/remove">Remove from Cart</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>Total: {{total}}</p>
+    <a href="/products">Continue Shopping</a>
+>>>>>>> master
 
 
   <div class="container-fluid">

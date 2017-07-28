@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^$', views.shoppingCart),
     url(r'^checkout$', views.checkout),
     url(r'^checkout/success$', views.checkout_success),
+    url(r'^(?P<product_id>\d+)/remove$', views.remove_from_cart),
 
     # order tracker
     url(r'^orders$', views.track_orders),
