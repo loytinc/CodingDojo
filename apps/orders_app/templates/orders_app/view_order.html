@@ -10,46 +10,66 @@
     <title>View Order</title>
 </head>
 <body>
-    <div>
-        <p>Order ID: {{order.id}}</p>
-        <p>Customer Shipping Info:</p> 
-        <p>Name: {{order.shippingInfo.first_name}} {{order.shippingInfo.last_name}}</p>
-        <p>Address: {{order.shippingInfo.address}}</p>
-        <p>City: {{order.shippingInfo.city}}</p>
-        <p>State: {{order.shippingInfo.state}}</p>
-        <p>Zip: {{order.shippingInfo.zipcode}}</p>
-        <p></p>
-        <p>Name: {{order.billingInfo.first_name}} {{order.billingInfo.last_name}}</p>
-        <p>Address: {{order.billingInfo.address}}</p>
-        <p>City: {{order.billingInfo.city}}</p>
-        <p>State: {{order.billingInfo.state}}</p>
-        <p>Zip: {{order.billingInfo.zipcode}}</p>
-        <p></p>
-    </div>
-    <p>Status: {{order.status}}</p>
-    <table class="table">
-        <tr>
-            <th>ID</th>
-            <th>Item</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-        </tr>
-        {% for quantity in quantities %}
-        <tr>
-            <td>{{quantity.product.id}}</td>
-            <td>{{quantity.product.name}}</td>
-            <td>{{quantity.product.price}}</td>
-            <td>{{quantity.amount}}</td>
-            <td>{{quantity.get_price_total}}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="container" style="margin-top: 30px;">
+        <div>
+            <div class="row">
+                <div class="col-md-10"><p style="font-size: 30px; font-weight: bold;">Order ID: {{order.id}}</p></div>
+                <div class="col-md-2"><a href="/dashboard" class="btn btn-primary">Go back to Dashboard</a></div>
+            </div>
+            <fieldset>
+                <legend><strong>Shipping Info:</strong></legend> 
+                <p><strong>Name: </strong>{{order.shippingInfo.first_name}} {{order.shippingInfo.last_name}}</p>
+                <p><strong>Address: </strong>{{order.shippingInfo.address}}</p>
+                <p><strong>City: </strong>{{order.shippingInfo.city}}</p>
+                <p><strong>State: </strong>{{order.shippingInfo.state}}</p>
+                <p><strong>Zip: </strong>{{order.shippingInfo.zipcode}}</p>
+            </fieldset>
+            <p></p>
+            <fieldset>
+                <legend><strong>Billing Info:</strong></legend>
+                <p><strong>Name: </strong>{{order.billingInfo.first_name}} {{order.billingInfo.last_name}}</p>
+                <p><strong>Address: </strong>{{order.billingInfo.address}}</p>
+                <p><strong>City: </strong>{{order.billingInfo.city}}</p>
+                <p><strong>State: </strong>{{order.billingInfo.state}}</p>
+                <p><strong>Zip: </strong>{{order.billingInfo.zipcode}}</p>
+            </fieldset>
+            <p></p>
+        </div>
+        <p style="background: #53c14d; display: inline-block; padding: 5px; font-weight: bold;">Status: 
+            {%if order.status == "orderin"%}
+            Order In Process
+            {%elif order.status == "shipped"%}
+            Shipped
+            {%elif order.status == "completed"%}
+            Completed
+            {%elif order.status == "cancelled"%}
+            Cancelled
+            {% endif %}
+            </p>
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+            {% for quantity in quantities %}
+            <tr>
+                <td>{{quantity.product.id}}</td>
+                <td>{{quantity.product.name}}</td>
+                <td>{{quantity.product.price}}</td>
+                <td>{{quantity.amount}}</td>
+                <td>{{quantity.get_price_total}}</td>
+            </tr>
+            {% endfor %}
+        </table>
 
-    <div>
-        <p>Sub total: ${{order.total}}</p>
-        <p>Shipping: $0.00</p>
-        <p>Total Price: ${{order.total}}</p>
+        <div style="font-weight: bold;">
+            <p>Sub total: ${{order.total}}</p>
+            <p>Shipping: $0.00</p>
+            <p>Total Price: ${{order.total}}</p>
+        </div>
     </div>
 </body>
 </html>

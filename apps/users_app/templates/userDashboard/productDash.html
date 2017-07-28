@@ -1,10 +1,69 @@
 <div class="row-fluid">
-    <div class="col-md-3">
+    <div class='row'>
         <h1>Manage Products</h1>
     </div>
-    <div class="col-md-offset-11">
-        <a class="btn btn-success" id="spacing_add" href="/products/new">Add product</a>
+    <div>
+        <div class='row'>
+            <div class='col-md-10'>
+                <input id="search" type="search" placeholder="Search">
+                <select id='category'>
+                    <option value="-1">Show all</option>
+                    {%for category in categories%}
+                    <option value="{{category.id}}">{{category.name}}</option>
+                    {%endfor%}
+                </select>
+            </div>
+            <a data-toggle='modal' class="btn btn-success" id="fixspacing" href="#newprod">Add product</a>
+            <div class='modal fade' id='newprod' tabindex='-1' role='dialog'>
+                <div class="modal-dialog">
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h2>Add New Product</h2>
+                        </div>
+                        <div class='modal-body'>
+                            <form action="/products/new/process" method='POST'>
+                                {%csrf_token%}
+                                <div class='form-group'>
+                                    <label>Name:</label>
+                                    <input class='form-control' id='name' type="text" name='name'>
+                                </div>
+                                <div class='form-group'>
+                                    <label>Description:</label>
+                                    <textarea class='form-control' name="desc" id="description" cols="30" rows="10"></textarea>
+                                </div>
+                                <div class='form-group'>
+                                    <label>Categories</label>
+                                    <select class='form-control' name="category" id='ncategory' value={{category.name}}>
+                                        {%for category in categories%}
+                                        <option value="{{category.name}}">{{category.name}}</option>
+                                        {%endfor%}
+                                    </select>
+                                </div>
+                                <div class='form-group'>
+                                    <label>or add a new category</label>
+                                    <input class='form-control' id='newcategory' type="text" name='newcategory'>
+                                </div>
+                                <div class='form-group'>
+                                    <label>Price:</label>
+                                    <input class='form-control' id='price' type="number" step=0.01 name='price'>
+                                </div>
+                                <div class='form-group'>
+                                    <label>Inventory:</label>
+                                    <input class='form-control' type="number" name='inventory' id='inventory'>
+                                </div>
+                                <div class='form-group'>
+                                    <label>Image (link to image):</label>
+                                    <input class='form-control' type="text" name='image' id='image'>
+                                </div>
+                                <button type="submit" class='btn btn-primary' id='addprod'>Add Product</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+        
 </div>
 <div id='prodTable'>
 </div>
@@ -31,16 +90,63 @@
             console.log('GGGFGGGG')
         })
 
+        $('#category').change(function(e){
+            $.ajax({
+                url:'/dashboard/products/'+$(this).val()+'/1',
+                method: 'get',
+                success: function(res){
+                    $('#prodTable').html(res);
+                }
+            })
+        })
+
+        $('#search').keyup(function(e){
+            if($(this).val()==''){
+                $.ajax({
+                url:'/dashboard/products/1',
+                method: 'get',
+                success: function(res){
+                    $('#prodTable').html(res);
+                }
+            })
+            }
+            $.ajax({
+                url:'/dashboard/products/search/'+$(this).val()+'/1',
+                method: 'get',
+                success: function(res){
+                    $('#prodTable').html(res);
+                }
+            })
+        })
+
+        $('#addprod').click(function(e){
+            e.preventDefault()
+            $.ajax({
+                    url:'/products/new/process',
+                    method:'post',
+                    headers:{'X-CSRFToken': csrftoken},
+                    data:{'name': $('#name').val(), 'desc': $('#description').val(), 'price':$('#price').val(), 'category':$('#ncategory').val(), 'newcategory':$('#newcategory').val(), 'inventory':$('#inventory').val(), 'image':$('#image').val()},
+                    success: function(res){
+                        $('#prodTable').html(res)
+                        $('#newprod').modal('hide');
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                    }
+                })
+
+        })
+
         $(document).on('click', '#update', function(e){
             e.preventDefault()
             
             editurl='/products/edit/'+$(this).attr('info')+'/process';
+            currid=$(this).attr('info')
             var correct='#edit' + $(this).attr('info')
             $.ajax({
                     url:editurl,
                     method:'post',
                     headers:{'X-CSRFToken': csrftoken},
-                    data:{'name': $('#name').val(), 'description': $('#description').val(), 'price':$('#price').val(), 'category':$('#category').val(), 'newcategory':$('#newcategory').val()},
+                    data:{'name': $('#ename'+currid).val(), 'description': $('#edescription'+currid).val(), 'price':$('#eprice'+currid).val(), 'category':$('#ecategory'+currid).val(), 'newcategory':$('#enewcategory'+currid).val()},
                     success: function(res){
                         $('#prodTable').html(res)
                         $(correct).modal('hide');
