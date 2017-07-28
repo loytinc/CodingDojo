@@ -259,17 +259,25 @@ def add_user(request):
 
 def update_user(request, user_id):
     if request.method == 'POST':
+        # print 'POOOOOONJNNJNLNK'
         errors = User.objects.user_validator(request.POST)
         if len(errors):
+            print 'POOOOOONJNNJNLNK'
             for error in errors:
                 messages.error(request, error)
-            return redirect('/users/edit/'+str(user_id))
+                # print error
+            # return redirect('/users/edit/'+str(user_id))
         else:
+            print 'waaaaa'
             user = User.objects.get(id=user_id)
+            # print request.POST['first_name']
             user.email = request.POST['email']
             user.first_name = request.POST['first_name']
             user.last_name = request.POST['last_name']
             user.save()
+            # print user.first_name
+            # print user.last_name
+            # print user.email
             messages.success(request,'Successfully updated User information.')
 
     return redirect('/dashboard/users/'+request.session['userpage'])
