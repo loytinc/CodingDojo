@@ -25,7 +25,7 @@
                   <span class="icon-bar"><a class="nav-link top_space" href="/register">Register</a></span>
                   <span class="icon-bar"></span>
               </button>
-              <h1 class="navbar-brand" id="heading_name">T-MAN</h1>
+              <img class="logo"src="https://github.com/loyti/images/blob/master/white+t.png?raw=true" max-width="25px" max-height="25px"><h1 class="navbar-brand" id="heading_name">T-MAN</h1>
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
@@ -66,8 +66,8 @@
     <div class="row-fluid">
       <div class="col-md-3"></div>
       <div class="col-md-6">
-        <p>Total: {{total}}</p>
-        <a href="/products">Continue Shopping</a>
+        <h4 style="text-align: center;">Total: ${{total}}</h4>
+        <h3 style="text-align: center;"><a href="/products">Continue Shopping</a></h3>
         {% if messages %}
         <ul class="messages">
           {% for message in messages %}
@@ -80,65 +80,112 @@
             <legend>Shipping Information</legend>
             {% csrf_token %}
             <div class="form-group row">
-              <label for="shipping_first_name" class="block_up" class="col-2 col-form-label">First Name:</label>
+              <label class="col-2 col-form-label" class="block_up">First Name:</label>
               <div class="col-8">
-                <input id="s_first_name" class="form-control" type="text" name="shipping_first_name" id="shipping_first_name">
+                <input id="s_first_name" class="form-control" type="text" name="shipping_first_name">
               </div>
             </div>
-            <label class="block_up">Last Name:
-              <input id="s_last_name" type="text" name="shipping_last_name">
-            </label>
-            <label class="block_up">Address:
-              <input id="s_address" type="text" name="shipping_address">
-            </label>
-            <label class="block_up">Address 2:
-              <input id="s_address2" type="text" name="shipping_address2">
-            </label>
-            <label class="block_up">City:
-              <input id="s_city" type="text" name="shipping_city">
-            </label>
-            <label class="block_up">State:
-              <input id="s_state" type="text" name="shipping_state">
-            </label>
-            <label class="block_up">Zipcode:
-              <input id="s_zipcode" type="text" name="shipping_zipcode">
-            </label>
+            <div class="form-group row">
+              <label class="block_up" class="col-2 col-form-label">Last Name:</label>
+              <div class="col-8">
+                <input id="s_last_name" class="form-control" type="text" name="shipping_last_name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="block_up" class="col-2 col-form-label">Address:</label>
+              <div class="col-8">
+                <input id="s_address" class="form-control" type="text" name="shipping_address">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="block_up" class="col-2 col-form-label">Address 2:</label>
+                <div class="col-8">
+                <input id="s_address2" class="form-control" type="text" name="shipping_address2">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="block_up" class="col-2 col-form-label">City:</label>
+              <div class="col-8">
+                <input id="s_city" class="form-control" type="text" name="shipping_city">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="block_up" class="col-2 col-form-label">State:</label>
+              <div class="col-8">
+                <input id="s_state" class="form-control" type="text" name="shipping_state">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="block_up" class="col-2 col-form-label">Zipcode:</label>
+              <div class="col-8">
+                <input id="s_zipcode" class="form-control" type="text" name="shipping_zipcode">
+              </div>
+            </div>
           </fieldset>
           <fieldset>
             <legend>Billing Information</legend>
               <input id="sameAsShipping" type="checkbox" name="sameAsShipping">
-              <label for="sameAsShipping">Same as Shipping
-              </label>
-              <label class="block_up">First Name:
-                <input id="b_first_name" type="text" name="billing_first_name">
-              </label>
-              <label class="block_up">Last Name:
-                <input id="b_last_name" type="text" name="billing_last_name">
-              </label>
-              <label class="block_up">Address:
-                <input id="b_address" type="text" name="billing_address">
-              </label>
-              <label class="block_up">Address 2:
-                <input id="b_address2" type="text" name="billing_address2">
-              </label>
-              <label class="block_up">City:
-                <input id="b_city" type="text" name="billing_city">
-              </label>
-              <label class="block_up">State:
-                <input id="b_state" type="text" name="billing_state">
-              </label>
-              <label class="block_up">Zipcode:
-                <input id="b_zipcode" type="text" name="billing_zipcode">
-              </label>
-              <label class="block_up">Card:
-                <input type="text" name="card">
-              </label>
-              <label class="block_up">Security Code:
-                <input type="text" name="security">
-              </label>
-              <label class="block_up">Expiration Date:
-                <input type="date" name="expiration">
-              </label>
+              <label for="sameAsShipping">Same as Shipping</label>
+              <div class="form-group row">
+                <label class="block_up" class="col-2 col-form-label">First Name:</label>
+                <div class="col-8">
+                  <input id="b_first_name" class="form-control" type="text" name="billing_first_name">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="block_up" class="col-2 col-form-label">Last Name:</label>
+                <div class="col-8">
+                  <input id="b_last_name" class="form-control" type="text" name="billing_last_name">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="block_up" class="col-2 col-form-label">Address:</label>
+                  <div class="col-8">
+                    <input id="b_address" class="form-control" type="text" name="billing_address">
+                  </div>
+                </div>
+              <div class="form-group row">
+                <label class="block_up" class="col-2 col-form-label">Address 2:</label>
+                <div class="col-8">
+                  <input id="b_address2" class="form-control" type="text" name="billing_address2">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="block_up" class="col-2 col-form-label">City:</label>
+                <div class="col-8">
+                  <input id="b_city" class="form-control" type="text" name="billing_city">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="block_up" class="col-2 col-form-label">State:</label>
+                  <div class="col-8">
+                  <input id="b_state" class="form-control" type="text" name="billing_state">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="block_up" class="col-2 col-form-label">Zipcode:</label>
+                <div class="col-8">
+                  <input id="b_zipcode" class="form-control" type="text" name="billing_zipcode">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="block_up" class="col-2 col-form-label">Card:</label>
+                  <div class="col-8">
+                  <input type="text" class="form-control" name="card">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="block_up" class="col-2 col-form-label">Security Code:</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" name="security">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="block_up" class="col-2 col-form-label">Expiration Date:</label>
+                  <div class="col-8">
+                  <input type="date" class="form-control" name="expiration">
+                </div>
+              </div>
               <input type="submit" class="btn btn-primary" value="Pay">
           </fieldset>
         </form>

@@ -40,21 +40,21 @@
     <div class="row-fluid">
       <div class="col-md-1"></div>
       <div class="col-md-3">
-        <h2>{{product.name}}</h2>
-        <img src="{{product.image}}" alt="prodimg">
+        <h2 id="productName">{{product.name}}</h2>
+        <img src="{{product.image}}" alt="prodimg" max-width="200px">
       </div>
       <div class="col-md-2"></div>
-      <div class="col-md-3">
+      <div id="prodDesc" class="col-md-3">
         {{product.description}}
-        <form action="/products/addtocart" method="post">
+        <form id="addCart" action="/products/addtocart" method="post">
           {% csrf_token %}
           <input type="hidden" name='prodid' value='{{product.id}}'>
-          <select name="quantity" id="item priice">
+          <select id="addCount" class="btn btn-success" name="quantity" id="item priice">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
           </select>
-          <input type="submit" value='Add to Cart'>
+          <input class="btn btn-success" type="submit" value='Add to Cart'>
         </form>
       </div>
     </div>
