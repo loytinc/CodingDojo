@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% load static %}
     <link rel="stylesheet" href="{% static 'orders_app/style.css' %}">
+    <link rel="stylesheet" href="{% static 'userDashboard/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'userDashboard/bootstrap-theme.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script
     src="https://code.jquery.com/jquery-3.2.1.js"
@@ -14,31 +16,57 @@
     <title>Shopping Cart</title>
 </head>
 <body>
-    <nav>
-        <h1>Title of Site Goes Here</h1>
-        Shopping Cart ( {{shoppingCart.products.count}} )
-    </nav>
-    <table class="table">
-        <tr>
+  <nav class="navbar-inverse">
+      <div class="container-fluid">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"><a class="nav-link top_space" href="/signin">Sign In</a></span>
+                  <span class="icon-bar"><a class="nav-link top_space" href="/register">Register</a></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <h1 class="navbar-brand" id="heading_name">T-MAN</h1>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                  <li><a class="nav-link top_space" href="/signin">Sign In</a></li>
+                  <li><a class="nav-link top_space" href="/register">Register</a></li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="col-md-1"></div>
+      <div class="col-md-6">
+        <h2>Shopping Cart ( {{shoppingCart.products.count}} )</h2>
+        <table class="table table-hover table-striped">
+          <tr>
             <th>Item</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Total</th>
-        </tr>
-        {% for product in shoppingCart.products.all %}
-        <tr>
+          </tr>
+          {% for product in shoppingCart.products.all %}
+          <tr>
             <td>{{product.name}}</td>
             <td>{{product.price}}</td>
             <td>{{product.quantity}}</td>
             <td>{{product.get_price_total}}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <p>Total: {{total}}</p>
-    <a href="/products">Continue Shopping</a>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      <div id="totalCart" class="col-md-2">
+        <p>Total: {{total}}</p>
+        <a href="/products">Continue Shopping</a>
+      </div>
 
+
+  <div class="container-fluid">
+    <div class="row-fluid">
     <fieldset>
-        {% if messages %}
+      {% if messages %}
         <ul class="messages">
             {% for message in messages %}
             <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
@@ -48,22 +76,22 @@
         <legend>Shipping Information</legend>
         <form action="/carts/checkout" method="post">
             {% csrf_token %}
-            <label class="block_up">First Name: 
+            <label class="block_up">First Name:
                 <input id="s_first_name" type="text" name="shipping_first_name">
             </label>
-            <label class="block_up">Last Name: 
+            <label class="block_up">Last Name:
                 <input id="s_last_name" type="text" name="shipping_last_name">
             </label>
-            <label class="block_up">Address: 
+            <label class="block_up">Address:
                 <input id="s_address" type="text" name="shipping_address">
             </label>
-            <label class="block_up">Address 2: 
+            <label class="block_up">Address 2:
                 <input id="s_address2" type="text" name="shipping_address2">
             </label>
-            <label class="block_up">City: 
+            <label class="block_up">City:
                 <input id="s_city" type="text" name="shipping_city">
             </label>
-            <label class="block_up">State: 
+            <label class="block_up">State:
                 <input id="s_state" type="text" name="shipping_state">
             </label>
             <label class="block_up">Zipcode:
@@ -74,22 +102,22 @@
         <legend>Billing Information</legend>
             <input id="sameAsShipping" type="checkbox" name="sameAsShipping">
             <label for="sameAsShipping">Same as Shipping</label>
-            <label class="block_up">First Name: 
+            <label class="block_up">First Name:
                 <input id="b_first_name" type="text" name="billing_first_name">
             </label>
-            <label class="block_up">Last Name: 
+            <label class="block_up">Last Name:
                 <input id="b_last_name" type="text" name="billing_last_name">
             </label>
-            <label class="block_up">Address: 
+            <label class="block_up">Address:
                 <input id="b_address" type="text" name="billing_address">
             </label>
-            <label class="block_up">Address 2: 
+            <label class="block_up">Address 2:
                 <input id="b_address2" type="text" name="billing_address2">
             </label>
-            <label class="block_up">City: 
+            <label class="block_up">City:
                 <input id="b_city" type="text" name="billing_city">
             </label>
-            <label class="block_up">State: 
+            <label class="block_up">State:
                 <input id="b_state" type="text" name="billing_state">
             </label>
             <label class="block_up">Zipcode:
@@ -108,7 +136,7 @@
         </form>
     </fieldset>
     <script>
-        // if #sameAsShipping has checked copy all values 
+        // if #sameAsShipping has checked copy all values
         // from shipping form into billing form
         $('#sameAsShipping').click(function(){
             if ( $(this).is(':checked') ) {
@@ -127,7 +155,7 @@
                 $('#b_city').val(city);
                 $('#b_state').val(state);
                 $('#b_zipcode').val(zipcode);
-            } 
+            }
 
         })
     </script>
