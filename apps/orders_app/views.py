@@ -103,6 +103,7 @@ def remove_from_cart(request, product_id):
 # ----------------------------
 # Order tracking
 def track_orders(request):
+    request.session['statuspage'] = 'showall'
     orders = Order.objects.all()
     
     context = {
@@ -120,10 +121,9 @@ def update_status(request):
 
 
 
-
-
 def page_process(request, page_num):
-
+    request.session['orderpage']=page_num
+    request.session['iorderpage']=int(page_num)
     total_pages = Order.objects.count()
     section_pages=Order.objects.all()[(int(page_num)-1)*10:((int(page_num)-1)*10)+10]
 
@@ -140,9 +140,13 @@ def page_process(request, page_num):
 
 def status_process(request, status, page):
     request.session['statuspage'] = status
-    total_pages = Order.objects.filter(status=status).count()
-    section_pages = Order.objects.filter(status=status)[(int(page)-1)*10:((int(page)-1)*10)+10]
-
+    if status == 'showall':
+        total_pages = Order.objects.all().count()
+        section_pages = Order.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
+    else:
+        total_pages = Order.objects.filter(status=status).count()
+        section_pages = Order.objects.filter(status=status)[(int(page)-1)*10:((int(page)-1)*10)+10]
+        
     newArr=[]
     for i in range(1,int(math.ceil((total_pages/10.0)) + 1)):
         newArr.append(i)
@@ -181,7 +185,12 @@ def changestatus(request, id, status):
     if request.session['statuspage'] != 'showall' and request.session['statuspage'] != 'orderin' and request.session['statuspage'] != 'shipped' and request.session['completed']:
         return redirect('/carts/orders/search/'+request.session['search']+'/1')
     if request.session['statuspage'] == 'showall':
-        return redirect('/carts/orders/search/1')
+        print 'HEREEE'
+        temporder=Order.objects.get(id=id)
+        prev=request.session['statuspage']
+        temporder.status=status
+        temporder.save()
+        return redirect('/carts/orders/page/1')
     temporder=Order.objects.get(id=id)
     prev=request.session['statuspage']
     temporder.status=status

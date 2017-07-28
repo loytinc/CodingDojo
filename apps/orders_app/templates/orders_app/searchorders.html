@@ -31,6 +31,6 @@
 </table>
 <ul class='pagination'>
     {%for i in total_pages%}
-    <li><a href="/carts/orders/page/{{i}}">{{i}}</a></li>
+    <li {%if i == request.session.iorderpage%}class='active'{%endif%}><a href="/carts/orders/page/{{i}}">{{i}}</a></li>
     {%endfor%}
 </ul>

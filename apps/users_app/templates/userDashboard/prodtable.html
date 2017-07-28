@@ -32,19 +32,19 @@
                                 {%csrf_token%}
                                 <div class='form-group'>
                                     <label>Name</label>
-                                    <input id='name' class='form-control' type="text" name='name' value='{{product.name}}'>
+                                    <input id='ename{{product.id}}' class='form-control' type="text" name='name' value='{{product.name}}'>
                                 </div>
                                 <div class='form-group'>
                                     <label>Description</label>
-                                    <textarea id='description' class='form-control' name="description" id="" cols="30" rows="10">{{product.description}}</textarea>
+                                    <textarea id='edescription{{product.id}}' class='form-control' name="description" id="" cols="30" rows="10">{{product.description}}</textarea>
                                 </div>
                                 <div class='form-group'>
                                     <label>Price</label>
-                                    <input id='price' class='form-control' type="number" step=0.01 name='price' value='{{product.price}}'>
+                                    <input id='eprice{{product.id}}' class='form-control' type="number" step=0.01 name='price' value='{{product.price}}'>
                                 </div>
                                 <div class='form-group'>
                                     <label>Categories</label>
-                                    <select id='category' class='form-control' name="category">
+                                    <select id='ecategory{{product.id}}' class='form-control' name="category">
                                         {%for category in categories%}
                                         <option value="{{category.name}}" {%if category.name == product.category.name%}selected{%endif%}>{{category.name}}</option>
                                         {%endfor%}
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class='form-group'>
                                     <label>or add a new category</label>
-                                    <input id='newcategory' class='form-control' type="text" name='newcategory'>
+                                    <input id='enewcategory{{product.id}}' class='form-control' type="text" name='newcategory'>
                                 </div>
                                 <button class='btn btn-primary' type="submit" info='{{product.id}}' id='update'>Update</button>
                             </form>
@@ -84,6 +84,6 @@
 </table>
 <ul class='pagination'>
 {%for i in numPages%}
-<li><a href="/dashboard/products/{{i}}">{{i}}</a></li>
+<li {%if i == request.session.iprodpage%}class='active'{%endif%}><a href="/dashboard/products/{{request.session.currcategory}}/{{i}}">{{i}}</a></li>
 {%endfor%}
 </ul>

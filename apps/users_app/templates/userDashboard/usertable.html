@@ -36,21 +36,21 @@
                                 <h3>{{user.first_name}} {{user.last_name}}</h3>
                             </div>
                             <div class='modal-body'>
-                                <form action="/users/edit/{{user.id}}/update_user" method="post">
+                                <form id='editform' action="/users/edit/{{user.id}}/update_user" method="post">
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <label>Email Address:
-                                            <input id="email" class="form-control" type="text" name="email" value="{{user.email}}">
+                                            <input id="eemail{{user.id}}" class="form-control" type="text" name="email" value="{{user.email}}">
                                         </label>
                                     </div>
                                     <div class="form-group">
                                         <label>First Name:
-                                            <input class="form-control" type="text" name="first_name" id='first_namef' value="{{user.id}}">
+                                            <input class="form-control" type="text" name="first_name" id='efirst_name{{user.id}}' value="{{user.first_name}}">
                                         </label>
                                     </div>
                                     <div class="form-group">
                                         <label>Last Name:
-                                            <input class="form-control" type="text" name="last_name" id='last_name' value="{{user.last_name}}">
+                                            <input class="form-control" type="text" name="last_name" id='elast_name{{user.id}}' value="{{user.last_name}}">
                                         </label>
                                     </div>
                                     <div class="form-group">
@@ -99,6 +99,6 @@
 </table>
 <ul class='pagination'>
     {%for i in numPages%}
-    <li><a href="/dashboard/users/{{i}}">{{i}}</a></li>
+    <li {%if i == request.session.iuserpage%}class='active'{%endif%}><a href="/dashboard/users/{{i}}">{{i}}</a></li>
     {%endfor%}
 </ul>

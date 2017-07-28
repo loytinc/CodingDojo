@@ -6,6 +6,10 @@
     font-size: 3em;
 }
 
+#fixspacing{
+    margin-left: 80%;
+}
+
 #spacing_add {
     margin-top: 28px;
 }
