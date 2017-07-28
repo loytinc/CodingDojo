@@ -59,7 +59,7 @@ class UserManager(models.Manager):
                     errors.append('You cannot be born in the future and be reading this. Birthdate must be in the past.')
                 elif birth == now:
                     errors.append('Infants cannot register an account. No way you have been born today.')
-
+        
         return errors
 
 class User(models.Model):

@@ -35,16 +35,9 @@ def dashboard(request):
     else:
         return redirect('/')
 
-def prodDashboard(request,page):
-    productCount=Product.objects.all().count()
-    allProducts=Product.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
-
-    newArr=[]
-    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
-        newArr.append(i)
-    
+def prodDashboard(request):
     context={
-        'products':allProducts, 'numPages':newArr
+        'products':Product.objects.all()#, 'numPages':newArr
     }
     return render(request, 'userDashboard/productDash.html', context)
 
@@ -279,7 +272,7 @@ def update_user(request, user_id):
             user.save()
             messages.success(request,'Successfully updated User information.')
 
-    return redirect('/users/edit/'+str(user_id))
+    return redirect('/dashboard/users/'+request.session['userpage'])
 
 def update_password(request, user_id):
     if request.method == 'POST':
@@ -293,7 +286,7 @@ def update_password(request, user_id):
             hash_it = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
             user.password = hash_it
             user.save()
-            messages.success(request,'Successfully updated password.')
+            # messages.success(request,'Successfully updated password.')
 
     return redirect('/users/edit/'+str(user_id))
 
@@ -301,3 +294,53 @@ def delete_user(request, user_id):
     user = User.objects.get(id=user_id)
     user.delete()
     return redirect('/dashboard/admin')
+
+# def userdashboard(request, page):
+#     userCount = User.objects.count()
+#     getUsers =  User.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
+#     newArr=[]
+#     for i in range(1,int(math.ceil((userCount/10.0)) + 1)):
+#         newArr.append(i)
+
+#     context={
+#         'users': User.objects.all(), 'numPages':newArr
+#     }
+#     return render(request, 'userDashboard/userdash.html', context)
+
+def prodDashboardload(request, page):
+    request.session['prodpage']=page
+    productCount=Product.objects.all().count()
+    allProducts=Product.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
+
+    newArr=[]
+    for i in range(1,int(math.ceil((productCount/10.0)) + 1)):
+        newArr.append(i)
+    
+    context={
+        'products':allProducts, 'numPages':newArr, 'categories':Category.objects.all()
+    }
+    return render(request, 'userDashboard/prodtable.html', context)
+
+def userDashboardload(request, page):
+    request.session['userpage']=page
+    userCount=User.objects.all().count()
+    allUsers=User.objects.all()[(int(page)-1)*10:((int(page)-1)*10)+10]
+
+    newArr=[]
+    for i in range(1,int(math.ceil((userCount/10.0)) + 1)):
+        newArr.append(i)
+    
+    context={
+        'users':allUsers, 'numPages':newArr
+    }
+    return render(request, 'userDashboard/usertable.html', context)
+
+def userDashboard(request):
+    context={
+        'users':User.objects.all()#, 'numPages':newArr
+    }
+    return render(request, 'userDashboard/userdash.html', context)
+
+def delete_user(request, id):
+    User.objects.get(id=id).delete()
+    return redirect('/dashboard/users/'+request.session['userpage'])
