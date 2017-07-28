@@ -70,11 +70,19 @@ def checkout(request):
                     quantity.product.inventory -= quantity.amount
                     quantity.product.save()
 
-    return redirect('/carts/checkout/success')
+    return redirect('/carts/checkout/'+ str(order.id) +'/success')
 
 
-def checkout_success(request):
-    return render(request, 'orders_app/payment_confirmation.html')
+def checkout_success(request, order_id):
+    order = Order.objects.get(id=order_id)
+    products = order.shoppingCart.products.all()
+
+    context = {
+        'order' : order,
+        'products' : products,
+        'quantities' : order.shoppingCart.quantities.all()
+    }
+    return render(request, 'orders_app/payment_confirmation.html',context)
 
 
 def remove_from_cart(request, product_id):
